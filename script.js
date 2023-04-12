@@ -86,7 +86,7 @@ function changeBackgroundColor(event) {
 }
 
 function resetBackgroundColor(event) {
-    event.target.style.backgroundColor = 'transparent';
+    event.target.style.backgroundColor = 'lightgrey';
     clearTimeout(timeoutID);
 }
 
