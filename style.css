@@ -50,5 +50,17 @@ input:focus {
 }
 
 #btn {
-    background-color: #e1e1e1;
+    background-color: #ffffff;
+    text-align: center;
+    color: dimgrey;
+}
+
+#my-heading {
+    text-align: center;
+    color: dimgrey;
+}
+
+#subhead {
+    text-align: center;
+    color: dimgrey;
 }
