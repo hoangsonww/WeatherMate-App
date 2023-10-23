@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The WeatherMate</title>
+    <title>The WeatherMate App</title>
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -14,9 +14,15 @@
 
 <img src="https://www.freepnglogos.com/uploads/cloud-png/clouds-5.pngu0026w0=495u0026h0=185u0026imgType=3u0026h1=52u0026w1=140" id="img">
 
+<h1 id="my-heading">The WeatherMate App</h1>
+
 <main id="main"></main>
 
-<h1 id="my-heading">The WeatherMate App</h1>
+<button id="forecast-btn" style="display: none;">VIEW FORECAST FOR </button>
+
+<div id="forecast-display">
+    <!-- This will be populated by the addForecastToPage function -->
+</div>
 
 <form id="form">
     <input
@@ -31,7 +37,26 @@
 
 <button type="button" id="btn">SEARCH OR PRESS ENTER</button>
 
-<h5 id="subhead">Remember that you must enter the exact name of your city/region to properly get the weather information!</h5>
+<h5 id="subhead">A reminder that you must enter the exact name of your desired city/region to properly get its accurate weather information!</h5>
+
+<div id="favorites-section">
+    <!-- Favorite cities will be appended here -->
+</div>
+
+<button onclick="window.location.href='about.html'" type="button" id="btn1" style="margin-top: 30px">ABOUT THIS APP</button>
+
+<div id="chatbot-container" class="chatbot-maximized">
+    <div id="chatbot-header">
+        Chat With Your WeatherMate!
+        <button id="chatbot-toggle" style="border-radius: 4px; margin-top: -20px" class="chatbot-maximize-btn">−</button>
+        <span id="chatbot-tooltip" style="position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);">Maximize/Minimize Chat</span>
+    </div>
+    <div id="chatbot-messages">
+        <!-- Messages will appear here -->
+    </div>
+    <input id="chatbot-input" type="text" placeholder="Type a message...">
+    <button id="chatbot-send">Send</button>
+</div>
 
 </body>
 
