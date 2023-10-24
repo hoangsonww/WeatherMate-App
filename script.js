@@ -9,10 +9,14 @@ const url = (city) =>
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`;
 
 async function getWeatherByLocation(city) {
+    // Hide forecast before fetching new city data
+    document.getElementById("forecast-display").style.display = 'none';
+    document.getElementById("forecast-btn").textContent = `VIEW FORECAST FOR ${city}`;
+
     const resp = await fetch(url(city), { origin: "cors" });
     const respData = await resp.json();
 
-    if(respData.cod === "404") { // If the status code is 404, it means the city was not found
+    if(respData.cod === "404") {
         displayCityNotFound(city);
         return;
     }
