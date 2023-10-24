@@ -6,6 +6,7 @@ const search = document.getElementById("search");
 const buttonSearch = document.getElementById("btn");
 const favorite = document.getElementById("favorites-section");
 const title = document.getElementById("my-heading");
+const forecast = document.getElementById("forecast-display");
 
 const url = (city) =>
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`;
@@ -72,6 +73,7 @@ function setBackground(condition, data) {
     document.body.style.color = textColor;
     title.style.color = textColor;
     favorite.style.color = favoriteColor;
+    forecast.style.color = favoriteColor;
 }
 
 function displayCityNotFound(city) {
