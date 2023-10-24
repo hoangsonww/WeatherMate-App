@@ -4,6 +4,8 @@ const main = document.getElementById("main");
 const form = document.getElementById("form");
 const search = document.getElementById("search");
 const buttonSearch = document.getElementById("btn");
+const favorite = document.getElementById("favorites-section");
+const title = document.getElementById("my-heading");
 
 const url = (city) =>
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`;
@@ -25,6 +27,53 @@ async function getWeatherByLocation(city) {
     addWeatherToPage(respData);
 }
 
+function setBackground(condition, data) {
+    let backgroundImage = '';
+    let textColor = 'black';
+    let favoriteColor = 'black';
+
+    const currentTime = new Date().getTime() / 1000; // Convert to UNIX timestamp
+    const sunrise = data.sys.sunrise;
+    const sunset = data.sys.sunset;
+
+    if (condition === 'Clear' && (currentTime < sunrise || currentTime > sunset)) {
+        backgroundImage = 'url(https://live.staticflickr.com/5698/30867056071_9b7f336f48_b.jpg)';
+        textColor = 'white';
+        favoriteColor = 'black';
+    }
+    else {
+        switch (condition) {
+            case 'Clouds':
+                backgroundImage = 'url(https://images.unsplash.com/photo-1611928482473-7b27d24eab80?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xvdWR5JTIwd2VhdGhlcnxlbnwwfHwwfHx8MA%3D%3D)';
+                textColor = 'white';
+                favoriteColor = 'black';
+                break;
+            case 'Clear':
+                backgroundImage = 'url(https://clarksvillenow.sagacom.com/files/2020/10/shutterstock_206307496-1200x768.jpg)';
+                break;
+            case 'Rain':
+                backgroundImage = 'url(https://massago.ca/wp-content/uploads/2018/06/blog-post_rain.jpg)';
+                break;
+            case 'Snow':
+                backgroundImage = 'url(https://wjla.com/resources/media2/16x9/full/1015/center/80/be94f27f-c70a-4e6c-b3cc-9a448da929b8-large16x9_SnowfallsinEllicottCityVeronicaJohnson.JPG)';
+                break;
+            case 'Thunderstorm':
+                backgroundImage = 'url(https://s.w-x.co/thunderstormasthma.jpg)';
+                break;
+            default:
+                backgroundImage = 'url(https://cbsnews1.cbsistatic.com/hub/i/2015/01/08/2a7e43f9-7cce-44a4-b0fa-949612fd9ef1/461133262.jpg)';
+                break;
+        }
+    }
+    document.body.style.backgroundImage = backgroundImage;
+    document.body.style.backgroundSize = "cover"; // This will make sure the image covers the entire viewport
+    document.body.style.backgroundPosition = "center"; // This will center the image
+    document.body.style.backgroundRepeat = "no-repeat"; // This will prevent the image from repeating
+    document.body.style.color = textColor;
+    title.style.color = textColor;
+    favorite.style.color = favoriteColor;
+}
+
 function displayCityNotFound(city) {
     main.innerHTML = `<h2>NO WEATHER DATA FOR THE REGION OR CITY WITH THE NAME ${city.toUpperCase()} FOUND!</h2>`;
 }
@@ -44,6 +93,8 @@ function addWeatherToPage(data) {
         <h2><img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" /> ${temp}°C <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" /></h2>
         <small>${data.weather[0].main}</small>
     `;
+
+    setBackground(data.weather[0].main, data);
 
     // cleanup
     main.innerHTML = "";
