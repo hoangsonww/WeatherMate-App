@@ -284,262 +284,153 @@ document.addEventListener('DOMContentLoaded', (event) => {
     displayFavorites();
 });
 
-document.getElementById("chatbot-send").addEventListener("click", function() {
-    const input = document.getElementById("chatbot-input");
-    const messages = document.getElementById("chatbot-messages");
-
-    // Display user message
-    messages.innerHTML += `<div class="message user">${input.value}</div>`;
-
-    // Get bot response
-    let response = getBotResponse(input.value);
-    setTimeout(() => {
-        messages.innerHTML += `<div class="message bot">${response}</div>`;
-        messages.scrollTop = messages.scrollHeight; // Scroll to bottom
-    }, 1000); // Simulate response delay
-
-    input.value = ""; // Clear input
-});
-
 function getBotResponse(message) {
-    message = message.toLowerCase().trim();
+    const weatherInCityRegex = /weather in (.*?)(?=\n|$)/;
 
-    // Greetings
-    if (["hello", "hi", "hey", "hola"].some(v => message.includes(v))) {
-        return "Hello! How can I assist you today?";
+    // Check if the message matches the 'weather in [city]' pattern
+    const weatherInCityMatch = message.match(weatherInCityRegex);
+
+    if (weatherInCityMatch && weatherInCityMatch[1]) {
+        const city = weatherInCityMatch[1].trim(); // Trim the city name to remove any extra whitespace
+        getWeatherByLocation(city); // Call the function to get weather by location
+        return `Fetching weather for ${city}...`; // Respond to the user
     }
 
-    // Farewells
+    // Greetings with dynamic weather comment
+    if (["hello", "hey", "hola"].some(v => message.includes(v))) {
+        // Ideally, integrate with a function that detects the user's current weather
+        return "How can I assist with your weather queries today? I can also display weather for you! To make me do so, simply type 'weather in [a city's name]'";
+    }
+
+    if (message === "hi") {
+        return "How can I assist with your weather queries today? I can also display weather for you! To make me do so, simply type 'weather in [a city's name]'";
+    }
+
+    // Farewells with a next-day weather teaser
     if (["bye", "goodbye", "see you", "later"].some(v => message.includes(v))) {
-        return "Goodbye! If you have more questions, feel free to return.";
+        // Potentially integrate with a function that provides a brief forecast for the next day
+        return "Goodbye! By the way, tomorrow looks [summary of tomorrow's weather]. Check back for updates!";
     }
 
-    // Asking about the bot
+    // Bot's status with a weather update
     if (["how are you", "how's it going"].some(v => message.includes(v))) {
-        return "I'm just a chatbot, but I'm operating optimally! How can I assist you?";
+        // Include a fun weather-related status
+        return "I'm as operational as a weather satellite! Currently tracking some interesting weather patterns. Need an update?";
     }
 
-    // Thanking the bot
-    if (["thank you", "thanks", "appreciate"].some(v => message.includes(v))) {
-        return "You're welcome! Let me know if there's anything else.";
-    }
-
-    // Asking about capabilities
+    // Enhanced capabilities including alerts and trends
     if (["what can you do", "help me", "features"].some(v => message.includes(v))) {
-        return "I can answer questions, provide information, and more. How can I assist you?";
+        return "I'm equipped to provide real-time weather updates, forecasts, alerts, and even educational tidbits about meteorology. Would you like a weather fact or a forecast?";
     }
 
-    // Asking the bot's name or identity
+    // Bot's identity with a fun weather twist
     if (["who are you", "your name"].some(v => message.includes(v))) {
-        return "I'm an Eliza-like chatbot. How can I assist you today?";
+        return "I'm Cumulus, your virtual meteorologist. I can forecast weather, offer climate trivia, and suggest the best times to enjoy the outdoors!";
     }
 
-    // Expressing confusion or uncertainty
+    // Detailed real-time weather responses
+    if (["how's the weather", "is it going to rain today", "weather today", "what's the temperature", "need an umbrella"].some(v => message.includes(v))) {
+        // Code here should query the weather API and give a detailed response
+        return "One moment, I’m scanning the skies for you... [Insert detailed weather information]";
+    }
+
+    // Offering a weather lesson when the user expresses confusion
     if (["i don't understand", "what do you mean"].some(v => message.includes(v))) {
-        return "Sorry if I was unclear. Please rephrase or ask another question.";
+        return "Let's clear the air! I can provide weather forecasts, climate facts, or explain meteorological terms. What weather topic can I illuminate for you?";
     }
 
-    // Expressing frustration or negativity
+    // Apologetic response with a proactive offer
     if (["you're bad", "you're terrible", "you're useless"].some(v => message.includes(v))) {
-        return "I apologize if I couldn't help. Please let me know how I can assist you better.";
+        return "I'm here to improve your day like a break in the clouds. Tell me what weather info you're after, and I'll do my best!";
     }
 
-    // Asking about the weather (note: this is a simplistic response and doesn't integrate with a weather API)
-    if (["how's the weather", "is it going to rain today", "weather today"].some(v => message.includes(v))) {
-        return "Sorry, I cannot fetch real-time weather information. Please check a reliable weather source.";
-    }
-
-    // Compliments
+    // Weather compliments with gratitude and offers of more service
     if (["you're great", "you're awesome", "i like you"].some(v => message.includes(v))) {
-        return "Thank you! I'm here to help. Let me know if you have any questions.";
+        return "Thank you for the warm front of kindness! How can I further brighten your day with weather updates?";
     }
 
-    // Jokes
+    // Weather jokes for a lighthearted moment
     if (["tell me a joke", "joke", "make me laugh"].some(v => message.includes(v))) {
-        return "Why did the programmer quit his job? Because he didn't get arrays!";
+        return "Why don't meteorologists like to go to the beach? They can't enjoy the sun with all that cloud judgment! Any other weather fun facts or forecasts I can provide?";
     }
 
-    // Weather (assuming the chatbot doesn't really fetch weather info)
-    if (["what's the temperature", "need an umbrella"].some(v => message.includes(v))) {
-        return "I'm not currently set up to provide real-time weather. Please check a weather website or app!";
+    // Weather tips for various scenarios
+    if (["i'm cold", "it's so hot", "what to wear"].some(v => message.includes(v))) {
+        // Include practical advice based on the current weather
+        return "Dressing in layers is key for cold weather. For heat, light-colored and loose-fitting clothing is best. Can I suggest something based on today’s weather?";
     }
 
-    // Asking about the bot's age
-    if (["how old are you", "your age", "when were you born"].some(v => message.includes(v))) {
-        return "I'm just code, so I don't age like humans do. But I'm always learning and updating!";
+    // Offering weather-related health advice
+    if (["i have a headache", "i feel sick"].some(v => message.includes(v))) {
+        return "Sometimes changes in weather, like barometric pressure, can affect your health. It's best to consult a doctor, but would you like to know if there’s a pressure change expected today?";
     }
 
-    // Asking about the bot's feelings
-    if (["are you happy", "do you have feelings"].some(v => message.includes(v))) {
-        return "I'm just a program, so I don't have feelings or emotions. But I'm here to assist you!";
+    // Introducing weather safety tips
+    if (["storm warning", "is it safe"].some(v => message.includes(v))) {
+        // Potentially integrate with a function that provides safety tips during adverse weather conditions
+        return "Safety first! There is a [current weather alert]. It's best to [safety advice]. Stay indoors and away from windows if you hear thunder.";
     }
 
-    // If the user mentions food
-    if (["i'm hungry", "recommend a restaurant", "what should i eat"].some(v => message.includes(v))) {
-        return "I can't taste food, but maybe try something healthy or your favorite dish!";
-    }
-
-    // If the user mentions sleep or tiredness
-    if (["i'm tired", "i can't sleep", "i need rest"].some(v => message.includes(v))) {
-        return "It's important to get a good rest. Maybe take a break and relax.";
-    }
-
-    // If the user asks about movies or entertainment
-    if (["recommend a movie", "what should i watch"].some(v => message.includes(v))) {
-        return "How about watching 'The Matrix'? It's a classic!";
-    }
-
-    // If the user's message is empty
-    if ([""].some(v => message.includes(v))) {
-        return "It seems like you have sent an empty message. Please rephrase or ask another question.";
-    }
-
-    // Inquiries about chatbot's day
-    if (["how was your day", "had a busy day"].some(v => message.includes(v))) {
-        return "I'm just a bot, so I don't have days in the way humans do. But I'm always here, ready to help!";
-    }
-
-    // Books and Reading
-    if (["recommend a book", "i want to read"].some(v => message.includes(v))) {
-        return "How about 'Sapiens' by Yuval Noah Harari? It offers a compelling overview of the history of humankind.";
-    }
-
-    // Travel
-    if (["i want to travel", "recommend a travel destination"].some(v => message.includes(v))) {
-        return "Ever considered visiting New Zealand? It's got breathtaking landscapes!";
-    }
-
-    // Music
-    if (["what music do you like", "recommend a song"].some(v => message.includes(v))) {
-        return "I don't have personal preferences, but 'Bohemian Rhapsody' by Queen is a widely appreciated track!";
-    }
-
-    // When the user is bored
-    if (["i'm bored", "suggest an activity"].some(v => message.includes(v))) {
-        return "How about learning a new skill? Maybe coding, cooking, or even playing a musical instrument?";
-    }
-
-    // When the user is feeling down
-    if (["i'm sad", "i'm feeling down", "cheer me up"].some(v => message.includes(v))) {
-        return "I'm sorry to hear that. Remember, it's okay to seek help or talk to someone about how you feel. You matter!";
-    }
-
-    // If the user talks about sports
-    if (["who won the last world cup", "suggest a sport"].some(v => message.includes(v))) {
-        return "I'm not up-to-date with live sports results, but if you're looking for a sport to get into, how about tennis?";
-    }
-
-    // Philosophical questions
-    if (["what's the meaning of life", "why are we here"].some(v => message.includes(v))) {
-        return "That's a deep question! Philosophers have pondered this for centuries. Some believe it's the pursuit of happiness, others look for meaning in various forms of accomplishment or love.";
-    }
-
-    // When the user is curious about space
-    if (["tell me about space", "how big is the universe"].some(v => message.includes(v))) {
-        return "Space is vast and largely unexplored. The observable universe is about 93 billion light-years in diameter, and it's filled with countless stars, galaxies, and mysteries yet to be uncovered!";
-    }
-
-    // Movie suggestions
-    if (["suggest a movie", "i want to watch a movie"].some(v => message.includes(v))) {
-        return "How about 'The Shawshank Redemption'? It's a classic with a powerful storyline.";
-    }
-
-    // Asking about technology
-    if (["tell me about ai", "what's the future of tech"].some(v => message.includes(v))) {
-        return "Artificial Intelligence (AI) is an area of computer science that emphasizes the creation of intelligent machines that can think and learn. It has a vast range of applications, and its future is exciting but also a topic of ethical discussions.";
-    }
-
-    // Food and cooking
-    if (["i'm hungry", "suggest a dish"].some(v => message.includes(v))) {
-        return "How about trying some homemade pasta? It's delicious and fun to make!";
-    }
-
-    // Coffee lovers
-    if (["suggest a coffee", "i need caffeine"].some(v => message.includes(v))) {
-        return "A flat white or cappuccino might be a good choice. If you're looking for something strong, an espresso shot could do the trick!";
-    }
-
-    // When the user asks about nature
-    if (["tell me about plants", "i love nature"].some(v => message.includes(v))) {
-        return "Nature is fascinating! Plants, for instance, use photosynthesis to convert light into energy. Some plants even have unique adaptations to survive in challenging environments!";
-    }
-
-    // Fitness and health
-    if (["i want to start exercising", "recommend a workout"].some(v => message.includes(v))) {
-        return "That's great! Starting with basic bodyweight exercises like push-ups, squats, and jumping jacks can be effective. Remember to warm up before and stretch after!";
-    }
-
-    // Curiosity about the ocean
-    if (["tell me about the sea", "how deep is the ocean"].some(v => message.includes(v))) {
-        return "The ocean covers about 71% of the Earth's surface. The deepest part of the ocean is the Mariana Trench, which goes down about 36,070 feet. The ocean is home to a diverse range of life, much of which remains undiscovered!";
-    }
-
-    // Questions about history
-    if (["who was albert einstein", "tell me about ancient civilizations"].some(v => message.includes(v))) {
-        return "Albert Einstein was a physicist known for his theory of relativity. If you're curious about ancient civilizations, the Egyptians, Mayans, and Mesopotamians are fascinating cultures with rich histories.";
-    }
-
-    // When the user mentions art
-    if (["i want to draw", "tell me about art"].some(v => message.includes(v))) {
-        return "Art is a diverse range of human activities that express creativity. Drawing is a wonderful way to start! Whether it's sketching or digital art, the most important thing is to enjoy the process.";
-    }
-
-    // If no patterns match
-    return "I'm not sure how to respond to that. Can you rephrase or ask another question?";
+    // If no patterns match, offer a range of weather services
+    return "I seem to be out of my element. I'm best with cloud coverage than clouded questions. For weather forecasts, trivia, or wardrobe advice, I'm your bot. How may I assist?";
 }
 
-// Assuming your chatbot input has the ID "chatbot-input"
-const chatbotInput = document.getElementById("chatbot-input");
+// Chat interaction with delay
+const chatInput = document.querySelector(".chat-input");
+const chatMessages = document.querySelector(".chat-messages");
 
-chatbotInput.addEventListener("keypress", function(event) {
-    // Check if the pressed key is "Enter"
-    if (event.keyCode === 13 || event.which === 13) {
-        event.preventDefault(); // Prevents any default "Enter" key behavior
+// Create the chatbot title
+const chatTitleElem = document.createElement("div");
+chatTitleElem.className = "chat-header chat-title";
+chatTitleElem.innerText = "The StickyNotes Assistant";
+document.querySelector(".chatbot").prepend(chatTitleElem);
 
-        const messages = document.getElementById("chatbot-messages");
+chatInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && e.target.value.trim()) {
+        const question = e.target.value.trim();
 
-        // Display user message
-        messages.innerHTML += `<div class="message user">${chatbotInput.value}</div>`;
+        const userMsgElem = document.createElement("div");
+        userMsgElem.innerText = `You: ${question}`;
+        chatMessages.appendChild(userMsgElem);
 
-        // Get bot response
-        let response = getBotResponse(chatbotInput.value);
         setTimeout(() => {
-            messages.innerHTML += `<div class="message bot">${response}</div>`;
-            messages.scrollTop = messages.scrollHeight; // Scroll to bottom
-        }, 1000); // Simulate response delay
+            const response = getBotResponse(question);
+            const elizaMsgElem = document.createElement("div");
+            elizaMsgElem.innerText = `Eliza: ${response}`;
+            chatMessages.appendChild(elizaMsgElem);
+        }, 1000); // 1-second delay
 
-        chatbotInput.value = ""; // Clear input
+        e.target.value = '';
     }
 });
 
-const chatbotToggleBtn = document.getElementById("chatbot-toggle");
-const chatbotContainer = document.getElementById("chatbot-container");
-const tooltip = document.getElementById('chatbot-tooltip');
+// Creating the chatbot's maximize/minimize button
+const toggleButton = document.createElement("button");
+toggleButton.innerText = "-";
+toggleButton.className = "toggle-chat";
+toggleButton.onclick = function() {
+    const chatMessagesElem = document.querySelector(".chat-messages");
+    const chatInputElem = document.querySelector(".chat-input");
 
-chatbotToggleBtn.addEventListener("click", function() {
-    if (chatbotContainer.classList.contains("chatbot-maximized")) {
-        chatbotContainer.classList.remove("chatbot-maximized");
-        chatbotContainer.classList.add("chatbot-minimized");
-        chatbotToggleBtn.textContent = "＋";
+    if (chatMessagesElem.style.display === "none") {
+        chatMessagesElem.style.display = "";
+        chatInputElem.style.display = "";
+        toggleButton.innerText = "-";
     } else {
-        chatbotContainer.classList.add("chatbot-maximized");
-        chatbotContainer.classList.remove("chatbot-minimized");
-        chatbotToggleBtn.textContent = "−";
+        chatMessagesElem.style.display = "none";
+        chatInputElem.style.display = "none";
+        toggleButton.innerText = "+";
     }
-});
+};
 
-chatbotToggleBtn.addEventListener('mouseover', function() {
-    if (chatbotContainer.classList.contains('chatbot-maximized')) {
-        tooltip.textContent = "Minimize Chat";
-    } else {
-        tooltip.textContent = "Maximize Chat";
-    }
-    tooltip.style.display = "block";
-});
+const chatHeaderElem = document.querySelector(".chat-header");
+chatHeaderElem.appendChild(toggleButton);
 
-chatbotToggleBtn.addEventListener('mouseout', function() {
-    tooltip.style.display = "none";
-});
+// Initially showing only header
+const chatMessagesElem = document.querySelector(".chat-messages");
+const chatInputElem = document.querySelector(".chat-input");
+chatMessagesElem.style.display = "none";
+chatInputElem.style.display = "none";
 
 // const heading = document.getElementById('my-heading');
 // const subhead = document.getElementById('subhead');

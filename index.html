@@ -45,17 +45,9 @@
 
 <button onclick="window.location.href='about.html'" type="button" id="btn1" style="margin-top: 30px">ABOUT THIS APP</button>
 
-<div id="chatbot-container" class="chatbot-maximized">
-    <div id="chatbot-header">
-        Chat With Your WeatherMate!
-        <button id="chatbot-toggle" style="border-radius: 4px; margin-top: -20px" class="chatbot-maximize-btn">−</button>
-        <span id="chatbot-tooltip" style="position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);">Maximize/Minimize Chat</span>
-    </div>
-    <div id="chatbot-messages">
-        <!-- Messages will appear here -->
-    </div>
-    <input id="chatbot-input" type="text" placeholder="Type a message...">
-    <button id="chatbot-send">Send</button>
+<div class="chatbot" style="color: black !important">
+    <div class="chat-messages"></div>
+    <input type="text" placeholder="Ask Eliza..." class="chat-input">
 </div>
 
 </body>
