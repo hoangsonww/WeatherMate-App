@@ -169,6 +169,13 @@ button {
     cursor: pointer;
     transition: all 0.3s;
     margin-left: 10px;
+    border-radius: 4px;
+    background: none;
+    color: white;
+}
+
+button:hover {
+    background-color: #201a5b;
 }
 
 #favorites-section button {

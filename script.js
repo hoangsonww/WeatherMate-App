@@ -382,7 +382,7 @@ const chatMessages = document.querySelector(".chat-messages");
 // Create the chatbot title
 const chatTitleElem = document.createElement("div");
 chatTitleElem.className = "chat-header chat-title";
-chatTitleElem.innerText = "The StickyNotes Assistant";
+chatTitleElem.innerText = "Chat With Your WeatherMate!";
 document.querySelector(".chatbot").prepend(chatTitleElem);
 
 chatInput.addEventListener("keydown", (e) => {
