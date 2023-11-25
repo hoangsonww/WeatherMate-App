@@ -174,8 +174,53 @@ function addWeatherToPage(data) {
     const aqiDisplay = document.getElementById("aqi-display") || createAQIDisplayElement();
     aqiDisplay.innerHTML = ''; // Clear previous AQI data
     aqiDisplay.style.display = 'none'; // Hide the AQI display initially
+
+    const humidityRainBtn = document.getElementById("humidity-rain-btn");
+    humidityRainBtn.setAttribute("data-lat", data.coord.lat);
+    humidityRainBtn.setAttribute("data-lon", data.coord.lon);
+    humidityRainBtn.setAttribute("data-city", data.name);
+    humidityRainBtn.textContent = `View Humidity & Chance of Rain For ${data.name}`;
+    humidityRainBtn.style.display = "block"; // Show the button
+
+    // Add the click event listener if it has not already been set
+    if (!humidityRainBtn.getAttribute('listener')) {
+        humidityRainBtn.addEventListener("click", toggleHumidityRain);
+        humidityRainBtn.setAttribute('listener', 'true');
+    }
 }
 
+function toggleHumidityRain() {
+    const displayElement = document.getElementById("humidity-rain-display");
+    const btn = document.getElementById("humidity-rain-btn");
+    const lat = btn.getAttribute("data-lat");
+    const lon = btn.getAttribute("data-lon");
+
+    if (btn.textContent.includes("Close")) {
+        displayElement.style.display = 'none';
+        btn.textContent = `View Humidity & Chance of Rain For ${btn.getAttribute("data-city")}`;
+    } else {
+        displayHumidityRain(lat, lon, displayElement);
+        btn.textContent = `Close Humidity & Chance of Rain For ${btn.getAttribute("data-city")}`;
+    }
+}
+
+async function displayHumidityRain(lat, lon, displayElement) {
+    // Fetch current weather for humidity
+    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apikey}`;
+    const weatherResp = await fetch(weatherUrl);
+    const weatherData = await weatherResp.json();
+    const humidity = weatherData.main.humidity;
+
+    // Fetch forecast for chance of rain
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apikey}`;
+    const forecastResp = await fetch(forecastUrl);
+    const forecastData = await forecastResp.json();
+    const chanceOfRain = forecastData.list[0].pop; // Probability of Precipitation
+
+    // Display the information
+    displayElement.innerHTML = `<h3>Humidity: ${humidity}%</h3><h3>Chance of Rain: ${(chanceOfRain * 100).toFixed(0)}%</h3>`;
+    displayElement.style.display = 'block';
+}
 
 function displayLocalTime(timezoneOffset) {
     // Get the current UTC time, add the timezone offset, and convert to milliseconds
