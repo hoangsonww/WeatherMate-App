@@ -291,7 +291,14 @@ form.addEventListener("submit", (e) => {
 
     if (city) {
         getWeatherByLocation(city);
+        const subhead = document.getElementById("subhead");
+        subhead.style.display = 'none';
     }
+});
+
+form.addEventListener("click", (e) => {
+    const subhead = document.getElementById("subhead");
+    subhead.style.display = 'block';
 });
 
 buttonSearch.addEventListener("click", (e) => {
