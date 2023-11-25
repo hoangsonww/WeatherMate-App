@@ -149,6 +149,8 @@ function addWeatherToPage(data) {
         toggleFavoriteCity(data.name);
     });
 
+    displayLocalTime(data.timezone);
+
     const forecastBtn = document.getElementById("forecast-btn");
     forecastBtn.setAttribute("data-lat", data.coord.lat);
     forecastBtn.setAttribute("data-lon", data.coord.lon);
@@ -172,6 +174,28 @@ function addWeatherToPage(data) {
     const aqiDisplay = document.getElementById("aqi-display") || createAQIDisplayElement();
     aqiDisplay.innerHTML = ''; // Clear previous AQI data
     aqiDisplay.style.display = 'none'; // Hide the AQI display initially
+}
+
+
+function displayLocalTime(timezoneOffset) {
+    // Get the current UTC time, add the timezone offset, and convert to milliseconds
+    const utcDate = new Date();
+    const utcTime = utcDate.getTime() + utcDate.getTimezoneOffset() * 60000;
+    const localTime = new Date(utcTime + timezoneOffset * 1000);
+
+    // Format the time
+    const formattedTime = localTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    // Update or create the local time display element
+    let timeElement = document.getElementById("local-time");
+    if (!timeElement) {
+        timeElement = document.createElement("div");
+        timeElement.id = "local-time";
+        timeElement.classList.add("local-time");
+        main.appendChild(timeElement);
+    }
+
+    timeElement.innerHTML = `<h3>Local Time: ${formattedTime}</h3>`;
 }
 
 async function getForecastByLocation(lat, lon) {
