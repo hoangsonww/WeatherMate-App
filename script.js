@@ -14,7 +14,8 @@ const url = (city) =>
 async function getWeatherByLocation(city) {
     // Hide forecast before fetching new city data
     document.getElementById("forecast-display").style.display = 'none';
-    document.getElementById("forecast-btn").textContent = `VIEW FORECAST FOR ${city}`;
+    document.getElementById("forecast-btn").textContent = `View Forecast For ${city}`;
+    document.getElementById("aqi-btn").textContent = `View Air Quality Index For ${city}`;
 
     const resp = await fetch(url(city), { origin: "cors" });
     const respData = await resp.json();
@@ -26,6 +27,47 @@ async function getWeatherByLocation(city) {
 
     console.log(respData);
     addWeatherToPage(respData);
+}
+
+// Function to fetch and display AQI data
+async function displayAirQuality(lat, lon) {
+    const aqiUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apikey}`;
+    const response = await fetch(aqiUrl, { origin: "cors" });
+    const aqiData = await response.json();
+
+    const aqiElement = document.getElementById("aqi-display");
+    // Prevent adding multiple AQI instances: check if the AQI data is already there
+    if (!aqiElement.hasChildNodes()) {
+        const aqi = aqiData.list[0].main.aqi;
+        const airQuality = convertAQIToQuality(aqi);
+        aqiElement.innerHTML = `<h3 class="aqi-text aqi-${aqi}">Air Quality Index: ${aqi} (${airQuality})</h3>`;
+        aqiElement.style.display = 'block'; // Show the AQI information
+    }
+}
+
+function createAQIDisplayElement() {
+    const aqiElement = document.createElement("div");
+    aqiElement.id = "aqi-display";
+    aqiElement.style.display = 'none'; // Start with the display set to none
+    document.body.appendChild(aqiElement);
+    return aqiElement;
+}
+
+// Function to convert AQI value to qualitative description
+function convertAQIToQuality(aqi) {
+    if (aqi === 1) {
+        return "Good";
+    } else if (aqi === 2) {
+        return "Fair";
+    } else if (aqi === 3) {
+        return "Moderate";
+    } else if (aqi === 4) {
+        return "Poor";
+    } else if (aqi === 5) {
+        return "Very Poor";
+    } else {
+        return "Unknown";
+    }
 }
 
 function setBackground(condition, data) {
@@ -111,8 +153,25 @@ function addWeatherToPage(data) {
     forecastBtn.setAttribute("data-lat", data.coord.lat);
     forecastBtn.setAttribute("data-lon", data.coord.lon);
     forecastBtn.setAttribute("data-city", data.name);
-    forecastBtn.textContent = `VIEW FORECAST FOR ${data.name}`; // Set the button's initial text
+    forecastBtn.textContent = `View Forecast For ${data.name}`; // Set the button's initial text
     forecastBtn.style.display = "block"; // Show the button
+    const aqiBtn = document.getElementById("aqi-btn");
+    aqiBtn.setAttribute("data-lat", data.coord.lat);
+    aqiBtn.setAttribute("data-lon", data.coord.lon);
+    aqiBtn.setAttribute("data-city", data.name);
+    aqiBtn.textContent = `View Air Quality Index For ${data.name}`; // Set the button's initial text
+    aqiBtn.style.display = "block"; // Show the button
+
+    // Add the click event listener if it has not already been set
+    if (!aqiBtn.getAttribute('listener')) {
+        aqiBtn.addEventListener("click", toggleAQI);
+        aqiBtn.setAttribute('listener', 'true');
+    }
+
+    // Ensure AQI is not displayed immediately
+    const aqiDisplay = document.getElementById("aqi-display") || createAQIDisplayElement();
+    aqiDisplay.innerHTML = ''; // Clear previous AQI data
+    aqiDisplay.style.display = 'none'; // Hide the AQI display initially
 }
 
 async function getForecastByLocation(lat, lon) {
@@ -180,18 +239,61 @@ function toggleForecast() {
     const forecastDisplay = document.getElementById("forecast-display");
     const forecastBtn = document.getElementById("forecast-btn");
 
-    if (forecastBtn.textContent.includes("Close Forecast")) { // Adjusted the string to match the set text
-        // If the forecast is open, hide it
+    if (forecastBtn.textContent.includes("Close Forecast")) {
         forecastDisplay.style.display = 'none';
         forecastBtn.textContent = `View Forecast For ${forecastBtn.getAttribute("data-city")}`;
     } else {
-        // Otherwise, show the forecast
-        getForecastByLocation(forecastBtn.getAttribute("data-lat"), forecastBtn.getAttribute("data-lon"))
-            .then(() => {
-                forecastDisplay.style.display = 'grid';
-                forecastBtn.textContent = `Close Forecast For ${forecastBtn.getAttribute("data-city")}`;
-            });
+        const lat = forecastBtn.getAttribute("data-lat");
+        const lon = forecastBtn.getAttribute("data-lon");
+        getForecastByLocation(lat, lon).then(() => {
+            forecastDisplay.style.display = 'grid';
+            forecastBtn.textContent = `Close Forecast For ${forecastBtn.getAttribute("data-city")}`;
+            // Add sunrise and sunset times
+            displaySunriseSunset(lat, lon);
+        });
     }
+}
+
+function toggleAQI() {
+    const aqiDisplay = document.getElementById("aqi-display");
+    const aqiBtn = document.getElementById("aqi-btn");
+    const city = aqiBtn.getAttribute("data-city");
+    const lat = aqiBtn.getAttribute("data-lat");
+    const lon = aqiBtn.getAttribute("data-lon");
+
+    if (aqiBtn.textContent.includes("Close Air Quality Index")) {
+        aqiDisplay.style.display = 'none';
+        aqiBtn.textContent = `View Air Quality Index For ${city}`;
+    } else {
+        // Check if AQI data is already fetched
+        if (!aqiDisplay.innerHTML.trim()) {
+            displayAirQuality(lat, lon);
+        } else {
+            aqiDisplay.style.display = 'block';
+        }
+        aqiBtn.textContent = `Close Air Quality Index For ${city}`;
+    }
+}
+
+function displaySunriseSunset(lat, lon) {
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apikey}`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const sunriseTime = new Date(data.sys.sunrise * 1000).toLocaleTimeString();
+            const sunsetTime = new Date(data.sys.sunset * 1000).toLocaleTimeString();
+
+            const sunriseElement = document.createElement("p");
+            const sunsetElement = document.createElement("p");
+            sunriseElement.textContent = `Sunrise: ${sunriseTime}`;
+            sunsetElement.textContent = `Sunset: ${sunsetTime}`;
+
+            const forecastDisplay = document.getElementById("forecast-display");
+            forecastDisplay.appendChild(sunriseElement);
+            forecastDisplay.appendChild(sunsetElement);
+        }
+    );
 }
 
 const forecastBtn = document.getElementById("forecast-btn");

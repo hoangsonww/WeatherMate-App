@@ -260,10 +260,10 @@ button:hover {
 }
 
 #forecast-btn:hover {
-    background-color: #f3f3f3;
+    background-color: #efefef;
 }
 
-#forecast-display .weather {
+#forecast-display.weather {
     background-color: rgba(255, 255, 255, 0.9);
     margin-top: 15px;
     padding: 10px;
@@ -282,6 +282,16 @@ button:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+#forecast-display p {
+    padding: 5px;
+    margin: 5px 0;
+    background: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+
 .forecast-item {
     background: rgba(255, 255, 255, 0.8);
     padding: 10px 20px;
@@ -291,6 +301,11 @@ button:hover {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.forecast-item:hover {
+    background-color: #efefef;
+    cursor: pointer;
 }
 
 .forecast-item img {
@@ -309,6 +324,15 @@ button:hover {
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
     overflow: hidden;
+}
+
+#aqi-display {
+    display: none;
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .chat-messages {
@@ -365,4 +389,55 @@ button:hover {
     font-size: 16.5px;
 }
 
+.aqi {
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
 
+.aqi-text {
+    font-weight: bold;
+}
+
+.aqi-1 {
+    color: #17a102; /* Good */
+}
+
+.aqi-2 {
+    color: #e1a637; /* Fair */
+}
+
+.aqi-3 {
+    color: #f57000; /* Moderate */
+}
+
+.aqi-4 {
+    color: #cc00c9; /* Poor */
+}
+
+.aqi-5 {
+    color: #ff0000; /* Very Poor */
+}
+
+.aqi-unknown {
+    color: #7e7e7e; /* Unknown */
+}
+
+#aqi-btn {
+    margin-top: 20px;
+    padding: 8px 15px;
+    background-color: #ffffff;
+    text-align: center;
+    color: #000000;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+#aqi-btn:hover {
+    background-color: #efefef;
+}
