@@ -208,12 +208,12 @@ button:hover {
 }
 
 #favorite-btn:hover::after {
-    content: "Add to favorites";
+    content: "Add to / Remove from favorites";
     position: absolute;
-    top: -50px;
+    top: -70px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: black;
+    background-color: #232323;
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
