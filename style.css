@@ -574,7 +574,7 @@ button:hover {
     font-size: 1em;
     z-index: 10;
     text-align: center;
-    padding-top: 6px;
+    padding-top: 12px;
 }
 
 .local-time-container:hover {
