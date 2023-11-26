@@ -605,3 +605,21 @@ button:hover {
 #enable-location-btn:hover {
     background: #0056b3;
 }
+
+#local-time-label,
+#local-time-container,
+#local-advice,
+#current-location-weather,
+#chatbot {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    #local-time-label,
+    #local-time-container,
+    #local-advice,
+    #current-location-weather,
+    #chatbot {
+        display: block;
+    }
+}
