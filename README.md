@@ -22,7 +22,9 @@ To get started with WeatherMate:
 
 1. **Clone the Repository**
    ```
-   git clone https://github.com/your-username/WeatherMate.git
+   git clone https://github.com/hoangsonww/WeatherMate-App.git
+   ```
+   ```
    cd WeatherMate
    ```
 
@@ -49,12 +51,27 @@ To get started with WeatherMate:
 - **View AQI**: Click the "View Air Quality Index" button to see the air quality data.
 - **View Humidity and Rain**: Click the "View Humidity & Chance of Rain" button to get detailed humidity stats and precipitation chances.
 - **Add to Favorites**: Click the heart icon next to the city name to add it to your favorites for quick access later.
+- **Remove from Favorites**: Click the heart icon next to the city name to remove it from your favorites.
+- **Switch Units**: Click the "Switch Units" button to toggle between Celsius and Fahrenheit.
+- **Refresh**: Click the "Refresh" button to refresh the weather data.
+- **Local Time**: The local time of the searched location is displayed at the top of the page.
+- **Dynamic Backgrounds**: The background image changes to reflect the current weather conditions.
+- **Local Advice**: The advice at the bottom of the page changes to reflect the current weather conditions.
+- **Local Weather**: The weather conditions at the top right of the page changes to reflect the current weather conditions.
 
 ## Technologies
 
 - **HTML/CSS**: For structure and styling.
 - **JavaScript**: For dynamic interactions and API integration.
 - **OpenWeatherMap API**: For fetching weather data.
+- **Unsplash API**: For fetching background images.
+- **Google Fonts**: For fonts.
+- **Font Awesome**: For icons.
+- **Moment.js**: For time display.
+- **jQuery**: For DOM manipulation.
+- **Bootstrap**: For styling and responsiveness.
+- **Git**: For version control.
+- **GitHub Pages**: For deployment.
 
 ## Contributing
 

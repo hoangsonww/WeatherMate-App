@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-image: url("https://cbsnews1.cbsistatic.com/hub/i/2015/01/08/2a7e43f9-7cce-44a4-b0fa-949612fd9ef1/461133262.jpg");
     font-family: "Poppins", sans-serif;
@@ -68,6 +72,19 @@ input:focus {
     border-radius: 8px;
 }
 
+#toggle-temp {
+    background-color: #ffffff;
+    text-align: center;
+    color: #000000;
+    border-radius: 8px;
+    margin-top: 12px;
+}
+
+#toggle-temp:hover {
+    background-color: #dcdcdc;
+    text-align: center;
+}
+
 #btn:hover {
     background-color: #dcdcdc;
     text-align: center;
@@ -79,6 +96,19 @@ input:focus {
     color: #000000;
     border-radius: 8px;
     padding: 8px;
+}
+
+#btn2 {
+    background-color: #ffffff;
+    text-align: center;
+    color: #000000;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+#btn2:hover {
+    background-color: #dcdcdc;
+    text-align: center;
 }
 
 #btn1:hover {
@@ -476,4 +506,102 @@ button:hover {
     padding: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     color: black;
+}
+
+#refresh-weather {
+    margin-top: 20px;
+    padding: 8px 15px;
+    background-color: #ffffff;
+    text-align: center;
+    color: #000000;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+#refresh-weather:hover {
+    background-color: #efefef;
+}
+
+.local-advice {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    color: black;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 1em;
+    z-index: 10;
+}
+
+.local-advice:hover {
+    background-color: #dcdcdc;
+}
+
+.current-location-weather {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #f5f5f5;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    font-size: 0.9em; /* Adjust the size as needed */
+    max-width: 10vw; /* Ensure it doesn't get too large */
+    max-height: 55vh; /* Ensure it doesn't get too large */
+}
+
+.local-time-container {
+    position: fixed;
+    top: 30px;
+    right: 0;
+    background: rgba(255, 255, 255, 0.8);
+    line-height: 20px;
+    margin: 20px;
+    border-radius: 50%; /* Circle shape */
+    width: 60px; /* Fixed size */
+    height: 60px; /* Fixed size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 1em;
+    z-index: 10;
+    text-align: center;
+    padding-top: 6px;
+}
+
+.local-time-container:hover {
+    background-color: #dcdcdc;
+}
+
+#local-time-label {
+    position: fixed;
+    top: 0;
+    right: 10px;
+}
+
+#enable-location-btn {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+    margin: 20px;
+    border-radius: 5px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    display: block;
+}
+
+#enable-location-btn:hover {
+    background: #0056b3;
 }
