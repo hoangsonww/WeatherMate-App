@@ -1,5 +1,3 @@
-const apikey = "593309284d3eb093ee96647eb294905b";
-
 const main = document.getElementById("main");
 const form = document.getElementById("form");
 const search = document.getElementById("search");
@@ -123,7 +121,8 @@ function setBackground(condition, data) {
 }
 
 function displayCityNotFound(city) {
-    main.innerHTML = `<h2>NO WEATHER DATA FOR THE REGION OR CITY WITH THE NAME ${city.toUpperCase()} FOUND!</h2>`;
+    main.innerHTML = `<h2>NO WEATHER DATA FOR THE REGION OR CITY WITH THE NAME ${city.toUpperCase()} FOUND!</h2>
+                      <h3>PLEASE CHECK THE SPELLING AND TRY AGAIN!</h3>`;
 }
 
 function addWeatherToPage(data) {
@@ -723,6 +722,7 @@ chatHeaderElem.appendChild(toggleButton);
 
 // Initially showing only header
 const chatMessagesElem = document.querySelector(".chat-messages");
+const apikey = "593309284d3eb093ee96647eb294905b";
 const chatInputElem = document.querySelector(".chat-input");
 chatMessagesElem.style.display = "none";
 chatInputElem.style.display = "none";
