@@ -289,7 +289,6 @@ function addForecastToPage(respData) {
     });
 }
 
-// Modify your existing KtoC function to also handle Fahrenheit conversion
 function KtoUnit(K) {
     // Check local storage for the user's preference
     const userPrefersCelsius = localStorage.getItem("isCelsius") === "true";
@@ -823,14 +822,25 @@ function addWeatherToPageByCoords(data) {
 function updateLocalTime() {
     const timeContainer = document.getElementById("local-time-container");
     const now = new Date();
-    const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    timeContainer.textContent = timeString;
+    const timeParts = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).split(' ');
+
+    // Clear previous content
+    timeContainer.innerHTML = '';
+
+    // Create and append time part
+    const timeDiv = document.createElement('div');
+    timeDiv.textContent = timeParts[0];
+    timeContainer.appendChild(timeDiv);
+
+    // Create and append AM/PM part
+    const amPmDiv = document.createElement('div');
+    amPmDiv.textContent = timeParts[1];
+    timeContainer.appendChild(amPmDiv);
+
     timeContainer.style.color = 'black';
-    // Call this function every minute to update the time
     setTimeout(updateLocalTime, 60000);
 }
 
-// Call once on load
 updateLocalTime();
 
 // const heading = document.getElementById('my-heading');
