@@ -111,9 +111,9 @@ function setBackground(condition, data) {
         }
     }
     document.body.style.backgroundImage = backgroundImage;
-    document.body.style.backgroundSize = "cover"; // This will make sure the image covers the entire viewport
-    document.body.style.backgroundPosition = "center"; // This will center the image
-    document.body.style.backgroundRepeat = "no-repeat"; // This will prevent the image from repeating
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+    document.body.style.backgroundRepeat = "no-repeat";
     document.body.style.color = textColor;
     title.style.color = textColor;
     favorite.style.color = favoriteColor;
@@ -761,7 +761,8 @@ function showRefreshButton(city) {
         refreshButton.onclick = function() {
             getWeatherByLocation(city); // Fetch latest weather data for the selected city
         };
-    } else {
+    }
+    else {
         refreshButton.style.display = 'none'; // Hide button when no city is selected
     }
 }

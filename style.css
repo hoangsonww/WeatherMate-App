@@ -38,16 +38,16 @@ input:focus {
     font-size: 2rem;
     text-align: center;
     display: flex;
-    flex-direction: column; /* Stack children vertically */
-    align-items: center;    /* Center children horizontally */
+    flex-direction: column;
+    align-items: center;
 }
 
 .weather h2 {
-    width: 100%;            /* Full width to allow centering */
+    width: 100%;
     display: flex;
-    justify-content: center; /* Center content */
-    align-items: center;    /* Center in case of multiple lines, e.g., long city names */
-    flex-wrap: wrap;        /* Allow wrapping for long names */
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     margin-bottom: 0;
 }
 
@@ -547,15 +547,15 @@ button:hover {
     position: fixed;
     top: 0;
     left: 0;
-    background: #f5f5f5;
+    background: #ffffff;
     margin: 20px;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     z-index: 10;
-    font-size: 0.9em; /* Adjust the size as needed */
-    max-width: 10vw; /* Ensure it doesn't get too large */
-    max-height: 55vh; /* Ensure it doesn't get too large */
+    font-size: 0.9em;
+    max-width: 10vw;
+    max-height: 55vh;
 }
 
 .local-time-container {
