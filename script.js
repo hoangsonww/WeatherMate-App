@@ -122,8 +122,16 @@ function setBackground(condition, data) {
 
 function displayCityNotFound(city) {
     main.innerHTML = `<h2>NO WEATHER DATA FOR THE REGION OR CITY WITH THE NAME ${city.toUpperCase()} FOUND!</h2>
-                      <h3>PLEASE CHECK THE SPELLING AND TRY AGAIN!</h3>`;
+                      <h3 style="align-self: center; text-align: center">PLEASE CHECK THE SPELLING AND TRY AGAIN!</h3>`;
 }
+
+document.getElementById("search").addEventListener("click", function() {
+    main.innerHTML = "";
+});
+
+document.getElementById("search").addEventListener("keydown", function() {
+    main.innerHTML = "";
+});
 
 function addWeatherToPage(data) {
     const temp = KtoUnit(data.main.temp);
@@ -567,7 +575,7 @@ function getBotResponse(message) {
 
     // Bot's identity with a fun weather twist
     if (["who are you", "your name"].some(v => message.includes(v))) {
-        return "I'm Cumulus, your virtual meteorologist. I can forecast weather, offer climate trivia, and suggest the best times to enjoy the outdoors!";
+        return "I'm WeatherMate, your virtual meteorologist. I can forecast weather, offer climate trivia, and suggest the best times to enjoy the outdoors!";
     }
 
     // Detailed real-time weather responses
@@ -729,13 +737,13 @@ chatInputElem.style.display = "none";
 function fetchWeatherForCurrentLocation() {
     const locationWeatherUI = document.getElementById("current-location-weather");
 
-    locationWeatherUI.textContent = "Loading Weather..."; // Set the loading message
+    locationWeatherUI.textContent = "Loading Weather...";
     locationWeatherUI.style.color = 'black';
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPositionWeather, handleLocationError);
-    } else {
-        // Geolocation is not supported by this browser, show an error or alternative content.
+    }
+    else {
         updateLocationWeatherUI("Geolocation is not supported by your browser.");
     }
 }
@@ -805,12 +813,14 @@ function addWeatherToPageByCoords(data) {
     const temp = Math.floor(data.main.temp);
     const weatherDescription = data.weather[0].description;
     const weatherIcon = data.weather[0].icon;
+    const locationName = data.name;
 
     // Build the display element with the fetched data
     const weatherElement = document.createElement('div');
     weatherElement.classList.add('weather');
     weatherElement.innerHTML = `
-        <h5>Weather in Your Location</h5>
+        <h5 style="margin-bottom: -10px">Weather in Your Location</h5>
+        <h5 style="margin-bottom: -10px">${locationName}</h5>
         <h6>${temp}°C, ${weatherDescription}</h6>
         <img src="https://openweathermap.org/img/wn/${weatherIcon}@2x.png" alt="${weatherDescription}" />
     `;

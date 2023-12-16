@@ -119,6 +119,7 @@ input:focus {
 #my-heading {
     text-align: center;
     color: #000000;
+    margin-bottom: 10px;
 }
 
 #subhead {
