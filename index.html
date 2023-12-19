@@ -7,6 +7,7 @@
     <title>The WeatherMate App</title>
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 
@@ -53,8 +54,6 @@
 
     <button id="refresh-weather" style="display: none;" title="Outdated weather? Refresh to get the latest weather at this location!">Refresh Weather</button>
 
-    <button onclick="window.location.reload()" type="button" id="btn2" style="margin-top: 30px" title="Get back to the initial home page">Clear Weather Data</button>
-
     <button onclick="window.location.href='about.html'" type="button" id="btn1" style="margin-top: 15px" title="See this app's and its creator's overview information">About Us</button>
 
     <div id="local-advice" class="local-advice" title="Choose a City or Region to Get Weather Advice">
@@ -75,6 +74,16 @@
     <div id="local-time-container" class="local-time-container" title="Your Local Time">
         <!-- Local time will be populated by JavaScript -->
     </div>
+
+    <div id="weather-alert-sidebar" class="weather-alert-sidebar">
+        <!-- Alerts will be populated here -->
+    </div>
+
+    <!-- New Home Button and Label -->
+    <h6 id="home-label"><strong>Back to Home</strong></h6>
+    <button onclick="window.location.reload()" type="button" id="home-btn" title="Get back to the initial home page">
+        <i class="fas fa-home"></i>
+    </button>
 
     <div class="chatbot" style="color: black !important">
         <div class="chat-messages"></div>

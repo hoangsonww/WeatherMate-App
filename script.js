@@ -12,6 +12,12 @@ const url = (city) =>
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`;
 
 async function getWeatherByLocation(city) {
+    const humidityRainBtn = document.getElementById("humidity-rain-btn");
+    const humidityRainDisplay = document.getElementById("humidity-rain-display");
+    if (humidityRainDisplay.style.display !== 'none') {
+        humidityRainDisplay.style.display = 'none';
+        humidityRainBtn.textContent = `View Humidity & Chance of Rain For ${city}`;
+    }
     lastCity = city; // Store the last searched city
     // Hide forecast before fetching new city data
     document.getElementById("forecast-display").style.display = 'none';
@@ -29,6 +35,11 @@ async function getWeatherByLocation(city) {
     console.log(respData);
     addWeatherToPage(respData);
     showRefreshButton(city);
+
+    const lat = respData.coord.lat;
+    const lon = respData.coord.lon;
+
+    fetchWeatherAlerts(lat, lon);
 }
 
 // Function to fetch and display AQI data
@@ -97,10 +108,15 @@ function setBackground(condition, data) {
                 backgroundImage = 'url(https://clarksvillenow.sagacom.com/files/2020/10/shutterstock_206307496-1200x768.jpg)';
                 break;
             case 'Rain':
-                backgroundImage = 'url(https://massago.ca/wp-content/uploads/2018/06/blog-post_rain.jpg)';
+                backgroundImage = 'url(https://cdn.zeebiz.com/sites/default/files/2023/09/21/261707-weather-effects-composition-1.jpg)';
+                document.getElementById("local-time-label").style.color = 'white';
+                document.getElementById("home-label").style.color = 'white';
                 break;
             case 'Snow':
-                backgroundImage = 'url(https://wjla.com/resources/media2/16x9/full/1015/center/80/be94f27f-c70a-4e6c-b3cc-9a448da929b8-large16x9_SnowfallsinEllicottCityVeronicaJohnson.JPG)';
+                backgroundImage = 'url(https://d.newsweek.com/en/full/1956691/winter-forest-landscape-snow-covered-trees.jpg)';
+                textColor = 'white';
+                favoriteColor = 'black';
+                document.getElementById("main").style.color = 'white';
                 break;
             case 'Thunderstorm':
                 backgroundImage = 'url(https://s.w-x.co/thunderstormasthma.jpg)';
@@ -145,7 +161,7 @@ function addWeatherToPage(data) {
 
     weather.innerHTML = `
         <h2 style="margin-left: 40px">${data.name} 
-            <button style="margin-left: 10px" id="favorite-btn">❤️</button>
+            <button style="margin-left: 10px" id="favorite-btn">❤️ </button>
         </h2>
         <h2><img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" /> ${temp}${unit} <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" /></h2>
         <small>${data.weather[0].main}</small>
@@ -157,7 +173,6 @@ function addWeatherToPage(data) {
     main.innerHTML = "";
     main.appendChild(weather);
 
-    // Add event listener to the favorite button
     document.getElementById("favorite-btn").addEventListener("click", function() {
         toggleFavoriteCity(data.name);
     });
@@ -746,7 +761,26 @@ function fetchWeatherForCurrentLocation() {
     else {
         updateLocationWeatherUI("Geolocation is not supported by your browser.");
     }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            position => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                fetchWeatherAlerts(lat, lon);
+            },
+            () => {
+                // If location access is denied, hide the alert sidebar
+                const sidebar = document.getElementById('weather-alert-sidebar');
+                sidebar.classList.remove('active');
+            }
+        );
+    }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchWeatherForCurrentLocation();
+});
 
 function showPositionWeather(position) {
     const lat = position.coords.latitude;
@@ -853,6 +887,51 @@ function updateLocalTime() {
 }
 
 updateLocalTime();
+
+async function fetchWeatherAlerts(lat, lon) {
+    const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily&appid=YOUR_API_KEY`;
+
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        if (data.alerts) {
+            updateAlertSidebar(data.alerts);
+        }
+        else {
+            // Handle no alerts
+            updateAlertSidebar([]);
+        }
+    }
+    catch (error) {
+        console.error('Error fetching weather alerts:', error);
+    }
+}
+
+function updateAlertSidebar(alerts) {
+    const sidebar = document.getElementById('weather-alert-sidebar');
+    sidebar.innerHTML = ''; // Clear previous alerts
+
+    if (alerts.length === 0) {
+        sidebar.innerHTML = '<p style="color: black; text-align: center">No current weather alerts.</p>';
+    }
+    else {
+        alerts.forEach(alert => {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert';
+            alertDiv.innerHTML = `<h4>${alert.event}</h4><p>${alert.description}</p>`;
+            sidebar.appendChild(alertDiv);
+        });
+    }
+
+    sidebar.classList.add('active'); // Show the sidebar
+}
+
+// Optional: Function to toggle the sidebar visibility
+function toggleAlertSidebar() {
+    const sidebar = document.getElementById('weather-alert-sidebar');
+    sidebar.classList.toggle('active');
+}
+
 
 // const heading = document.getElementById('my-heading');
 // const subhead = document.getElementById('subhead');
