@@ -9,7 +9,7 @@ const forecast = document.getElementById("forecast-display");
 let isCelsius = localStorage.getItem("isCelsius") === "true";
 
 const url = (city) =>
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`;
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherpath}`;
 
 async function getWeatherByLocation(city) {
     const humidityRainBtn = document.getElementById("humidity-rain-btn");
@@ -44,7 +44,7 @@ async function getWeatherByLocation(city) {
 
 // Function to fetch and display AQI data
 async function displayAirQuality(lat, lon) {
-    const aqiUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apikey}`;
+    const aqiUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${weatherpath}`;
     const response = await fetch(aqiUrl, { origin: "cors" });
     const aqiData = await response.json();
 
@@ -237,13 +237,13 @@ function toggleHumidityRain() {
 
 async function displayHumidityRain(lat, lon, displayElement) {
     // Fetch current weather for humidity
-    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apikey}`;
+    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherpath}`;
     const weatherResp = await fetch(weatherUrl);
     const weatherData = await weatherResp.json();
     const humidity = weatherData.main.humidity;
 
     // Fetch forecast for chance of rain
-    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apikey}`;
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherpath}`;
     const forecastResp = await fetch(forecastUrl);
     const forecastData = await forecastResp.json();
     const chanceOfRain = forecastData.list[0].pop; // Probability of Precipitation
@@ -275,7 +275,7 @@ function displayLocalTime(timezoneOffset) {
 }
 
 async function getForecastByLocation(lat, lon) {
-    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apikey}`;
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherpath}`;
 
     const resp = await fetch(forecastUrl, { origin: "cors" });
     const respData = await resp.json();
@@ -425,7 +425,7 @@ function toggleAQI() {
 }
 
 function displaySunriseSunset(lat, lon) {
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apikey}`;
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherpath}`;
 
     fetch(apiUrl)
         .then(response => response.json())
@@ -744,7 +744,7 @@ chatHeaderElem.appendChild(toggleButton);
 
 // Initially showing only header
 const chatMessagesElem = document.querySelector(".chat-messages");
-const apikey = "593309284d3eb093ee96647eb294905b";
+const weatherpath = "593309284d3eb093ee96647eb294905b";
 const chatInputElem = document.querySelector(".chat-input");
 chatMessagesElem.style.display = "none";
 chatInputElem.style.display = "none";
@@ -822,7 +822,7 @@ function updateLocationWeatherUI(message) {
 fetchWeatherForCurrentLocation();
 
 async function getWeatherByLocationCoords(lat, lon) {
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apikey}&units=metric`;
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherpath}&units=metric`;
 
     try {
         const response = await fetch(apiUrl);
