@@ -430,37 +430,37 @@ function displaySunriseSunset(lat, lon) {
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            const sunriseTime = new Date(data.sys.sunrise * 1000).toLocaleTimeString();
-            const sunsetTime = new Date(data.sys.sunset * 1000).toLocaleTimeString();
+                const sunriseTime = new Date(data.sys.sunrise * 1000).toLocaleTimeString();
+                const sunsetTime = new Date(data.sys.sunset * 1000).toLocaleTimeString();
 
-            const sunriseElement = document.createElement("p");
-            const sunsetElement = document.createElement("p");
+                const sunriseElement = document.createElement("p");
+                const sunsetElement = document.createElement("p");
 
-            sunriseElement.textContent = `Sunrise: ${sunriseTime}`;
-            sunsetElement.textContent = `Sunset: ${sunsetTime}`;
+                sunriseElement.textContent = `Sunrise: ${sunriseTime}`;
+                sunsetElement.textContent = `Sunset: ${sunsetTime}`;
 
-            sunsetElement.style.cursor = "pointer";
-            sunriseElement.style.cursor = "pointer";
+                sunsetElement.style.cursor = "pointer";
+                sunriseElement.style.cursor = "pointer";
 
-            sunsetElement.addEventListener("mouseenter", () => {
-                sunsetElement.style.backgroundColor = "#dcdcdc";
-            });
-            sunsetElement.addEventListener("mouseleave", () => {
-                sunsetElement.style.backgroundColor = "white";
-            });
+                sunsetElement.addEventListener("mouseenter", () => {
+                    sunsetElement.style.backgroundColor = "#dcdcdc";
+                });
+                sunsetElement.addEventListener("mouseleave", () => {
+                    sunsetElement.style.backgroundColor = "white";
+                });
 
-            sunriseElement.addEventListener("mouseenter", () => {
-                sunriseElement.style.backgroundColor = "#dcdcdc";
-            });
-            sunriseElement.addEventListener("mouseleave", () => {
-                sunriseElement.style.backgroundColor = "white";
-            });
+                sunriseElement.addEventListener("mouseenter", () => {
+                    sunriseElement.style.backgroundColor = "#dcdcdc";
+                });
+                sunriseElement.addEventListener("mouseleave", () => {
+                    sunriseElement.style.backgroundColor = "white";
+                });
 
-            const forecastDisplay = document.getElementById("forecast-display");
-            forecastDisplay.appendChild(sunriseElement);
-            forecastDisplay.appendChild(sunsetElement);
-        }
-    );
+                const forecastDisplay = document.getElementById("forecast-display");
+                forecastDisplay.appendChild(sunriseElement);
+                forecastDisplay.appendChild(sunsetElement);
+            }
+        );
 }
 
 const forecastBtn = document.getElementById("forecast-btn");
@@ -971,3 +971,4 @@ function toggleAlertSidebar() {
 // subhead.addEventListener('mouseout', resetColor);
 // main.addEventListener('mouseover', changeColor);
 // main.addEventListener('mouseout', resetColor);
+// forecastBtn.addEventListener('mouseover', changeBackgroundColor);
