@@ -18,11 +18,16 @@ async function getWeatherByLocation(city) {
         humidityRainDisplay.style.display = 'none';
         humidityRainBtn.textContent = `View Humidity & Chance of Rain For ${city}`;
     }
-    lastCity = city; // Store the last searched city
-    // Hide forecast before fetching new city data
+    lastCity = city;
     document.getElementById("forecast-display").style.display = 'none';
     document.getElementById("forecast-btn").textContent = `View Forecast For ${city}`;
     document.getElementById("aqi-btn").textContent = `View Air Quality Index For ${city}`;
+    const windInfoBtn = document.getElementById("wind-info-btn");
+    windInfoBtn.textContent = `View Wind Info for ${city}`;
+    windInfoBtn.style.display = "block";
+    const feelsLikeBtn = document.getElementById("feels-like-btn");
+    feelsLikeBtn.textContent = `View Feels Like Info for ${city}`;
+    feelsLikeBtn.style.display = "block";
 
     const resp = await fetch(url(city), { origin: "cors" });
     const respData = await resp.json();
@@ -32,17 +37,12 @@ async function getWeatherByLocation(city) {
         return;
     }
 
-    console.log(respData);
     addWeatherToPage(respData);
     showRefreshButton(city);
-
-    const lat = respData.coord.lat;
-    const lon = respData.coord.lon;
-
-    fetchWeatherAlerts(lat, lon);
+    addWindInfoToPage(respData);
+    addFeelsLikeToPage(respData);
 }
 
-// Function to fetch and display AQI data
 async function displayAirQuality(lat, lon) {
     const aqiUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${weatherpath}`;
     const response = await fetch(aqiUrl, { origin: "cors" });
@@ -61,24 +61,28 @@ async function displayAirQuality(lat, lon) {
 function createAQIDisplayElement() {
     const aqiElement = document.createElement("div");
     aqiElement.id = "aqi-display";
-    aqiElement.style.display = 'none'; // Start with the display set to none
+    aqiElement.style.display = 'none';
     document.body.appendChild(aqiElement);
     return aqiElement;
 }
 
-// Function to convert AQI value to qualitative description
 function convertAQIToQuality(aqi) {
     if (aqi === 1) {
         return "Good";
-    } else if (aqi === 2) {
+    }
+    else if (aqi === 2) {
         return "Fair";
-    } else if (aqi === 3) {
+    }
+    else if (aqi === 3) {
         return "Moderate";
-    } else if (aqi === 4) {
+    }
+    else if (aqi === 4) {
         return "Poor";
-    } else if (aqi === 5) {
+    }
+    else if (aqi === 5) {
         return "Very Poor";
-    } else {
+    }
+    else {
         return "Unknown";
     }
 }
@@ -137,7 +141,7 @@ function setBackground(condition, data) {
 }
 
 function displayCityNotFound(city) {
-    main.innerHTML = `<h2>NO WEATHER DATA FOR THE REGION OR CITY WITH THE NAME ${city.toUpperCase()} FOUND!</h2>
+    main.innerHTML = `<h2 style="text-align: center; align-self: center">NO WEATHER DATA FOR THE REGION OR CITY WITH THE NAME ${city.toUpperCase()} FOUND!</h2>
                       <h3 style="align-self: center; text-align: center">PLEASE CHECK THE SPELLING AND TRY AGAIN!</h3>`;
 }
 
@@ -155,7 +159,6 @@ function addWeatherToPage(data) {
     const lat = data.coord.lat;
     const lon = data.coord.lon;
 
-    // Update the weather HTML with the temperature and the correct unit
     const weather = document.createElement("div");
     weather.classList.add("weather");
 
@@ -194,13 +197,11 @@ function addWeatherToPage(data) {
     aqiBtn.textContent = `View Air Quality Index For ${data.name}`; // Set the button's initial text
     aqiBtn.style.display = "block"; // Show the button
 
-    // Add the click event listener if it has not already been set
     if (!aqiBtn.getAttribute('listener')) {
         aqiBtn.addEventListener("click", toggleAQI);
         aqiBtn.setAttribute('listener', 'true');
     }
 
-    // Ensure AQI is not displayed immediately
     const aqiDisplay = document.getElementById("aqi-display") || createAQIDisplayElement();
     aqiDisplay.innerHTML = ''; // Clear previous AQI data
     aqiDisplay.style.display = 'none'; // Hide the AQI display initially
@@ -212,11 +213,21 @@ function addWeatherToPage(data) {
     humidityRainBtn.textContent = `View Humidity & Chance of Rain For ${data.name}`;
     humidityRainBtn.style.display = "block"; // Show the button
 
-    // Add the click event listener if it has not already been set
     if (!humidityRainBtn.getAttribute('listener')) {
         humidityRainBtn.addEventListener("click", toggleHumidityRain);
         humidityRainBtn.setAttribute('listener', 'true');
     }
+
+    const windInfoBtn = document.getElementById("wind-info-btn");
+    windInfoBtn.textContent = `View Wind Info for ${data.name}`;
+    windInfoBtn.style.display = 'block';
+
+    const feelsLikeBtn = document.getElementById("feels-like-btn");
+    feelsLikeBtn.textContent = `View Feels Like Info for ${data.name}`;
+    feelsLikeBtn.style.display = 'block';
+
+    addWindInfoToPage(data);
+    addFeelsLikeToPage(data);
 }
 
 function toggleHumidityRain() {
@@ -236,33 +247,27 @@ function toggleHumidityRain() {
 }
 
 async function displayHumidityRain(lat, lon, displayElement) {
-    // Fetch current weather for humidity
     const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherpath}`;
     const weatherResp = await fetch(weatherUrl);
     const weatherData = await weatherResp.json();
     const humidity = weatherData.main.humidity;
 
-    // Fetch forecast for chance of rain
     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherpath}`;
     const forecastResp = await fetch(forecastUrl);
     const forecastData = await forecastResp.json();
     const chanceOfRain = forecastData.list[0].pop; // Probability of Precipitation
 
-    // Display the information
     displayElement.innerHTML = `<h3>Humidity: ${humidity}%</h3><h3>Chance of Rain: ${(chanceOfRain * 100).toFixed(0)}%</h3>`;
     displayElement.style.display = 'block';
 }
 
 function displayLocalTime(timezoneOffset) {
-    // Get the current UTC time, add the timezone offset, and convert to milliseconds
     const utcDate = new Date();
     const utcTime = utcDate.getTime() + utcDate.getTimezoneOffset() * 60000;
     const localTime = new Date(utcTime + timezoneOffset * 1000);
 
-    // Format the time
     const formattedTime = localTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    // Update or create the local time display element
     let timeElement = document.getElementById("local-time");
     if (!timeElement) {
         timeElement = document.createElement("div");
@@ -280,8 +285,6 @@ async function getForecastByLocation(lat, lon) {
     const resp = await fetch(forecastUrl, { origin: "cors" });
     const respData = await resp.json();
 
-    console.log("Forecast Data:", respData);  // log the response
-
     addForecastToPage(respData);
 }
 
@@ -289,10 +292,8 @@ function addForecastToPage(respData) {
     const forecastDisplay = document.getElementById("forecast-display");
     const unit = isCelsius ? "°C" : "°F";
 
-    // Set the display property to grid when adding forecast data
     forecastDisplay.style.display = 'grid';
 
-    // Clear previous data
     forecastDisplay.innerHTML = "";
 
     const forecastList = respData.list.slice(0, 5);  // Get the next five 3-hourly predictions
@@ -313,18 +314,16 @@ function addForecastToPage(respData) {
 }
 
 function KtoUnit(K) {
-    // Check local storage for the user's preference
     const userPrefersCelsius = localStorage.getItem("isCelsius") === "true";
     return userPrefersCelsius ? Math.floor(K - 273.15) : Math.floor((K - 273.15) * 9/5 + 32);
 }
 
-// Add a function to toggle the temperature unit between C and F
 function toggleTemperatureUnit() {
-    isCelsius = !isCelsius; // Toggle the boolean value
-    localStorage.setItem("isCelsius", isCelsius); // Store the preference
+    isCelsius = !isCelsius;
+    localStorage.setItem("isCelsius", isCelsius);
     const button = document.getElementById("toggle-temp");
-    button.textContent = isCelsius ? "Displaying in °C" : "Displaying in °F"; // Update button text
-    updateTemperatures(); // Call a new function to update temperatures
+    button.textContent = isCelsius ? "Displaying in °C" : "Displaying in °F";
+    updateTemperatures();
 }
 
 function updateTemperatures() {
@@ -391,13 +390,13 @@ function toggleForecast() {
     if (forecastBtn.textContent.includes("Close Forecast")) {
         forecastDisplay.style.display = 'none';
         forecastBtn.textContent = `View Forecast For ${forecastBtn.getAttribute("data-city")}`;
-    } else {
+    }
+    else {
         const lat = forecastBtn.getAttribute("data-lat");
         const lon = forecastBtn.getAttribute("data-lon");
         getForecastByLocation(lat, lon).then(() => {
             forecastDisplay.style.display = 'grid';
             forecastBtn.textContent = `Close Forecast For ${forecastBtn.getAttribute("data-city")}`;
-            // Add sunrise and sunset times
             displaySunriseSunset(lat, lon);
         });
     }
@@ -413,11 +412,12 @@ function toggleAQI() {
     if (aqiBtn.textContent.includes("Close Air Quality Index")) {
         aqiDisplay.style.display = 'none';
         aqiBtn.textContent = `View Air Quality Index For ${city}`;
-    } else {
-        // Check if AQI data is already fetched
+    }
+    else {
         if (!aqiDisplay.innerHTML.trim()) {
             displayAirQuality(lat, lon);
-        } else {
+        }
+        else {
             aqiDisplay.style.display = 'block';
         }
         aqiBtn.textContent = `Close Air Quality Index For ${city}`;
@@ -466,32 +466,26 @@ function displaySunriseSunset(lat, lon) {
 const forecastBtn = document.getElementById("forecast-btn");
 forecastBtn.addEventListener("click", toggleForecast); // Adjusted to use addEventListener
 
-// Function to add or remove city from favorites
 function toggleFavoriteCity(city) {
-    console.log("Toggling favorite for city:", city);  // Added log
-
     let favorites = getFavorites();
-    console.log("Current favorites before toggle:", favorites);  // Added log
 
-    // If the city is already a favorite, remove it, otherwise add it
     if (favorites.includes(city)) {
         favorites = favorites.filter(favCity => favCity !== city);
-    } else {
+    }
+    else {
         favorites.push(city);
     }
 
     localStorage.setItem("favoriteCities", JSON.stringify(favorites));
     updateFavoriteButton(city);
-    displayFavorites();  // Refresh the favorites list
+    displayFavorites();
 }
 
-// Get list of favorite cities from local storage
-function getFavorites() {
+function getFavorites(){
     const favorites = localStorage.getItem("favoriteCities");
     return favorites ? JSON.parse(favorites) : [];
 }
 
-// Update the state of the favorite button based on if city is a favorite or not
 function updateFavoriteButton(city) {
     const favoriteBtn = document.getElementById("favorite-btn");
     if (getFavorites().includes(city)) {
@@ -501,13 +495,11 @@ function updateFavoriteButton(city) {
     }
 }
 
-// Display list of favorite cities for quick access and deletion
 function displayFavorites() {
     const favoritesSection = document.getElementById("favorites-section");
     const favoritesList = document.createElement("div");
     const favorites = getFavorites();
 
-    // Clear existing favorites if any
     favoritesSection.innerHTML = "";
 
     if (favorites.length === 0) {
@@ -520,7 +512,6 @@ function displayFavorites() {
     favorites.forEach(city => {
         const cityElem = document.createElement("div");
 
-        // Making the city name clickable
         const cityLink = document.createElement("span");
         cityLink.innerText = city;
         cityLink.style.cursor = "pointer";
@@ -550,74 +541,54 @@ function removeFavorite(city) {
 }
 
 function getBotResponse(message) {
+
     const weatherInCityRegex = /weather in (.*?)(?=\n|$)/;
 
-    // Check if the message matches the 'weather in [city]' pattern
     const weatherInCityMatch = message.match(weatherInCityRegex);
 
     if (weatherInCityMatch && weatherInCityMatch[1]) {
-        const city = weatherInCityMatch[1].trim(); // Trim the city name to remove any extra whitespace
-        getWeatherByLocation(city); // Call the function to get weather by location
-        return `Fetching weather for ${city}...`; // Respond to the user
+        const city = weatherInCityMatch[1].trim();
+        getWeatherByLocation(city);
+        return `Fetching weather for ${city}...`;
     }
 
-    // Greetings with dynamic weather comment
     if (message.toLowerCase().includes("hello") || message.toLowerCase().includes("hi") || message.toLowerCase().includes("hey")) {
-        // Ideally, integrate with a function that detects the user's current weather
         return "How can I assist with your weather queries today? I can also display weather for you! To make me do so, simply type 'weather in [a city's name]'";
     }
 
-    // Farewells with a next-day weather teaser
     if (message.toLowerCase().includes("bye") || message.toLowerCase().includes("goodbye")) {
-        // Potentially integrate with a function that provides a brief forecast for the next day
-        return "Goodbye! By the way, tomorrow looks [summary of tomorrow's weather]. Check back for updates!";
+        return "Goodbye! Check back for updates!";
     }
 
-    // Bot's status with a weather update
     if (message.toLowerCase().includes("how are you") || message.toLowerCase().includes("how's it going") || message.toLowerCase().includes("how are you doing")) {
-        // Include a fun weather-related status
         return "I'm as operational as a weather satellite! Currently tracking some interesting weather patterns. Need an update?";
     }
 
-    // Enhanced capabilities including alerts and trends
     if (message.toLowerCase().includes("what can you do") || message.toLowerCase().includes("what can you do for me") || message.toLowerCase().includes("what can you do for us")) {
         return "I'm equipped to provide real-time weather updates, forecasts, alerts, and even educational tidbits about meteorology. Would you like a weather fact or a forecast?";
     }
 
-    // Bot's identity with a fun weather twist
     if (message.toLowerCase().includes("who are you") || message.toLowerCase().includes("what are you")) {
         return "I'm WeatherMate, your virtual meteorologist. I can forecast weather, offer climate trivia, and suggest the best times to enjoy the outdoors!";
     }
 
-    // Detailed real-time weather responses
-    if (message.toLowerCase().includes("what's the weather") || message.toLowerCase().includes("what is the weather") || message.toLowerCase().includes("what's the weather like") || message.toLowerCase().includes("what is the weather like")) {
-        // Code here should query the weather API and give a detailed response
-        return "One moment, I’m scanning the skies for you... [Insert detailed weather information]";
-    }
-
-    // Offering a weather lesson when the user expresses confusion
     if (message.toLowerCase().includes("what do you do") && message.toLowerCase().includes("what you do") && message.toLowerCase().includes("what can you do")) {
         return "Let's clear the air! I can provide weather forecasts, climate facts, or explain meteorological terms. What weather topic can I illuminate for you?";
     }
 
-    // Apologetic response with a proactive offer
     if (message.toLowerCase().includes("sorry") || message.toLowerCase().includes("my bad")) {
         return "I'm here to improve your day like a break in the clouds. Tell me what weather info you're after, and I'll do my best!";
     }
 
-    // Weather compliments with gratitude and offers of more service
     if (message.toLowerCase().includes("thank you") || message.toLowerCase().includes("thanks")) {
         return "Thank you for the warm front of kindness! How can I further brighten your day with weather updates?";
     }
 
-    // Weather jokes for a lighthearted moment
     if (message.toLowerCase().includes("tell me a joke") || message.toLowerCase().includes("tell me a weather joke") || message.toLowerCase().includes("tell me a weather-related joke")) {
         return "Why don't meteorologists like to go to the beach? They can't enjoy the sun with all that cloud judgment! Any other weather fun facts or forecasts I can provide?";
     }
 
-    // Weather tips for various scenarios
     if (message.toLowerCase().includes("what should i wear") || message.toLowerCase().includes("what should i wear today") || message.toLowerCase().includes("what should i wear tomorrow")) {
-        // Include practical advice based on the current weather
         return "Dressing in layers is key for cold weather. For heat, light-colored and loose-fitting clothing is best. Can I suggest something based on today’s weather?";
     }
 
@@ -636,11 +607,9 @@ function getBotResponse(message) {
     return "I seem to be out of my element. I'm best with cloud coverage than clouded questions. For weather forecasts, trivia, or wardrobe advice, I'm your bot. How may I assist?";
 }
 
-// Chat interaction with delay
 const chatInput = document.querySelector(".chat-input");
 const chatMessages = document.querySelector(".chat-messages");
 
-// Create the chatbot title
 const chatTitleElem = document.createElement("div");
 chatTitleElem.className = "chat-header chat-title";
 chatTitleElem.innerText = "Chat With Your WeatherMate!";
@@ -665,7 +634,6 @@ chatInput.addEventListener("keydown", (e) => {
     }
 });
 
-// Creating the chatbot's maximize/minimize button
 const toggleButton = document.createElement("button");
 toggleButton.innerText = "-";
 toggleButton.className = "toggle-chat";
@@ -738,7 +706,6 @@ function generateLocalAdvice(weatherData) {
 const chatHeaderElem = document.querySelector(".chat-header");
 chatHeaderElem.appendChild(toggleButton);
 
-// Initially showing only header
 const chatMessagesElem = document.querySelector(".chat-messages");
 const weatherpath = "593309284d3eb093ee96647eb294905b";
 const chatInputElem = document.querySelector(".chat-input");
@@ -757,21 +724,6 @@ function fetchWeatherForCurrentLocation() {
     else {
         updateLocationWeatherUI("Geolocation is not supported by your browser.");
     }
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            position => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-                fetchWeatherAlerts(lat, lon);
-            },
-            () => {
-                // If location access is denied, hide the alert sidebar
-                const sidebar = document.getElementById('weather-alert-sidebar');
-                sidebar.classList.remove('active');
-            }
-        );
-    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -787,13 +739,13 @@ function showPositionWeather(position) {
 function showRefreshButton(city) {
     const refreshButton = document.getElementById('refresh-weather');
     if (city) {
-        refreshButton.style.display = 'block'; // Show button when a city is selected
+        refreshButton.style.display = 'block';
         refreshButton.onclick = function() {
-            getWeatherByLocation(city); // Fetch latest weather data for the selected city
+            getWeatherByLocation(city);
         };
     }
     else {
-        refreshButton.style.display = 'none'; // Hide button when no city is selected
+        refreshButton.style.display = 'none';
     }
 }
 
@@ -801,11 +753,9 @@ function handleLocationError(error) {
     let message = "An error occurred while retrieving your location.";
 
     if (error.code === error.PERMISSION_DENIED) {
-        // Show the location button as we don't have permission to access the location
         message = "Enable location access then reload to view live weather in your area!";
     }
 
-    // Update the UI with the message
     updateLocationWeatherUI(message);
 }
 
@@ -824,10 +774,9 @@ async function getWeatherByLocationCoords(lat, lon) {
         const response = await fetch(apiUrl);
         const data = await response.json();
         if (data.cod === 200) {
-            // Call function to add weather data to page, similar to addWeatherToPage but for coordinates
             addWeatherToPageByCoords(data);
-        } else {
-            // Handle any errors, such as location not found
+        }
+        else {
             updateLocationWeatherUI(`Weather data not found for your location.`);
         }
     }
@@ -846,7 +795,6 @@ function addWeatherToPageByCoords(data) {
     const weatherIcon = data.weather[0].icon;
     const locationName = data.name;
 
-    // Build the display element with the fetched data
     const weatherElement = document.createElement('div');
     weatherElement.classList.add('weather');
     weatherElement.innerHTML = `
@@ -856,7 +804,6 @@ function addWeatherToPageByCoords(data) {
         <img src="https://openweathermap.org/img/wn/${weatherIcon}@2x.png" alt="${weatherDescription}" />
     `;
 
-    // Append the weather info to the container
     locationWeatherContainer.appendChild(weatherElement);
 }
 
@@ -865,15 +812,12 @@ function updateLocalTime() {
     const now = new Date();
     const timeParts = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).split(' ');
 
-    // Clear previous content
     timeContainer.innerHTML = '';
 
-    // Create and append time part
     const timeDiv = document.createElement('div');
     timeDiv.textContent = timeParts[0];
     timeContainer.appendChild(timeDiv);
 
-    // Create and append AM/PM part
     const amPmDiv = document.createElement('div');
     amPmDiv.textContent = timeParts[1];
     timeContainer.appendChild(amPmDiv);
@@ -884,91 +828,66 @@ function updateLocalTime() {
 
 updateLocalTime();
 
-async function fetchWeatherAlerts(lat, lon) {
-    const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily&appid=YOUR_API_KEY`;
+function toggleWindInfo() {
+    const windInfoDiv = document.getElementById("wind-info");
+    const windInfoBtn = document.getElementById("wind-info-btn");
 
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        if (data.alerts) {
-            updateAlertSidebar(data.alerts);
-        }
-        else {
-            // Handle no alerts
-            updateAlertSidebar([]);
-        }
-    }
-    catch (error) {
-        console.error('Error fetching weather alerts:', error);
-    }
-}
-
-function updateAlertSidebar(alerts) {
-    const sidebar = document.getElementById('weather-alert-sidebar');
-    sidebar.innerHTML = ''; // Clear previous alerts
-
-    if (alerts.length === 0) {
-        sidebar.innerHTML = '<p style="color: black; text-align: center">No current weather alerts.</p>';
+    if (windInfoBtn.textContent.includes("Close Wind Info")) {
+        windInfoDiv.style.display = 'none';
+        windInfoBtn.textContent = `View Wind Info for ${windInfoBtn.getAttribute("data-city")}`;
     }
     else {
-        alerts.forEach(alert => {
-            const alertDiv = document.createElement('div');
-            alertDiv.className = 'alert';
-            alertDiv.innerHTML = `<h4>${alert.event}</h4><p>${alert.description}</p>`;
-            sidebar.appendChild(alertDiv);
-        });
+        windInfoDiv.style.display = 'block';
+        windInfoBtn.textContent = `Close Wind Info for ${windInfoBtn.getAttribute("data-city")}`;
+    }
+}
+
+document.getElementById("wind-info-btn").addEventListener("click", toggleWindInfo);
+
+function addWindInfoToPage(data) {
+    const windSpeedElement = document.getElementById("wind-speed");
+    const windSpeedKmH = (data.wind.speed * 3.6).toFixed(1);
+    windSpeedElement.textContent = `Speed: ${windSpeedKmH} km/h`;
+
+    const windDirectionElement = document.getElementById("wind-direction");
+    windDirectionElement.textContent = `Direction: ${getWindDirection(data.wind.deg)}`;
+
+    const windInfoBtn = document.getElementById("wind-info-btn");
+    windInfoBtn.setAttribute("data-city", data.name);
+}
+
+function getWindDirection(degree) {
+    const directions = ["North", "North-East", "East", "South-East", "South", "South-West", "West", "North-West"];
+    const index = Math.round(((degree %= 360) < 0 ? degree + 360 : degree) / 45) % 8;
+    return directions[index];
+}
+
+function toggleFeelsLikeInfo() {
+    const feelsLikeInfoDiv = document.getElementById("feels-like-info");
+    const feelsLikeBtn = document.getElementById("feels-like-btn");
+
+    if (feelsLikeBtn.textContent.includes("Close Feels Like Info")) {
+        feelsLikeInfoDiv.style.display = 'none';
+        feelsLikeBtn.textContent = `View Feels Like Info for ${feelsLikeBtn.getAttribute("data-city")}`;
+    }
+    else {
+        feelsLikeInfoDiv.style.display = 'block';
+        feelsLikeBtn.textContent = `Close Feels Like Info for ${feelsLikeBtn.getAttribute("data-city")}`;
+    }
+}
+
+document.getElementById("feels-like-btn").addEventListener("click", toggleFeelsLikeInfo);
+
+function addFeelsLikeToPage(data) {
+    const feelsLikeTempElement = document.getElementById("feels-like-temp");
+    let feelsLikeTemp;
+
+    if (isCelsius) {
+        feelsLikeTemp = (data.main.feels_like - 273.15).toFixed(1) + '°C';
+    }
+    else {
+        feelsLikeTemp = ((data.main.feels_like - 273.15) * 9/5 + 32).toFixed(1) + '°F';
     }
 
-    sidebar.classList.add('active'); // Show the sidebar
+    feelsLikeTempElement.textContent = `Temperature: ${feelsLikeTemp}`;
 }
-
-// Optional: Function to toggle the sidebar visibility
-function toggleAlertSidebar() {
-    const sidebar = document.getElementById('weather-alert-sidebar');
-    sidebar.classList.toggle('active');
-}
-
-
-// const heading = document.getElementById('my-heading');
-// const subhead = document.getElementById('subhead');
-// const colors = ['#ff0000',
-//     '#00ff00',
-//     '#0000ff',
-//     '#ffff00',
-//     '#00ffff',
-//     '#ff00ff'];
-// let timeoutID;
-//
-// function changeColor(event) {
-//     const randomColor = colors[Math.floor(Math.random() * colors.length)];
-//     event.target.style.color = randomColor;
-//     timeoutID = setTimeout(resetBackgroundColor, 500);
-// }
-//
-// function resetColor(event) {
-//     event.target.style.color = 'black';
-//     clearTimeout(timeoutID);
-// }
-//
-// function changeBackgroundColor(event) {
-//     const randomColor = colors[Math.floor(Math.random() * colors.length)];
-//     event.target.style.backgroundColor = randomColor;
-//     timeoutID = setTimeout(resetBackgroundColor, 500);
-// }
-//
-// function resetBackgroundColor(event) {
-//     event.target.style.backgroundColor = 'lightgrey';
-//     clearTimeout(timeoutID);
-// }
-
-// heading.addEventListener('mouseover', changeColor);
-// heading.addEventListener('mouseout', resetColor);
-// buttonSearch.addEventListener('mouseover', changeBackgroundColor);
-// buttonSearch.addEventListener('mouseout', resetBackgroundColor);
-// search.addEventListener('mouseover', changeBackgroundColor);
-// search.addEventListener('mouseout', resetBackgroundColor);
-// subhead.addEventListener('mouseover', changeColor);
-// subhead.addEventListener('mouseout', resetColor);
-// main.addEventListener('mouseover', changeColor);
-// main.addEventListener('mouseout', resetColor);
-// forecastBtn.addEventListener('mouseover', changeBackgroundColor);

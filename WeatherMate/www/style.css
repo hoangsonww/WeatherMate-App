@@ -122,24 +122,6 @@ input:focus {
     margin-bottom: 10px;
 }
 
-.weather-alert-sidebar {
-    position: fixed;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 250px;
-    background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    z-index: 100;
-    padding: 10px;
-    display: none;
-}
-
-.weather-alert-sidebar.active {
-    display: block;
-}
-
 #subhead {
     margin-top: 45px;
     text-align: center;
@@ -179,7 +161,6 @@ input:focus {
     background-color: #555;
 }
 
-/* Additional style improvements for the favorites list */
 #favorites-section div {
     padding: 10px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -194,7 +175,6 @@ input:focus {
     background-color: rgba(0, 0, 0, 0.05);
 }
 
-/* Style for favorite city names */
 #favorites-section span {
     font-size: 1.1rem;
     transition: color 0.3s;
@@ -204,7 +184,6 @@ input:focus {
     color: #333;
 }
 
-/* Style for the remove button */
 #favorites-section button {
     padding: 5px 10px;
     font-size: 0.9rem;
@@ -398,13 +377,13 @@ button:hover {
     border-radius: 8px;
 }
 
-.chat-messages div:nth-child(odd) { /* User messages */
+.chat-messages div:nth-child(odd) {
     background-color: #e1e1e1;
     align-self: flex-end;
     margin-right: 10%;
 }
 
-.chat-messages div:nth-child(even) { /* Eliza messages */
+.chat-messages div:nth-child(even) {
     background-color: #c4c4ff;
     align-self: flex-start;
     margin-left: 10%;
@@ -627,7 +606,8 @@ button:hover {
 
 #local-advice,
 #current-location-weather,
-#chatbot {
+#chatbot,
+.weather-alert-sidebar {
     display: none;
 }
 
@@ -636,7 +616,8 @@ button:hover {
     #local-time-container,
     #local-advice,
     #current-location-weather,
-    #chatbot {
+    #chatbot,
+    .weather-alert-sidebar {
         display: block;
     }
 }
@@ -648,9 +629,9 @@ button:hover {
 
 #home-btn {
     background: rgba(255, 255, 255, 0.8);
-    border-radius: 50%; /* Circle shape */
-    width: 50px; /* Fixed size */
-    height: 50px; /* Fixed size */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -671,7 +652,59 @@ button:hover {
 
 #home-label {
     position: fixed;
-    top: 100px; /* Adjust as needed */
+    top: 100px;
     right: 15px;
+    text-align: center;
+}
+
+#wind-info-btn {
+    margin-top: 20px;
+    padding: 8px 15px;
+    background-color: #ffffff;
+    text-align: center;
+    color: #000000;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+#wind-info-btn:hover {
+    background-color: #efefef;
+}
+
+#wind-info {
+    background-color: white;
+    border: 1px solid #ddd;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#feels-like-btn {
+    margin-top: 20px;
+    padding: 8px 15px;
+    background-color: #ffffff;
+    text-align: center;
+    color: #000000;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+#feels-like-btn:hover {
+    background-color: #efefef;
+}
+
+#feels-like-info {
+    background-color: white;
+    border: 1px solid #ddd;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
     text-align: center;
 }
