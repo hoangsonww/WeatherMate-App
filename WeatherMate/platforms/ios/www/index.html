@@ -5,10 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The WeatherMate App</title>
-    <link rel="stylesheet" href="src/css/style.css" />
-    <script src="src/js/script.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="icon" type="image/x-icon" href="utils/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 
 <body>
@@ -24,19 +24,6 @@
     <button id="aqi-btn" style="display: none;">View Air Quality Index For </button>
 
     <button id="humidity-rain-btn" style="display: none;">View Humidity & Chance of Rain For </button>
-
-    <button id="wind-info-btn" style="display: none;">View Wind Info</button>
-    <div id="wind-info" style="display: none;">
-        <h3>Wind Information</h3>
-        <p id="wind-speed">Speed: --</p>
-        <p id="wind-direction">Direction: --</p>
-    </div>
-
-    <button id="feels-like-btn" style="display: none;">View Feels Like Info</button>
-    <div id="feels-like-info" style="display: none;">
-        <h3>Feels Like Temperature</h3>
-        <p id="feels-like-temp">Temperature: --</p>
-    </div>
 
     <div id="aqi-display" style="display: none;"></div>
 
@@ -67,7 +54,7 @@
 
     <button id="refresh-weather" style="display: none;" title="Outdated weather? Refresh to get the latest weather at this location!">Refresh Weather</button>
 
-    <button onclick="window.location.href='src/html/about.html'" type="button" id="btn1" style="margin-top: 15px" title="See this app's and its creator's overview information">About Us</button>
+    <button onclick="window.location.href='about.html'" type="button" id="btn1" style="margin-top: 15px" title="See this app's and its creator's overview information">About Us</button>
 
     <div id="local-advice" class="local-advice" title="Choose a City or Region to Get Weather Advice">
         <p><strong>Weather Advice</strong></p>
@@ -100,5 +87,11 @@
     </div>
 
 </body>
+
+<br>
+<br>
+<br>
+<br>
+<br>
 
 </html>
