@@ -1,1 +1,5 @@
+./node_modules/
+
+./backend_django/myenv/lib/
 node_modules
+backend_django/myenv/lib/
