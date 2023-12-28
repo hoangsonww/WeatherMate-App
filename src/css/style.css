@@ -708,3 +708,10 @@ button:hover {
     margin-top: 10px;
     text-align: center;
 }
+
+.popup {
+    overflow: hidden;
+    transition: height 1s ease, opacity 1s ease;
+    height: 0;
+    opacity: 0;
+}
