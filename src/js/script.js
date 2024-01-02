@@ -49,15 +49,19 @@ async function getWeatherByLocation(city) {
         return;
     }
 
+    if(respData.visibility !== undefined) {
+        displayAirQuality(respData.coord.lat, respData.coord.lon, respData.visibility);
+    }
+
     addWeatherToPage(respData);
     showRefreshButton(city);
     addWindInfoToPage(respData);
     addFeelsLikeToPage(respData);
 }
 
-async function displayAirQuality(lat, lon) {
+async function displayAirQuality(lat, lon, visibility) {
     const aqiElement = document.getElementById("aqi-display");
-    aqiElement.innerHTML = 'Loading...'; // Show loading message
+    aqiElement.innerHTML = 'Loading...';
     aqiElement.style.display = 'block';
 
     const aqiUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${weatherpath}`;
@@ -66,7 +70,11 @@ async function displayAirQuality(lat, lon) {
         const aqiData = await response.json();
         const aqi = aqiData.list[0].main.aqi;
         const airQuality = convertAQIToQuality(aqi);
-        aqiElement.innerHTML = `<h3 class="aqi-text aqi-${aqi}">Air Quality Index: ${aqi} (${airQuality})</h3>`;
+
+        const visibilityKm = (visibility / 1000).toFixed(1);
+        aqiElement.innerHTML = `
+            <h3 class="aqi-text aqi-${aqi}">Air Quality Index: ${aqi} (${airQuality})</h3>
+            <h3 style="color: black">Visibility: ${visibilityKm} km</h3>`;
     } catch (error) {
         aqiElement.innerHTML = 'Error loading data.';
     }
@@ -494,27 +502,21 @@ function toggleHumidityRain() {
 }
 
 function toggleWindInfo() {
-    closeAllPopups();
     const windInfoDiv = document.getElementById("wind-info");
     const windInfoBtn = document.getElementById("wind-info-btn");
 
+    closeAllPopups();
+
     if (!popupStatus.windInfo) {
-        windInfoDiv.innerHTML = 'Loading...';
-        addWindInfoToPage(lastCity);
-        windInfoDiv.style.display = 'block';
+        windInfoDiv.style.display = "block";
         windInfoBtn.textContent = `Close Wind Info for ${windInfoBtn.getAttribute("data-city")}`;
         popupStatus.windInfo = true;
     }
     else {
-        windInfoDiv.style.display = 'none';
+        windInfoDiv.style.display = "none";
         windInfoBtn.textContent = `View Wind Info for ${windInfoBtn.getAttribute("data-city")}`;
         popupStatus.windInfo = false;
     }
-
-    popupStatus.forecast = false;
-    popupStatus.aqi = false;
-    popupStatus.humidityRain = false;
-    popupStatus.feelsLike = false;
 }
 
 function toggleFeelsLikeInfo() {
@@ -947,7 +949,6 @@ function updateLocalTime() {
     const amPmDiv = document.createElement('div');
     amPmDiv.textContent = timeParts[1];
     timeContainer.appendChild(amPmDiv);
-
     timeContainer.style.color = 'black';
     setTimeout(updateLocalTime, 60000);
 }
@@ -957,15 +958,24 @@ updateLocalTime();
 document.getElementById("wind-info-btn").addEventListener("click", toggleWindInfo);
 
 function addWindInfoToPage(data) {
-    const windSpeedElement = document.getElementById("wind-speed");
-    const windSpeedKmH = (data.wind.speed * 3.6).toFixed(1);
-    windSpeedElement.textContent = `Speed: ${windSpeedKmH} km/h`;
+    if (data.wind && data.wind.speed !== undefined) {
+        const windSpeedElement = document.getElementById("wind-speed");
+        const windSpeedKmH = (data.wind.speed * 3.6).toFixed(1);
+        windSpeedElement.textContent = `Speed: ${windSpeedKmH} km/h`;
 
-    const windDirectionElement = document.getElementById("wind-direction");
-    windDirectionElement.textContent = `Direction: ${getWindDirection(data.wind.deg)}`;
+        const windDirectionElement = document.getElementById("wind-direction");
+        windDirectionElement.textContent = `Direction: ${getWindDirection(data.wind.deg)}`;
 
-    const windInfoBtn = document.getElementById("wind-info-btn");
-    windInfoBtn.setAttribute("data-city", data.name);
+        const pressureElement = document.getElementById("wind-pressure");
+        pressureElement.textContent = `Pressure: ${data.main.pressure} hPa`;
+
+        const windInfoBtn = document.getElementById("wind-info-btn");
+        windInfoBtn.setAttribute("data-city", data.name);
+    }
+    else {
+        const windInfoDiv = document.getElementById("wind-info");
+        windInfoDiv.textContent = "Wind data not available for this location.";
+    }
 }
 
 function getWindDirection(degree) {
@@ -978,13 +988,14 @@ document.getElementById("feels-like-btn").addEventListener("click", toggleFeelsL
 
 function addFeelsLikeToPage(data) {
     const feelsLikeTempElement = document.getElementById("feels-like-temp");
-    let feelsLikeTemp;
+    let feelsLikeTemp = isCelsius ? (data.main.feels_like - 273.15).toFixed(1) + ' °C' : ((data.main.feels_like - 273.15) * 9/5 + 32).toFixed(1) + ' °F';
+    feelsLikeTempElement.textContent = `Feels Like: ${feelsLikeTemp}`;
 
-    if (isCelsius) {
-        feelsLikeTemp = (data.main.feels_like - 273.15).toFixed(1) + '°C';
-    }
-    else {
-        feelsLikeTemp = ((data.main.feels_like - 273.15) * 9/5 + 32).toFixed(1) + '°F';
-    }
-    feelsLikeTempElement.textContent = `Temperature: ${feelsLikeTemp}`;
+    const minTemp = isCelsius ? (data.main.temp_min - 273.15).toFixed(1) + ' °C' : ((data.main.temp_min - 273.15) * 9/5 + 32).toFixed(1) + ' °F';
+    const maxTemp = isCelsius ? (data.main.temp_max - 273.15).toFixed(1) + ' °C' : ((data.main.temp_max - 273.15) * 9/5 + 32).toFixed(1) + ' °F';
+
+    const minTempElement = document.getElementById("min-temp");
+    const maxTempElement = document.getElementById("max-temp");
+    minTempElement.textContent = `Min Temperature: ${minTemp}`;
+    maxTempElement.textContent = `Max Temperature: ${maxTemp}`;
 }
