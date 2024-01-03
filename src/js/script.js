@@ -417,8 +417,9 @@ function closeAllPopups() {
     const windInfoBtn = document.getElementById("wind-info-btn");
     if (windInfoBtn) windInfoBtn.textContent = `View Wind Info for ${windInfoBtn.getAttribute("data-city")}`;
 
+    const capitalizedCity = capitalizeCityName(lastCity);
     const feelsLikeBtn = document.getElementById("feels-like-btn");
-    if (feelsLikeBtn) feelsLikeBtn.textContent = `View Feels Like Info for ${lastCity}`;
+    if (feelsLikeBtn) feelsLikeBtn.textContent = `View Feels Like Info for ${capitalizedCity}`;
 }
 
 let popupStatus = {
