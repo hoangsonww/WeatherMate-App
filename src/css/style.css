@@ -70,6 +70,7 @@ input:focus {
     text-align: center;
     color: #000000;
     border-radius: 8px;
+    font: inherit;
 }
 
 #toggle-temp {

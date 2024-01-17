@@ -42,13 +42,13 @@
 
     <main id="main"></main>
 
-    <button id="forecast-btn" style="display: none;">View Forecast For </button>
+    <button id="forecast-btn" style="display: none; font-size: 15px; font: inherit">View Forecast For </button>
 
-    <button id="aqi-btn" style="display: none; text-align: center">View Air Quality Index For </button>
+    <button id="aqi-btn" style="display: none; font-size: 15px; text-align: center; font: inherit">View Air Quality Index For </button>
 
-    <button id="humidity-rain-btn" style="display: none;">View Humidity & Chance of Rain For </button>
+    <button id="humidity-rain-btn" style="display: none; font-size: 15px; font: inherit">View Humidity & Chance of Rain For </button>
 
-    <button id="wind-info-btn" style="display: none;">View Wind Info</button>
+    <button id="wind-info-btn" style="display: none; font-size: 15px; font: inherit">View Wind Info</button>
     <div id="wind-info" style="display: none;">
         <h3>Wind Information</h3>
         <p id="wind-speed">Speed: --</p>
@@ -56,7 +56,7 @@
         <p id="wind-pressure">Pressure: --</p>
     </div>
 
-    <button id="feels-like-btn" style="display: none;">View Feels Like Info</button>
+    <button id="feels-like-btn" style="display: none; font-size: 15px; font: inherit">View Feels Like Info</button>
     <div id="feels-like-info" style="display: none;">
         <h3>Feels Like Information</h3>
         <p id="feels-like-temp">Temperature: --</p>
@@ -81,19 +81,19 @@
 
     <br>
 
-    <button type="button" id="btn" title="Simply press enter or this button to search">SEARCH OR PRESS ENTER</button>
+    <button type="button" style="font-size: 18px; padding-left: 10px; padding-right: 10px" id="btn" title="Simply press enter or this button to search">Search</button>
 
     <h5 id="subhead" style="display: none;">A reminder that you must enter the exact name of your desired city/region to properly get its accurate weather information!</h5>
 
-    <button id="toggle-temp" onclick="toggleTemperatureUnit()" title="Click to Change Temperature Units">Displaying in °F</button>
+    <button id="toggle-temp" style="font-size: 16px; font: inherit" onclick="toggleTemperatureUnit()" title="Click to Change Temperature Units">Displaying in °F</button>
 
     <div id="favorites-section">
         <!-- Favorite cities will be appended here -->
     </div>
 
-    <button id="refresh-weather" style="display: none;" title="Outdated weather? Refresh to get the latest weather at this location!">Refresh Weather</button>
+    <button id="refresh-weather" style="display: none; font: inherit" title="Outdated weather? Refresh to get the latest weather at this location!">Refresh Weather</button>
 
-    <button onclick="window.location.href='src/html/about.html'" type="button" id="btn1" style="margin-top: 15px" title="See this app's and its creator's overview information">About Us</button>
+    <button onclick="window.location.href='src/html/about.html'" type="button" id="btn1" style="margin-top: 15px; font-size: 16px; font: inherit; margin-bottom: 50px" title="See this app's and its creator's overview information">About Us</button>
 
     <div id="local-advice" class="local-advice" title="Choose a City or Region to Get Weather Advice">
         <p><strong>Weather Advice</strong></p>
