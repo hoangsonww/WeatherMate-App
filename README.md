@@ -72,6 +72,9 @@ To get started with WeatherMate:
 - **Bootstrap**: For styling and responsiveness.
 - **Git**: For version control.
 - **GitHub Pages**: For deployment.
+- **VS Code**: For code editing.
+- **Figma**: For design and prototyping.
+- **OpenWeatherMap**: For fetching weather data.
 
 ## Contributing
 
