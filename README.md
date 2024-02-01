@@ -1,6 +1,6 @@
 # WeatherMate App
 
-Welcome to WeatherMate, your go-to web application for staying updated with the latest weather conditions for any location! With an easy-to-use interface and real-time data from OpenWeatherMap API, WeatherMate ensures that you're well-prepared for the weather ahead.
+Welcome to WeatherMate, your go-to web application for staying updated with the latest weather conditions for any location! With an easy-to-use interface and real-time data from OpenWeatherMap API, WeatherMate ensures that you're well-prepared for the weather ahead. The mobile version is also under development, and is in the `WeatherMate` directory.
 
 ## Features
 
@@ -66,6 +66,7 @@ To get started with WeatherMate:
 - **OpenWeatherMap API**: For fetching weather data.
 - **Unsplash API**: For fetching background images.
 - **Google Fonts**: For fonts.
+- **Vue.js**: For reactive UI components.
 - **Font Awesome**: For icons.
 - **Moment.js**: For time display.
 - **jQuery**: For DOM manipulation.
@@ -74,7 +75,6 @@ To get started with WeatherMate:
 - **GitHub Pages**: For deployment.
 - **VS Code**: For code editing.
 - **Figma**: For design and prototyping.
-- **OpenWeatherMap**: For fetching weather data.
 
 ## Contributing
 
