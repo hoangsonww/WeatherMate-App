@@ -34,13 +34,7 @@ To get started with WeatherMate:
    npm install
    ```
 
-3. **API Key Setup**
-   Sign up for an API key at [OpenWeatherMap](https://openweathermap.org/api), and replace `your_api_key` in the `script.js` file with your actual API key:
-   ```javascript
-   const apikey = "your_api_key";
-   ```
-
-4. **Run the Application**
+3. **Run the Application**
    Open the `index.html` file in your browser to see WeatherMate in action.
 
 ## Usage
