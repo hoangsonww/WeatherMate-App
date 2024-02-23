@@ -45,9 +45,12 @@
 </head>
 
 <body>
-    <img src="https://www.freepnglogos.com/uploads/cloud-png/clouds-5.pngu0026w0=495u0026h0=185u0026imgType=3u0026h1=52u0026w1=140" id="img">
 
-    <h1 id="my-heading">The WeatherMate App</h1>
+    <img src="https://www.freepnglogos.com/uploads/cloud-png/clouds-5.pngu0026w0=495u0026h0=185u0026imgType=3u0026h1=52u0026w1=140" id="img" onclick="window.location.href='index.html'" title="Click to go back to the home page" style="cursor: pointer"/>
+
+    <a href="index.html" style="text-decoration: none">
+     <h1 id="my-heading">The WeatherMate App</h1>
+    </a>
 
     <main id="main"></main>
 
@@ -121,7 +124,7 @@
 
     <h6 id="home-label"><strong>Back to Home</strong></h6>
 
-    <button onclick="window.location.reload()" type="button" id="home-btn" title="Get back to the initial home page">
+    <button onclick="window.location.href='index.html'" type="button" id="home-btn" title="Get back to the initial home page">
         <i class="fas fa-home"></i>
     </button>
 
@@ -129,6 +132,7 @@
         <div class="chat-messages"></div>
         <input type="text" placeholder="Ask WeatherMate..." class="chat-input">
     </div>
+
 </body>
 
 </html>
