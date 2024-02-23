@@ -65,6 +65,7 @@ async function displayAirQuality(lat, lon, visibility) {
     aqiElement.style.display = 'block';
 
     const aqiUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${weatherpath}`;
+
     try {
         const response = await fetch(aqiUrl, { origin: "cors" });
         const aqiData = await response.json();
@@ -75,9 +76,20 @@ async function displayAirQuality(lat, lon, visibility) {
         aqiElement.innerHTML = `
             <h3 class="aqi-text aqi-${aqi}">Air Quality Index: ${aqi} (${airQuality})</h3>
             <h3 style="color: black">Visibility: ${visibilityKm} km</h3>`;
-    } catch (error) {
+    }
+    catch (error) {
         aqiElement.innerHTML = 'Error loading data.';
     }
+}
+
+function updateBrowserURL(name) {
+    const nameSlug = createNameSlug(name);
+    const newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + '?query=' + nameSlug;
+    window.history.replaceState({ path: newURL }, '', newURL);
+}
+
+function createNameSlug(name) {
+    return name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]/g, '');
 }
 
 function createAQIDisplayElement() {
@@ -379,6 +391,8 @@ form.addEventListener("submit", (e) => {
         const subhead = document.getElementById("subhead");
         subhead.style.display = 'none';
     }
+
+    updateBrowserURL(city);
 });
 
 form.addEventListener("click", (e) => {
@@ -396,6 +410,8 @@ buttonSearch.addEventListener("click", (e) => {
         const subhead = document.getElementById("subhead");
         subhead.style.display = 'none';
     }
+
+    updateBrowserURL(city);
 });
 
 function closeAllPopups() {
