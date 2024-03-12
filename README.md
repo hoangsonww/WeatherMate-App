@@ -90,6 +90,6 @@ David Nguyen - [@hoangsonww](https://github.com/hoangsonww)
 
 Project Link: [https://github.com/hoangsonww/WeatherMate-App](https://github.com/hoangsonww/WeatherMate-App)
 
-It is live at: [https://hoangsonww.github.io/WeatherMate-App/](https://hoangsonww.github.io/WeatherMate-App/)
+App's URL: [https://hoangsonww.github.io/WeatherMate-App/](https://hoangsonww.github.io/WeatherMate-App/)
 
 ---
