@@ -35,7 +35,7 @@ To get started with WeatherMate:
    ```
 
 3. **Run the Application**
-   Open the `index.html` file in your browser to see WeatherMate in action.
+   Simply open the `index.html` file in your browser to see WeatherMate in action. We're also working on a mobile version, so stay tuned for updates!
 
 ## Usage
 
