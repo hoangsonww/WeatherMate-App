@@ -1,6 +1,6 @@
 # WeatherMate App
 
-Welcome to WeatherMate, your go-to web application for staying updated with the latest weather conditions for any location! With an easy-to-use interface and real-time data from OpenWeatherMap API, WeatherMate ensures that you're well-prepared for the weather ahead. The mobile version is also under development, and is in the `WeatherMate` directory.
+Welcome to WeatherMate, your go-to web application for staying updated with the latest weather conditions for any location! With an easy-to-use interface and real-time data from OpenWeatherMap API, WeatherMate ensures that you're well-prepared for the weather ahead. The mobile version is also under development, and is in the `WeatherMate` directory. At the mean time, you can use the web version at [https://hoangsonww.github.io/WeatherMate-App/](https://hoangsonww.github.io/WeatherMate-App/).
 
 ## Features
 
