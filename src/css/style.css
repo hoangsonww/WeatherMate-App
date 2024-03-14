@@ -19,6 +19,21 @@ body {
     min-height: 100vh;
 }
 
+.search-result-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    color: black !important;
+}
+
+.search-result-card:hover {
+    background-color: #f0f0f0;
+}
+
 input {
     background-color: #fff;
     border: none;

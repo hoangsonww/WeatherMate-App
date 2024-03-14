@@ -9,6 +9,57 @@ const forecast = document.getElementById("forecast-display");
 let isCelsius = localStorage.getItem("isCelsius") === "true";
 let lastCity = "";
 
+const searchInput = document.getElementById('search');
+const resultsDiv = document.getElementById('search-results');
+
+searchInput.addEventListener('input', async (e) => {
+    const searchTerm = e.target.value.trim();
+    resultsDiv.innerHTML = '';
+
+    if (searchTerm.length === 0) {
+        return;
+    }
+
+    const encodedSearchTerm = encodeURIComponent(searchTerm);
+    const searchUrl = `https://api.openweathermap.org/data/2.5/find?q=${encodedSearchTerm}&type=like&sort=population&cnt=5&appid=${weatherpath}`;
+
+    try {
+        const response = await fetch(searchUrl);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch: ${response.statusText}`);
+        }
+        const data = await response.json();
+        if (data.cod !== "200") {
+            console.error('Error from API:', data.message);
+            return;
+        }
+        displaySearchResults(data);
+    }
+    catch (error) {
+        console.error('Error fetching search results:', error);
+    }
+});
+
+function displaySearchResults(data) {
+    if (!data || data.count === 0) {
+        resultsDiv.innerHTML = '<div>No matched locations found.</div>';
+        return;
+    }
+
+    resultsDiv.innerHTML = data.list.map(location =>
+      `<div class="search-result-card" data-city-name="${location.name}">
+            ${location.name}, ${location.sys.country}
+        </div>`
+    ).join('');
+
+    document.querySelectorAll('.search-result-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const cityName = this.getAttribute('data-city-name');
+            getWeatherByLocation(cityName);
+        });
+    });
+}
+
 const url = (city) =>
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherpath}`;
 
