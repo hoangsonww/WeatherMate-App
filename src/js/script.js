@@ -182,32 +182,32 @@ function setBackground(condition, data) {
     const sunset = data.sys.sunset;
 
     if (condition === 'Clear' && (currentTime < sunrise || currentTime > sunset)) {
-        backgroundImage = 'url(https://live.staticflickr.com/5698/30867056071_9b7f336f48_b.jpg)';
+        backgroundImage = 'url(/utils/night.jpg)';
         textColor = 'white';
         favoriteColor = 'black';
     }
     else {
         switch (condition) {
             case 'Clouds':
-                backgroundImage = 'url(../../utils/cloudy.jpg)';
+                backgroundImage = 'url(/utils/cloudy.jpg)';
                 textColor = 'black';
                 favoriteColor = 'black';
                 document.getElementById('my-heading').style.color = 'white !important';
                 break;
             case 'Clear':
-                backgroundImage = 'url(../../utils/clear.jpg)';
+                backgroundImage = 'url(/utils/clear.jpg)';
                 break;
             case 'Rain':
-                backgroundImage = 'url(../../utils/rainy.jpg)';
+                backgroundImage = 'url(/utils/rainy.jpg)';
                 break;
             case 'Snow':
-                backgroundImage = 'url(../../utils/snowy.jpg)';
+                backgroundImage = 'url(/utils/snowy.jpg)';
                 break;
             case 'Thunderstorm':
-                backgroundImage = 'url(../../utils/thunderstorm.jpg)';
+                backgroundImage = 'url(/utils/thunderstorm.jpg)';
                 break;
             default:
-                backgroundImage = 'url(../../utils/clouds.jpg)';
+                backgroundImage = 'url(/utils/clouds.jpg)';
                 break;
         }
     }
