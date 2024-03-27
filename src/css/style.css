@@ -638,7 +638,7 @@ button:hover {
 
 #local-advice,
 #current-location-weather,
-#chatbot,
+.chatbot,
 .weather-alert-sidebar {
     display: none;
 }
@@ -648,7 +648,7 @@ button:hover {
     #local-time-container,
     #local-advice,
     #current-location-weather,
-    #chatbot,
+    .chatbot,
     .weather-alert-sidebar {
         display: block;
     }
