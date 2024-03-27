@@ -42,7 +42,7 @@ searchInput.addEventListener('input', async (e) => {
 
 function displaySearchResults(data) {
     if (!data || data.count === 0) {
-        resultsDiv.innerHTML = '<div>No matched locations found.</div>';
+        resultsDiv.innerHTML = '<div></div>';
         return;
     }
 
@@ -68,7 +68,7 @@ async function getWeatherByLocation(city) {
     const humidityRainDisplay = document.getElementById("humidity-rain-display");
     if (humidityRainDisplay.style.display !== 'none') {
         humidityRainDisplay.style.display = 'none';
-        humidityRainBtn.textContent = `View Humidity & Chance of Rain For ${city}`;
+        humidityRainBtn.textContent = `View Humidity For ${city}`;
     }
     lastCity = city;
     document.getElementById("forecast-display").classList.remove('hide');
@@ -189,29 +189,25 @@ function setBackground(condition, data) {
     else {
         switch (condition) {
             case 'Clouds':
-                backgroundImage = 'url(https://images.unsplash.com/photo-1611928482473-7b27d24eab80?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xvdWR5JTIwd2VhdGhlcnxlbnwwfHwwfHx8MA%3D%3D)';
-                textColor = 'white';
+                backgroundImage = 'url(../../utils/cloudy.jpg)';
+                textColor = 'black';
                 favoriteColor = 'black';
+                document.getElementById('my-heading').style.color = 'white !important';
                 break;
             case 'Clear':
-                backgroundImage = 'url(https://clarksvillenow.sagacom.com/files/2020/10/shutterstock_206307496-1200x768.jpg)';
+                backgroundImage = 'url(../../utils/clear.jpg)';
                 break;
             case 'Rain':
-                backgroundImage = 'url(https://cdn.zeebiz.com/sites/default/files/2023/09/21/261707-weather-effects-composition-1.jpg)';
-                document.getElementById("local-time-label").style.color = 'white';
-                document.getElementById("home-label").style.color = 'white';
+                backgroundImage = 'url(../../utils/rainy.jpg)';
                 break;
             case 'Snow':
-                backgroundImage = 'url(https://d.newsweek.com/en/full/1956691/winter-forest-landscape-snow-covered-trees.jpg)';
-                textColor = 'white';
-                favoriteColor = 'black';
-                document.getElementById("main").style.color = 'white';
+                backgroundImage = 'url(../../utils/snowy.jpg)';
                 break;
             case 'Thunderstorm':
-                backgroundImage = 'url(https://s.w-x.co/thunderstormasthma.jpg)';
+                backgroundImage = 'url(../../utils/thunderstorm.jpg)';
                 break;
             default:
-                backgroundImage = 'url(https://cbsnews1.cbsistatic.com/hub/i/2015/01/08/2a7e43f9-7cce-44a4-b0fa-949612fd9ef1/461133262.jpg)';
+                backgroundImage = 'url(../../utils/clouds.jpg)';
                 break;
         }
     }
@@ -294,7 +290,7 @@ function addWeatherToPage(data) {
     humidityRainBtn.setAttribute("data-lat", data.coord.lat);
     humidityRainBtn.setAttribute("data-lon", data.coord.lon);
     humidityRainBtn.setAttribute("data-city", data.name);
-    humidityRainBtn.textContent = `View Humidity & Chance of Rain For ${data.name}`;
+    humidityRainBtn.textContent = `View Humidity For ${data.name}`;
     humidityRainBtn.style.display = "block";
 
     if (!humidityRainBtn.getAttribute('listener')) {
@@ -439,16 +435,9 @@ form.addEventListener("submit", (e) => {
 
     if (city) {
         getWeatherByLocation(city);
-        const subhead = document.getElementById("subhead");
-        subhead.style.display = 'none';
     }
 
     updateBrowserURL(city);
-});
-
-form.addEventListener("click", (e) => {
-    const subhead = document.getElementById("subhead");
-    subhead.style.display = 'block';
 });
 
 buttonSearch.addEventListener("click", (e) => {
@@ -458,8 +447,6 @@ buttonSearch.addEventListener("click", (e) => {
 
     if (city) {
         getWeatherByLocation(city);
-        const subhead = document.getElementById("subhead");
-        subhead.style.display = 'none';
     }
 
     updateBrowserURL(city);
@@ -479,7 +466,7 @@ function closeAllPopups() {
     if (aqiBtn) aqiBtn.textContent = `View Air Quality Index For ${aqiBtn.getAttribute("data-city")}`;
 
     const humidityRainBtn = document.getElementById("humidity-rain-btn");
-    if (humidityRainBtn) humidityRainBtn.textContent = `View Humidity & Chance of Rain For ${humidityRainBtn.getAttribute("data-city")}`;
+    if (humidityRainBtn) humidityRainBtn.textContent = `View Humidity For ${humidityRainBtn.getAttribute("data-city")}`;
 
     const windInfoBtn = document.getElementById("wind-info-btn");
     if (windInfoBtn) windInfoBtn.textContent = `View Wind Info for ${windInfoBtn.getAttribute("data-city")}`;
@@ -554,12 +541,12 @@ function toggleHumidityRain() {
 
     if (!popupStatus.humidityRain) {
         displayHumidityRain(humidityRainBtn.getAttribute("data-lat"), humidityRainBtn.getAttribute("data-lon"), humidityRainDisplay);
-        humidityRainBtn.textContent = `Close Humidity & Chance of Rain For ${humidityRainBtn.getAttribute("data-city")}`;
+        humidityRainBtn.textContent = `Close Humidity For ${humidityRainBtn.getAttribute("data-city")}`;
         popupStatus.humidityRain = true;
     }
     else {
         humidityRainDisplay.style.display = 'none';
-        humidityRainBtn.textContent = `View Humidity & Chance of Rain For ${humidityRainBtn.getAttribute("data-city")}`;
+        humidityRainBtn.textContent = `View Humidity For ${humidityRainBtn.getAttribute("data-city")}`;
         popupStatus.humidityRain = false;
     }
 

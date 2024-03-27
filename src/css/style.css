@@ -9,7 +9,7 @@ html {
 }
 
 body {
-    background-image: url("https://cbsnews1.cbsistatic.com/hub/i/2015/01/08/2a7e43f9-7cce-44a4-b0fa-949612fd9ef1/461133262.jpg");
+    background-image: url("../../utils/clouds.jpg");
     font-family: "Poppins", sans-serif;
     display: flex;
     flex-direction: column;
@@ -17,6 +17,22 @@ body {
     justify-content: center;
     margin: 0;
     min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+#center {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px;
+    width: calc(100% - 20px);
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .search-result-card {

@@ -12,9 +12,17 @@ Welcome to WeatherMate, your go-to web application for staying updated with the 
 - **Favorites**: Save your favorite locations for quick weather checks.
 - **Responsive Design**: WeatherMate looks great on any device, whether it's your phone, tablet, or desktop.
 
+## User Interface
+
+<p align="center" style="cursor: pointer">
+  <a href="https://hoangsonww.github.io/WeatherMate-App/">
+    <img src="../utils/weathermateUI.png" alt="The WeatherMate App Interface"/>
+  </a>
+</p>
+
 ## How It Works
 
-WeatherMate fetches data from the OpenWeatherMap API, which provides comprehensive weather data that our app processes to give you the most relevant weather information.
+WeatherMate fetches data from the OpenWeatherMap API and our live databases, which provides comprehensive weather data that our app processes to give you the most relevant weather information.
 
 ## Getting Started
 
