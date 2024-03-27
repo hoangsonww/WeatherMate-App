@@ -9,7 +9,7 @@ html {
 }
 
 body {
-    background-image: url("/utils/clouds.jpg");
+    background-image: url("/WeatherMate-App/utils/clouds.jpg");
     font-family: "Poppins", sans-serif;
     display: flex;
     flex-direction: column;

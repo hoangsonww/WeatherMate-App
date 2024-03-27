@@ -182,32 +182,32 @@ function setBackground(condition, data) {
     const sunset = data.sys.sunset;
 
     if (condition === 'Clear' && (currentTime < sunrise || currentTime > sunset)) {
-        backgroundImage = 'url(/utils/night.jpg)';
+        backgroundImage = 'url(/WeatherMate-App/utils/night.jpg)';
         textColor = 'white';
         favoriteColor = 'black';
     }
     else {
         switch (condition) {
             case 'Clouds':
-                backgroundImage = 'url(/utils/cloudy.jpg)';
+                backgroundImage = 'url(/WeatherMate-App/utils/cloudy.jpg)';
                 textColor = 'black';
                 favoriteColor = 'black';
                 document.getElementById('my-heading').style.color = 'white !important';
                 break;
             case 'Clear':
-                backgroundImage = 'url(/utils/clear.jpg)';
+                backgroundImage = 'url(/WeatherMate-App/utils/clear.jpg)';
                 break;
             case 'Rain':
-                backgroundImage = 'url(/utils/rainy.jpg)';
+                backgroundImage = 'url(/WeatherMate-App/utils/rainy.jpg)';
                 break;
             case 'Snow':
-                backgroundImage = 'url(/utils/snowy.jpg)';
+                backgroundImage = 'url(/WeatherMate-App/utils/snowy.jpg)';
                 break;
             case 'Thunderstorm':
-                backgroundImage = 'url(/utils/thunderstorm.jpg)';
+                backgroundImage = 'url(/WeatherMate-App/utils/thunderstorm.jpg)';
                 break;
             default:
-                backgroundImage = 'url(/utils/clouds.jpg)';
+                backgroundImage = 'url(/WeatherMate-App/utils/clouds.jpg)';
                 break;
         }
     }
