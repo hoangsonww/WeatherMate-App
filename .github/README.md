@@ -16,7 +16,7 @@ Welcome to WeatherMate! Created by [Son Nguyen](https://github.com/hoangsonww) i
 
 <p align="center" style="cursor: pointer">
   <a href="https://hoangsonww.github.io/WeatherMate-App/">
-    <img src="../utils/weathermateUI.png" alt="The WeatherMate App Interface"/>
+    <img src="../utils/weathermateUI.png" alt="The WeatherMate App Interface" width="100%"/>
   </a>
 </p>
 
