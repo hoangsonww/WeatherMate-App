@@ -1,0 +1,21 @@
+{
+  "short_name": "WeatherMate",
+  "name": "WeatherMate App - Real-time Weather Updates",
+  "icons": [
+    {
+      "src": "utils/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "utils/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#c9dfff",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#4DB8FF"
+}

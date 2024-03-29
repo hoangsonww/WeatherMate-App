@@ -16,7 +16,7 @@ Welcome to WeatherMate! Created by [Son Nguyen](https://github.com/hoangsonww) i
 
 <p align="center" style="cursor: pointer">
   <a href="https://hoangsonww.github.io/WeatherMate-App/">
-    <img src="../utils/weathermateUI.png" alt="The WeatherMate App Interface"/>
+    <img src="../utils/weathermateUI.png" alt="The WeatherMate App Interface" width="100%"/>
   </a>
 </p>
 
@@ -66,8 +66,6 @@ To get started with WeatherMate:
 - **HTML/CSS**: For structure and styling.
 - **JavaScript**: For dynamic interactions and API integration.
 - **OpenWeatherMap API**: For fetching weather data.
-- **Unsplash API**: For fetching background images.
-- **Google Fonts**: For fonts.
 - **Vue.js**: For reactive UI components.
 - **Font Awesome**: For icons.
 - **Moment.js**: For time display.
@@ -75,7 +73,8 @@ To get started with WeatherMate:
 - **Bootstrap**: For styling and responsiveness.
 - **Git**: For version control.
 - **GitHub Pages**: For deployment.
-- **VS Code**: For code editing.
+- **Webpack**: For bundling.
+- **Babel**: For transpiling.
 - **Figma**: For design and prototyping.
 
 ## Contributing
