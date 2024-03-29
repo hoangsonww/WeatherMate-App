@@ -75,7 +75,8 @@ To get started with WeatherMate:
 - **Bootstrap**: For styling and responsiveness.
 - **Git**: For version control.
 - **GitHub Pages**: For deployment.
-- **VS Code**: For code editing.
+- **Webpack**: For bundling.
+- **Babel**: For transpiling.
 - **Figma**: For design and prototyping.
 
 ## Contributing
