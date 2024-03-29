@@ -66,8 +66,6 @@ To get started with WeatherMate:
 - **HTML/CSS**: For structure and styling.
 - **JavaScript**: For dynamic interactions and API integration.
 - **OpenWeatherMap API**: For fetching weather data.
-- **Unsplash API**: For fetching background images.
-- **Google Fonts**: For fonts.
 - **Vue.js**: For reactive UI components.
 - **Font Awesome**: For icons.
 - **Moment.js**: For time display.
