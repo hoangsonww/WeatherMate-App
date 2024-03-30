@@ -60,6 +60,7 @@ To get started with WeatherMate:
 - **Dynamic Backgrounds**: The background image changes to reflect the current weather conditions.
 - **Local Advice**: The advice at the bottom of the page changes to reflect the current weather conditions.
 - **Local Weather**: The weather conditions at the top right of the page changes to reflect the current weather conditions.
+- **Cute Backgrounds**: The background image changes to reflect the current weather conditions.
 
 ## Technologies
 
