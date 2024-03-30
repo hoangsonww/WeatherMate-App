@@ -93,10 +93,12 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-David Nguyen - [@hoangsonww](https://github.com/hoangsonww)
+Son Nguyen - [@hoangsonww](https://github.com/hoangsonww)
 
 Project Link: [https://github.com/hoangsonww/WeatherMate-App](https://github.com/hoangsonww/WeatherMate-App)
 
 App's URL: [https://hoangsonww.github.io/WeatherMate-App/](https://hoangsonww.github.io/WeatherMate-App/)
 
 ---
+
+Created with ❤️ in 2024 by [Son Nguyen](https://github.com/hoangsonww). All rights reserved.
