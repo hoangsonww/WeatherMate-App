@@ -244,7 +244,7 @@ function addWeatherToPage(data) {
     weather.classList.add("weather");
 
     weather.innerHTML = `
-        <h2 style="margin-left: 40px">${data.name} 
+        <h2 style="margin-left: 20px">${data.name} 
             <button style="margin-left: 10px" id="favorite-btn">❤️ </button>
         </h2>
         <h2><img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" /> ${temp}${unit} <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" /></h2>
