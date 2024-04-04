@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 Not Found - The WeatherMate App</title>
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="/utils/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        body {
+            background-image: url("/utils/clouds.jpg");
+            font-family: "Poppins", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+
+        .error-container {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .error-container h1 {
+            font-size: 6rem;
+            margin-bottom: 0;
+        }
+
+        .error-container p {
+            font-size: 1.5rem;
+            margin-top: 0;
+        }
+
+        .back-link {
+            font-size: 1.2rem;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 15px;
+            background-color: #534caf;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-link:hover {
+            background-color: #39329f;
+        }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HXL07SQFH0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-HXL07SQFH0');
+    </script>
+</head>
+
+<body>
+    <header style="text-align: center">
+        <img src="utils/logo.png" id="img" onclick="window.location.href='index.html'" title="Click to go back to the home page" style="cursor: pointer"/>
+        <h1 id="my-heading">The WeatherMate App</h1>
+        <div class="error-container">
+            <h1>404</h1>
+            <p>Oops! The page you're looking for can't be found.</p>
+            <a href="https://hoangsonww.github.io/WeatherMate-App/" class="back-link">Back to Home</a>
+        </div>
+    </header>
+</body>
+
+</html>

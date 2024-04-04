@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The WeatherMate App</title>
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="description" content="The WeatherMate App provides real-time weather updates, forecasts, and air quality information for any location.">
+    <meta name="keywords" content="weather, forecast, air quality, temperature, humidity, wind, WeatherMate">
+    <meta name="author" content="Son Nguyen Hoang">
+    <meta http-equiv="content-language" content="en" />
+    <meta name="rating" content="general" />
+    <meta name="robots" content="index, follow" />
+    <meta name="rights" content="&copy; 2023 Son Nguyen Hoang" />
+
+    <link rel="canonical" href="https://hoangsonww.github.io/WeatherMate-App/" />
+    <link rel="stylesheet" href="src/css/style.css" />
+    <script src="src/js/script.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="utils/favicon.ico">
+
+    <meta property="og:title" content="The WeatherMate App" />
+    <meta property="og:description" content="Get up-to-date weather information and forecasts for any location with the WeatherMate App." />
+    <meta property="og:image" content="https://hoangsonww.github.io/WeatherMate-App/utils/image.png" />
+    <meta property="og:url" content="https://hoangsonww.github.io/WeatherMate-App/" />
+    <meta property="og:site_name" content="WeatherMate App" />
+    <meta property="og:type" content="website" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="The WeatherMate App" />
+    <meta name="twitter:description" content="Stay updated with the latest weather forecasts with WeatherMate. Real-time updates, forecasts, and air quality info for your location." />
+    <meta name="twitter:image" content="https://hoangsonww.github.io/WeatherMate-App/utils/image.png" />
+    <meta name="theme-color" content="#4DB8FF">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HXL07SQFH0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-HXL07SQFH0');
+    </script>
+</head>
+
+<body>
+
+    <div id="center">
+        <img src="utils/logo.png" id="img" onclick="window.location.href='index.html'" title="Click to go back to the home page" style="cursor: pointer"/>
+
+        <a href="index.html" style="text-decoration: none">
+            <h1 id="my-heading">The WeatherMate App</h1>
+        </a>
+
+        <main id="main"></main>
+
+        <button id="forecast-btn" style="display: none; font-size: 15px; font: inherit">View Forecast For </button>
+
+        <button id="aqi-btn" style="display: none; font-size: 15px; text-align: center; font: inherit">View Air Quality Index For </button>
+
+        <button id="humidity-rain-btn" style="display: none; font-size: 15px; font: inherit">View Humidity For </button>
+
+        <button id="wind-info-btn" style="display: none; font-size: 15px; font: inherit">View Wind Info</button>
+        <div id="wind-info" style="display: none;">
+            <h3>Wind Information</h3>
+            <p id="wind-speed">Speed: --</p>
+            <p id="wind-direction">Direction: --</p>
+            <p id="wind-pressure">Pressure: --</p>
+        </div>
+
+        <button id="feels-like-btn" style="display: none; font-size: 15px; font: inherit">View Feels Like Info</button>
+        <div id="feels-like-info" style="display: none;">
+            <h3>Feels Like Information</h3>
+            <p id="feels-like-temp">Temperature: --</p>
+            <p id="min-temp">Min Temp: --</p>
+            <p id="max-temp">Max Temp: --</p>
+        </div>
+
+        <div id="aqi-display" style="display: none; text-align: center"></div>
+
+        <div id="forecast-display"></div>
+
+        <div id="humidity-rain-display" style="display: none; text-align: center"></div>
+
+        <form id="form">
+            <input
+                    type="text"
+                    id="search"
+                    placeholder="Search for any location..."
+                    autocomplete="on"
+            />
+        </form>
+        <div id="search-results" style="margin-top: 20px"></div>
+
+        <br>
+
+        <button type="button" style="font-size: 18px; padding-left: 10px; padding-right: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);" id="btn" title="Simply press enter or this button to search">Search</button>
+
+        <button id="toggle-temp" style="font-size: 16px; font: inherit; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);" onclick="toggleTemperatureUnit()" title="Click to Change Temperature Units">Displaying in °F</button>
+
+        <div id="favorites-section"></div>
+
+        <button id="refresh-weather" style="display: none; font: inherit" title="Outdated weather? Refresh to get the latest weather at this location!">Refresh Weather</button>
+
+        <button onclick="window.location.href='src/html/about.html'" type="button" id="btn1" style="margin-top: 15px; font-size: 16px; font: inherit; margin-bottom: 50px" title="See this app's and its creator's overview information">About Us</button>
+
+        <div id="local-advice" class="local-advice" title="Choose a City or Region to Get Weather Advice">
+            <p><strong>Weather Advice</strong></p>
+        </div>
+
+        <div
+                id="current-location-weather"
+                class="current-location-weather"
+                onclick="fetchWeatherForCurrentLocation()"
+                style="cursor: pointer"
+                title="Click to Refresh Weather for Your Current Location"
+        >
+        </div>
+
+        <h6 id="local-time-label"><strong>Your Local Time</strong></h6>
+
+        <div id="local-time-container" class="local-time-container" title="Your Local Time"></div>
+
+        <h6 id="home-label"><strong>Back to Home</strong></h6>
+
+        <button onclick="window.location.href='index.html'" type="button" id="home-btn" title="Get back to the initial home page">
+            <i class="fas fa-home"></i>
+        </button>
+
+        <div class="chatbot" style="color: black !important">
+            <div class="chat-messages"></div>
+            <input type="text" placeholder="Ask WeatherMate..." class="chat-input">
+        </div>
+
+    </div>
+
+</body>
+
+</html>
