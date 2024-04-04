@@ -200,6 +200,9 @@ function setBackground(condition, data) {
             case 'Rain':
                 backgroundImage = 'url(/WeatherMate-App/utils/rainy.jpg)';
                 break;
+            case 'Drizzle':
+                backgroundImage = 'url(/WeatherMate-App/utils/rainy.jpg)';
+                break;
             case 'Snow':
                 backgroundImage = 'url(/WeatherMate-App/utils/snowy.jpg)';
                 break;
@@ -856,9 +859,17 @@ function generateLocalAdvice(weatherData) {
             advice = "It's cloudy. Good weather to enjoy a walk outside!";
             break;
         case "Mist":
+            advice = "Misty weather. Drive carefully and keep your headlights on!";
+            break;
         case "Smoke":
+            advice = "Smoke detected. Stay indoors and keep windows closed!";
+            break;
         case "Haze":
+            advice = "Hazy weather. Wear sunglasses and stay hydrated!";
+            break;
         case "Dust":
+            advice = "Dusty winds are blowing. Protect your eyes and skin!";
+            break;
         case "Fog":
             advice = "Visibility might be low due to mist. Take care when driving!";
             break;
