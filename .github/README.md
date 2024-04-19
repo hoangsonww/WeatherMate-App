@@ -29,16 +29,16 @@ WeatherMate fetches data from the OpenWeatherMap API and our live databases, whi
 To get started with WeatherMate:
 
 1. **Clone the Repository**
-   ```
+   ```bash
    git clone https://github.com/hoangsonww/WeatherMate-App.git
    ```
-   ```
+   ```bash
    cd WeatherMate
    ```
 
 2. **Install Dependencies**
    Assuming you have Node.js and npm installed, run the following command:
-   ```
+   ```bash
    npm install
    ```
 
@@ -66,7 +66,6 @@ To get started with WeatherMate:
 
 - **HTML/CSS**: For structure and styling.
 - **JavaScript**: For dynamic interactions and API integration.
-- **OpenWeatherMap API**: For fetching weather data.
 - **Vue.js**: For reactive UI components.
 - **Font Awesome**: For icons.
 - **Moment.js**: For time display.
