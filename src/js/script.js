@@ -183,7 +183,7 @@ function setBackground(condition, data) {
 
     if (condition === 'Clear' && (currentTime < sunrise || currentTime > sunset)) {
         backgroundImage = 'url(/WeatherMate-App/utils/night.jpg)';
-        textColor = 'white';
+        textColor = 'black';
         favoriteColor = 'black';
     }
     else {
@@ -192,7 +192,7 @@ function setBackground(condition, data) {
                 backgroundImage = 'url(/WeatherMate-App/utils/cloudy.jpg)';
                 textColor = 'black';
                 favoriteColor = 'black';
-                document.getElementById('my-heading').style.color = 'white !important';
+                document.getElementById('my-heading').style.color = 'black !important';
                 break;
             case 'Clear':
                 backgroundImage = 'url(/WeatherMate-App/utils/clear.jpg)';
