@@ -185,6 +185,8 @@ function setBackground(condition, data) {
         backgroundImage = 'url(/WeatherMate-App/utils/night.jpg)';
         textColor = 'black';
         favoriteColor = 'black';
+        document.getElementById('home-label').style.color = 'white';
+        document.getElementById('local-time-label').style.color = 'white';
     }
     else {
         switch (condition) {
@@ -192,25 +194,39 @@ function setBackground(condition, data) {
                 backgroundImage = 'url(/WeatherMate-App/utils/cloudy.jpg)';
                 textColor = 'black';
                 favoriteColor = 'black';
-                document.getElementById('my-heading').style.color = 'black !important';
+                document.getElementById('my-heading').style.color = 'black';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
             case 'Clear':
                 backgroundImage = 'url(/WeatherMate-App/utils/clear.jpg)';
+                document.getElementById('home-label').style.color = 'white';
+                document.getElementById('local-time-label').style.color = 'white';
                 break;
             case 'Rain':
                 backgroundImage = 'url(/WeatherMate-App/utils/rainy.jpg)';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
             case 'Drizzle':
                 backgroundImage = 'url(/WeatherMate-App/utils/rainy.jpg)';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
             case 'Snow':
                 backgroundImage = 'url(/WeatherMate-App/utils/snowy.jpg)';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
             case 'Thunderstorm':
                 backgroundImage = 'url(/WeatherMate-App/utils/thunderstorm.jpg)';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
             default:
                 backgroundImage = 'url(/WeatherMate-App/utils/clouds.jpg)';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
         }
     }
