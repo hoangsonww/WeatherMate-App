@@ -9,7 +9,7 @@ html {
 }
 
 body {
-    background-image: url("/WeatherMate-App/utils/clouds.jpg");
+    background-image: url("https://hoangsonww.github.io/WeatherMate-App/utils/clouds.jpg");
     font-family: "Poppins", sans-serif;
     display: flex;
     flex-direction: column;
@@ -23,12 +23,12 @@ body {
 }
 
 #center {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 16px;
     padding: 15px;
     margin: 10px;
     width: calc(100% - 20px);
-    max-width: 400px;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
