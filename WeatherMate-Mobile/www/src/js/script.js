@@ -703,6 +703,7 @@ function displayFavorites() {
     const favorites = getFavorites();
 
     favoritesSection.innerHTML = "";
+    favoritesList.style.borderRadius = "12px";
 
     if (favorites.length === 0) {
         favoritesSection.innerHTML = "<h3>No favorite cities added.</h3>";
@@ -713,7 +714,7 @@ function displayFavorites() {
 
     favorites.forEach(city => {
         const cityElem = document.createElement("div");
-
+        cityElem.style.borderRadius = "8px";
         const cityLink = document.createElement("span");
         cityLink.innerText = city;
         cityLink.style.cursor = "pointer";
@@ -726,6 +727,8 @@ function displayFavorites() {
 
         const removeBtn = document.createElement("button");
         removeBtn.innerText = "Remove";
+        removeBtn.style.font = "inherit";
+        removeBtn.style.fontSize = "14px";
         removeBtn.onclick = function() { removeFavorite(city); };
 
         cityElem.appendChild(removeBtn);
