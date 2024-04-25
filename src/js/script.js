@@ -713,7 +713,7 @@ function displayFavorites() {
 
     favorites.forEach(city => {
         const cityElem = document.createElement("div");
-
+        cityElem.style.borderRadius = "8px";
         const cityLink = document.createElement("span");
         cityLink.innerText = city;
         cityLink.style.cursor = "pointer";
