@@ -288,8 +288,8 @@ button:hover {
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-    width: 80%;
-    max-width: 600px;
+    width: 600px;
+    max-width: calc(100% - 20px);
     margin: 20px 0;
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.1);
