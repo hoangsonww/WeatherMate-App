@@ -727,6 +727,8 @@ function displayFavorites() {
 
         const removeBtn = document.createElement("button");
         removeBtn.innerText = "Remove";
+        removeBtn.style.font = "inherit";
+        removeBtn.style.fontSize = "14px";
         removeBtn.onclick = function() { removeFavorite(city); };
 
         cityElem.appendChild(removeBtn);
