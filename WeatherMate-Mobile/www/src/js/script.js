@@ -182,32 +182,51 @@ function setBackground(condition, data) {
     const sunset = data.sys.sunset;
 
     if (condition === 'Clear' && (currentTime < sunrise || currentTime > sunset)) {
-        backgroundImage = 'url(/WeatherMate-App/WeatherMate-Mobile/www/utils/night.jpg)';
-        textColor = 'white';
+        backgroundImage = 'url(/WeatherMate-App/utils/night.jpg)';
+        textColor = 'black';
         favoriteColor = 'black';
+        document.getElementById('home-label').style.color = 'white';
+        document.getElementById('local-time-label').style.color = 'white';
     }
     else {
         switch (condition) {
             case 'Clouds':
-                backgroundImage = 'url(/WeatherMate-App/WeatherMate-Mobile/www/utils/cloudy.jpg)';
+                backgroundImage = 'url(/WeatherMate-App/utils/cloudy.jpg)';
                 textColor = 'black';
                 favoriteColor = 'black';
-                document.getElementById('my-heading').style.color = 'white !important';
+                document.getElementById('my-heading').style.color = 'black';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
             case 'Clear':
-                backgroundImage = 'url(/WeatherMate-App/WeatherMate-Mobile/www/utils/clear.jpg)';
+                backgroundImage = 'url(/WeatherMate-App/utils/clear.jpg)';
+                document.getElementById('home-label').style.color = 'white';
+                document.getElementById('local-time-label').style.color = 'white';
                 break;
             case 'Rain':
-                backgroundImage = 'url(/WeatherMate-App/WeatherMate-Mobile/www/utils/rainy.jpg)';
+                backgroundImage = 'url(/WeatherMate-App/utils/rainy.jpg)';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
+                break;
+            case 'Drizzle':
+                backgroundImage = 'url(/WeatherMate-App/utils/rainy.jpg)';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
             case 'Snow':
-                backgroundImage = 'url(/WeatherMate-App/WeatherMate-Mobile/www/utils/snowy.jpg)';
+                backgroundImage = 'url(/WeatherMate-App/utils/snowy.jpg)';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
             case 'Thunderstorm':
-                backgroundImage = 'url(/WeatherMate-App/WeatherMate-Mobile/www/utils/thunderstorm.jpg)';
+                backgroundImage = 'url(/WeatherMate-App/utils/thunderstorm.jpg)';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
             default:
-                backgroundImage = 'url(/WeatherMate-App/WeatherMate-Mobile/www/utils/clouds.jpg)';
+                backgroundImage = 'url(/WeatherMate-App/utils/clouds.jpg)';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
         }
     }
@@ -244,7 +263,7 @@ function addWeatherToPage(data) {
     weather.classList.add("weather");
 
     weather.innerHTML = `
-        <h2 style="margin-left: 40px">${data.name} 
+        <h2 style="margin-left: 20px">${data.name} 
             <button style="margin-left: 10px" id="favorite-btn">❤️ </button>
         </h2>
         <h2><img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" /> ${temp}${unit} <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" /></h2>
@@ -856,9 +875,17 @@ function generateLocalAdvice(weatherData) {
             advice = "It's cloudy. Good weather to enjoy a walk outside!";
             break;
         case "Mist":
+            advice = "Misty weather. Drive carefully and keep your headlights on!";
+            break;
         case "Smoke":
+            advice = "Smoke detected. Stay indoors and keep windows closed!";
+            break;
         case "Haze":
+            advice = "Hazy weather. Wear sunglasses and stay hydrated!";
+            break;
         case "Dust":
+            advice = "Dusty winds are blowing. Protect your eyes and skin!";
+            break;
         case "Fog":
             advice = "Visibility might be low due to mist. Take care when driving!";
             break;
