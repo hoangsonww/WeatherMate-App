@@ -703,6 +703,7 @@ function displayFavorites() {
     const favorites = getFavorites();
 
     favoritesSection.innerHTML = "";
+    favoritesList.style.borderRadius = "12px";
 
     if (favorites.length === 0) {
         favoritesSection.innerHTML = "<h3>No favorite cities added.</h3>";
