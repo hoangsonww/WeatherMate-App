@@ -512,6 +512,7 @@ let popupStatus = {
 
 function toggleForecast() {
     closeAllPopups();
+
     const forecastDisplay = document.getElementById("forecast-display");
     const forecastBtn = document.getElementById("forecast-btn");
 
@@ -544,6 +545,7 @@ function toggleAQI() {
         if (!aqiDisplay.hasChildNodes()) {
             displayAirQuality(aqiBtn.getAttribute("data-lat"), aqiBtn.getAttribute("data-lon"));
         }
+
         aqiDisplay.style.display = 'block';
         aqiBtn.textContent = `Close Air Quality Index For ${aqiBtn.getAttribute("data-city")}`;
         popupStatus.aqi = true;
