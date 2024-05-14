@@ -251,14 +251,6 @@ function displayCityNotFound(city) {
     document.getElementById("feels-like-btn").style.display = 'none';
 }
 
-document.getElementById("search").addEventListener("click", function() {
-    main.innerHTML = "";
-});
-
-document.getElementById("search").addEventListener("keydown", function() {
-    main.innerHTML = "";
-});
-
 function addWeatherToPage(data) {
     const temp = KtoUnit(data.main.temp);
     const unit = isCelsius ? "°C" : "°F";
