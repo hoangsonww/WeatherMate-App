@@ -616,6 +616,10 @@ button:hover {
     position: fixed;
     top: 0;
     right: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 4px;
 }
 
 #enable-location-btn {
