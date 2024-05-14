@@ -850,6 +850,7 @@ toggleButton.title = "Maximize/Minimize Chatbot";
 toggleButton.onclick = function() {
     const chatMessagesElem = document.querySelector(".chat-messages");
     const chatInputElem = document.querySelector(".chat-input");
+
     if (chatMessagesElem.style.display === "none") {
         chatMessagesElem.style.display = "";
         chatInputElem.style.display = "";
