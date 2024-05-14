@@ -247,6 +247,8 @@ function setBackground(condition, data) {
 function displayCityNotFound(city) {
     main.innerHTML = `<h2 style="text-align: center; align-self: center">NO WEATHER DATA FOR THE REGION OR CITY WITH THE NAME ${city.toUpperCase()} FOUND!</h2>
                       <h3 style="align-self: center; text-align: center">PLEASE CHECK THE SPELLING AND TRY AGAIN!</h3>`;
+    document.getElementById("wind-info-btn").style.display = 'none';
+    document.getElementById("feels-like-btn").style.display = 'none';
 }
 
 document.getElementById("search").addEventListener("click", function() {
