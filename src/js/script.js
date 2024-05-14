@@ -25,6 +25,7 @@ searchInput.addEventListener('input', async (e) => {
 
     try {
         const response = await fetch(searchUrl);
+
         if (!response.ok) {
             throw new Error(`Failed to fetch: ${response.statusText}`);
         }
@@ -66,10 +67,12 @@ const url = (city) =>
 async function getWeatherByLocation(city) {
     const humidityRainBtn = document.getElementById("humidity-rain-btn");
     const humidityRainDisplay = document.getElementById("humidity-rain-display");
+
     if (humidityRainDisplay.style.display !== 'none') {
         humidityRainDisplay.style.display = 'none';
         humidityRainBtn.textContent = `View Humidity For ${city}`;
     }
+
     lastCity = city;
     document.getElementById("forecast-display").classList.remove('hide');
     document.getElementById( "forecast-display" ).classList.add( 'show' );
@@ -95,12 +98,12 @@ async function getWeatherByLocation(city) {
     const resp = await fetch(url(city), { origin: "cors" });
     const respData = await resp.json();
 
-    if(respData.cod === "404") {
+    if (respData.cod === "404") {
         displayCityNotFound(city);
         return;
     }
 
-    if(respData.visibility !== undefined) {
+    if (respData.visibility !== undefined) {
         displayAirQuality(respData.coord.lat, respData.coord.lon, respData.visibility);
     }
 
@@ -230,6 +233,7 @@ function setBackground(condition, data) {
                 break;
         }
     }
+
     document.body.style.backgroundImage = backgroundImage;
     document.body.style.backgroundSize = "cover";
     document.body.style.backgroundPosition = "center";
@@ -289,6 +293,7 @@ function addWeatherToPage(data) {
     forecastBtn.setAttribute("data-city", data.name);
     forecastBtn.textContent = `View Forecast For ${data.name}`;
     forecastBtn.style.display = "block";
+
     const aqiBtn = document.getElementById("aqi-btn");
     aqiBtn.setAttribute("data-lat", data.coord.lat);
     aqiBtn.setAttribute("data-lon", data.coord.lon);
@@ -356,6 +361,7 @@ function displayLocalTime(timezoneOffset) {
     const formattedTime = localTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     let timeElement = document.getElementById("local-time");
+
     if (!timeElement) {
         timeElement = document.createElement("div");
         timeElement.id = "local-time";
@@ -372,6 +378,7 @@ async function getForecastByLocation(lat, lon) {
     forecastDisplay.style.display = 'grid';
 
     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherpath}`;
+
     try {
         const resp = await fetch(forecastUrl, { origin: "cors" });
         const respData = await resp.json();
@@ -690,6 +697,7 @@ function getFavorites(){
 
 function updateFavoriteButton(city) {
     const favoriteBtn = document.getElementById("favorite-btn");
+
     if (getFavorites().includes(city)) {
         favoriteBtn.style.color = "red";
     } else {
