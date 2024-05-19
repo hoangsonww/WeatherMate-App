@@ -1,6 +1,8 @@
 # The WeatherMate App
 
-Welcome to WeatherMate! Created by [Son Nguyen](https://github.com/hoangsonww) in 2024, WeatherMate is your go-to web application for staying updated with the latest weather conditions for any location! With an easy-to-use interface and real-time data, WeatherMate ensures that you're well-prepared for the weather ahead. The mobile version is also under development, and is in the `WeatherMate` sub-directory. At the mean time, you can use the web version at [https://hoangsonww.github.io/WeatherMate-App/](https://hoangsonww.github.io/WeatherMate-App/).
+Welcome to WeatherMate! Created by [Son Nguyen](https://github.com/hoangsonww) in 2024, WeatherMate is your go-to web application for staying updated with the latest weather conditions for any location! With an easy-to-use interface and real-time data, WeatherMate ensures that you're well-prepared for the weather ahead. The mobile version is also under development, and is in the `WeatherMate-Mobile` sub-directory. 
+
+At the mean time, you can use the web version at [https://hoangsonww.github.io/WeatherMate-App/](https://hoangsonww.github.io/WeatherMate-App/). Let's get prepared for the weather ahead 🌤️️!
 
 ## Features
 
@@ -101,4 +103,4 @@ App's URL: [https://hoangsonww.github.io/WeatherMate-App/](https://hoangsonww.gi
 
 ---
 
-Created with ❤️ in 2024 by [Son Nguyen](https://github.com/hoangsonww). All rights reserved.
+Created with ❤️ in 2024 by [Son Nguyen](https://github.com/hoangsonww). Thank you for using WeatherMate! 🌤️
