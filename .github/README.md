@@ -4,6 +4,14 @@ Welcome to WeatherMate! Created by [Son Nguyen](https://github.com/hoangsonww) i
 
 At the mean time, you can use the web version at [https://hoangsonww.github.io/WeatherMate-App/](https://hoangsonww.github.io/WeatherMate-App/). Let's get prepared for the weather ahead 🌤️️!
 
+## User Interface
+
+<p align="center" style="cursor: pointer">
+  <a href="https://hoangsonww.github.io/WeatherMate-App/">
+    <img src="../utils/weathermateUI.png" alt="The WeatherMate App Interface" width="100%"/>
+  </a>
+</p>
+
 ## Features
 
 - **Current Weather Conditions**: Get detailed reports of the current weather, including temperature, weather conditions, and more.
@@ -13,14 +21,6 @@ At the mean time, you can use the web version at [https://hoangsonww.github.io/W
 - **Dynamic Backgrounds**: The UI changes to reflect the current weather conditions, enhancing the user experience.
 - **Favorites**: Save your favorite locations for quick weather checks.
 - **Responsive Design**: WeatherMate looks great on any device, whether it's your phone, tablet, or desktop.
-
-## User Interface
-
-<p align="center" style="cursor: pointer">
-  <a href="https://hoangsonww.github.io/WeatherMate-App/">
-    <img src="../utils/weathermateUI.png" alt="The WeatherMate App Interface" width="100%"/>
-  </a>
-</p>
 
 ## How It Works
 
