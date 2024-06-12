@@ -1086,6 +1086,7 @@ function addFeelsLikeToPage(data) {
 
     const minTempElement = document.getElementById("min-temp");
     const maxTempElement = document.getElementById("max-temp");
+
     minTempElement.textContent = `Min Temperature: ${minTemp}`;
     maxTempElement.textContent = `Max Temperature: ${maxTemp}`;
 }
