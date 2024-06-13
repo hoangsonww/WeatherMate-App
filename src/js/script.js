@@ -30,6 +30,7 @@ searchInput.addEventListener('input', async (e) => {
             throw new Error(`Failed to fetch: ${response.statusText}`);
         }
         const data = await response.json();
+
         if (data.cod !== "200") {
             console.error('Error from API:', data.message);
             return;
