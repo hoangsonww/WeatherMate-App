@@ -30,41 +30,42 @@ These instructions will get you a copy of the project up and running on your loc
 3. **For iOS:**
     - Open the `WeatherMate.xcodeproj` file in Xcode.
     - Run the application on an iOS simulator or a physical device.
+    - Note: If you change the code, you must remove the iOS platform and add it again using the following commands for the changes to take effect:
+    ```bash
+    cordova platforms rm ios
+    cordova platforms add ios
+    ```
+   
+### Mobile UI
 
-4. **For React Native:**
-    - Navigate to the project directory.
-    - Install dependencies:
-      ```bash
-      npm install
-      ```
-    - Run the app:
-      ```bash
-      npm start
-      ```
+If your previous installations are successful, you should see the following output:
 
-## Running the tests
-Explain how to run the automated tests for this system.
+#### iOS
 
-## Deployment
-Add additional notes about how to deploy this on a live system.
+<p align="center" style="cursor: pointer">
+    <img src="../utils/weathermateios.png" alt="The WeatherMate App Interface" width="80%" style="border-radius: 8px"/>
+</p>
+
+#### Android
+
+<p align="center" style="cursor: pointer">
+    <img src="../utils/weathermateandroid.png" alt="The WeatherMate App Interface" width="80%" style="border-radius: 8px"/>
+</p>
+
+This image shows an example when the user views the weather for New York City.
 
 ## Built With
 - [Kotlin](https://kotlinlang.org/) - Used for Android development.
 - [Swift](https://swift.org/) - Used for iOS development.
-- [React Native](https://reactnative.dev/) - Used for cross-platform mobile app development.
+- [Cordova](https://cordova.apache.org/) - Used for cross-platform development.
 
 ## Versioning
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/hoangsonww/WeatherMate-App/tags).
+We use [Git](https://git-scm.com/) for version control.
 
 ## Authors
 - **Son Nguyen Hoang** - *Initial work*
 
-See also the list of [contributors](https://github.com/hoangsonww/WeatherMate-App/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/hoangsonww) who participated in this project.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
-## Acknowledgments
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc
+This project is licensed under the MIT License - see the [LICENSE.md](../LICENSE) file for details.

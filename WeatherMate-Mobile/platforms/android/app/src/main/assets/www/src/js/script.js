@@ -25,10 +25,12 @@ searchInput.addEventListener('input', async (e) => {
 
     try {
         const response = await fetch(searchUrl);
+
         if (!response.ok) {
             throw new Error(`Failed to fetch: ${response.statusText}`);
         }
         const data = await response.json();
+
         if (data.cod !== "200") {
             console.error('Error from API:', data.message);
             return;
@@ -66,14 +68,16 @@ const url = (city) =>
 async function getWeatherByLocation(city) {
     const humidityRainBtn = document.getElementById("humidity-rain-btn");
     const humidityRainDisplay = document.getElementById("humidity-rain-display");
+
     if (humidityRainDisplay.style.display !== 'none') {
         humidityRainDisplay.style.display = 'none';
         humidityRainBtn.textContent = `View Humidity For ${city}`;
     }
+
     lastCity = city;
     document.getElementById("forecast-display").classList.remove('hide');
     document.getElementById( "forecast-display" ).classList.add( 'show' );
-    
+
     document.getElementById("forecast-btn").textContent = `View Forecast For ${city}`;
     document.getElementById("aqi-btn").textContent = `View Air Quality Index For ${city}`;
 
@@ -95,12 +99,12 @@ async function getWeatherByLocation(city) {
     const resp = await fetch(url(city), { origin: "cors" });
     const respData = await resp.json();
 
-    if(respData.cod === "404") {
+    if (respData.cod === "404") {
         displayCityNotFound(city);
         return;
     }
 
-    if(respData.visibility !== undefined) {
+    if (respData.visibility !== undefined) {
         displayAirQuality(respData.coord.lat, respData.coord.lon, respData.visibility);
     }
 
@@ -182,35 +186,53 @@ function setBackground(condition, data) {
     const sunset = data.sys.sunset;
 
     if (condition === 'Clear' && (currentTime < sunrise || currentTime > sunset)) {
-        backgroundImage = 'url(/WeatherMate-App/WeatherMate-Mobile/www/utils/night.jpg)';
-        textColor = 'white';
+        backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/night.jpg)';
+        textColor = 'black';
         favoriteColor = 'black';
     }
     else {
         switch (condition) {
             case 'Clouds':
-                backgroundImage = 'url(/WeatherMate-App/WeatherMate-Mobile/www/utils/cloudy.jpg)';
+                backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/cloudy.jpg)';
                 textColor = 'black';
                 favoriteColor = 'black';
-                document.getElementById('my-heading').style.color = 'white !important';
+                document.getElementById('my-heading').style.color = 'black';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
             case 'Clear':
-                backgroundImage = 'url(/WeatherMate-App/WeatherMate-Mobile/www/utils/clear.jpg)';
+                backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/clear.jpg)';
+                document.getElementById('home-label').style.color = 'white';
+                document.getElementById('local-time-label').style.color = 'white';
                 break;
             case 'Rain':
-                backgroundImage = 'url(/WeatherMate-App/WeatherMate-Mobile/www/utils/rainy.jpg)';
+                backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/rainy.jpg)';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
+                break;
+            case 'Drizzle':
+                backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/rainy.jpg)';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
             case 'Snow':
-                backgroundImage = 'url(/WeatherMate-App/WeatherMate-Mobile/www/utils/snowy.jpg)';
+                backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/snowy.jpg)';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
             case 'Thunderstorm':
-                backgroundImage = 'url(/WeatherMate-App/WeatherMate-Mobile/www/utils/thunderstorm.jpg)';
+                backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/thunderstorm.jpg)';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
             default:
-                backgroundImage = 'url(/WeatherMate-App/WeatherMate-Mobile/www/utils/clouds.jpg)';
+                backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/clouds.jpg)';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
         }
     }
+
     document.body.style.backgroundImage = backgroundImage;
     document.body.style.backgroundSize = "cover";
     document.body.style.backgroundPosition = "center";
@@ -224,15 +246,9 @@ function setBackground(condition, data) {
 function displayCityNotFound(city) {
     main.innerHTML = `<h2 style="text-align: center; align-self: center">NO WEATHER DATA FOR THE REGION OR CITY WITH THE NAME ${city.toUpperCase()} FOUND!</h2>
                       <h3 style="align-self: center; text-align: center">PLEASE CHECK THE SPELLING AND TRY AGAIN!</h3>`;
+    document.getElementById("wind-info-btn").style.display = 'none';
+    document.getElementById("feels-like-btn").style.display = 'none';
 }
-
-document.getElementById("search").addEventListener("click", function() {
-    main.innerHTML = "";
-});
-
-document.getElementById("search").addEventListener("keydown", function() {
-    main.innerHTML = "";
-});
 
 function addWeatherToPage(data) {
     const temp = KtoUnit(data.main.temp);
@@ -244,7 +260,7 @@ function addWeatherToPage(data) {
     weather.classList.add("weather");
 
     weather.innerHTML = `
-        <h2 style="margin-left: 40px">${data.name} 
+        <h2 style="margin-left: 20px">${data.name} 
             <button style="margin-left: 10px" id="favorite-btn">❤️ </button>
         </h2>
         <h2><img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" /> ${temp}${unit} <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" /></h2>
@@ -270,6 +286,7 @@ function addWeatherToPage(data) {
     forecastBtn.setAttribute("data-city", data.name);
     forecastBtn.textContent = `View Forecast For ${data.name}`;
     forecastBtn.style.display = "block";
+
     const aqiBtn = document.getElementById("aqi-btn");
     aqiBtn.setAttribute("data-lat", data.coord.lat);
     aqiBtn.setAttribute("data-lon", data.coord.lon);
@@ -337,6 +354,7 @@ function displayLocalTime(timezoneOffset) {
     const formattedTime = localTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     let timeElement = document.getElementById("local-time");
+
     if (!timeElement) {
         timeElement = document.createElement("div");
         timeElement.id = "local-time";
@@ -353,6 +371,7 @@ async function getForecastByLocation(lat, lon) {
     forecastDisplay.style.display = 'grid';
 
     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherpath}`;
+
     try {
         const resp = await fetch(forecastUrl, { origin: "cors" });
         const respData = await resp.json();
@@ -486,6 +505,7 @@ let popupStatus = {
 
 function toggleForecast() {
     closeAllPopups();
+
     const forecastDisplay = document.getElementById("forecast-display");
     const forecastBtn = document.getElementById("forecast-btn");
 
@@ -518,6 +538,7 @@ function toggleAQI() {
         if (!aqiDisplay.hasChildNodes()) {
             displayAirQuality(aqiBtn.getAttribute("data-lat"), aqiBtn.getAttribute("data-lon"));
         }
+
         aqiDisplay.style.display = 'block';
         aqiBtn.textContent = `Close Air Quality Index For ${aqiBtn.getAttribute("data-city")}`;
         popupStatus.aqi = true;
@@ -671,6 +692,7 @@ function getFavorites(){
 
 function updateFavoriteButton(city) {
     const favoriteBtn = document.getElementById("favorite-btn");
+
     if (getFavorites().includes(city)) {
         favoriteBtn.style.color = "red";
     } else {
@@ -684,6 +706,7 @@ function displayFavorites() {
     const favorites = getFavorites();
 
     favoritesSection.innerHTML = "";
+    favoritesList.style.borderRadius = "12px";
 
     if (favorites.length === 0) {
         favoritesSection.innerHTML = "<h3>No favorite cities added.</h3>";
@@ -694,7 +717,7 @@ function displayFavorites() {
 
     favorites.forEach(city => {
         const cityElem = document.createElement("div");
-
+        cityElem.style.borderRadius = "8px";
         const cityLink = document.createElement("span");
         cityLink.innerText = city;
         cityLink.style.cursor = "pointer";
@@ -707,6 +730,8 @@ function displayFavorites() {
 
         const removeBtn = document.createElement("button");
         removeBtn.innerText = "Remove";
+        removeBtn.style.font = "inherit";
+        removeBtn.style.fontSize = "14px";
         removeBtn.onclick = function() { removeFavorite(city); };
 
         cityElem.appendChild(removeBtn);
@@ -820,6 +845,7 @@ toggleButton.title = "Maximize/Minimize Chatbot";
 toggleButton.onclick = function() {
     const chatMessagesElem = document.querySelector(".chat-messages");
     const chatInputElem = document.querySelector(".chat-input");
+
     if (chatMessagesElem.style.display === "none") {
         chatMessagesElem.style.display = "";
         chatInputElem.style.display = "";
@@ -856,9 +882,17 @@ function generateLocalAdvice(weatherData) {
             advice = "It's cloudy. Good weather to enjoy a walk outside!";
             break;
         case "Mist":
+            advice = "Misty weather. Drive carefully and keep your headlights on!";
+            break;
         case "Smoke":
+            advice = "Smoke detected. Stay indoors and keep windows closed!";
+            break;
         case "Haze":
+            advice = "Hazy weather. Wear sunglasses and stay hydrated!";
+            break;
         case "Dust":
+            advice = "Dusty winds are blowing. Protect your eyes and skin!";
+            break;
         case "Fog":
             advice = "Visibility might be low due to mist. Take care when driving!";
             break;
@@ -1051,6 +1085,7 @@ function addFeelsLikeToPage(data) {
 
     const minTempElement = document.getElementById("min-temp");
     const maxTempElement = document.getElementById("max-temp");
+
     minTempElement.textContent = `Min Temperature: ${minTemp}`;
     maxTempElement.textContent = `Max Temperature: ${maxTemp}`;
 }

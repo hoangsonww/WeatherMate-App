@@ -77,7 +77,7 @@ async function getWeatherByLocation(city) {
     lastCity = city;
     document.getElementById("forecast-display").classList.remove('hide');
     document.getElementById( "forecast-display" ).classList.add( 'show' );
-    
+
     document.getElementById("forecast-btn").textContent = `View Forecast For ${city}`;
     document.getElementById("aqi-btn").textContent = `View Air Quality Index For ${city}`;
 
@@ -186,16 +186,14 @@ function setBackground(condition, data) {
     const sunset = data.sys.sunset;
 
     if (condition === 'Clear' && (currentTime < sunrise || currentTime > sunset)) {
-        backgroundImage = 'url(/WeatherMate-App/utils/night.jpg)';
+        backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/night.jpg)';
         textColor = 'black';
         favoriteColor = 'black';
-        document.getElementById('home-label').style.color = 'white';
-        document.getElementById('local-time-label').style.color = 'white';
     }
     else {
         switch (condition) {
             case 'Clouds':
-                backgroundImage = 'url(/WeatherMate-App/utils/cloudy.jpg)';
+                backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/cloudy.jpg)';
                 textColor = 'black';
                 favoriteColor = 'black';
                 document.getElementById('my-heading').style.color = 'black';
@@ -203,32 +201,32 @@ function setBackground(condition, data) {
                 document.getElementById('local-time-label').style.color = 'black';
                 break;
             case 'Clear':
-                backgroundImage = 'url(/WeatherMate-App/utils/clear.jpg)';
-                document.getElementById('home-label').style.color = 'white';
-                document.getElementById('local-time-label').style.color = 'white';
+                backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/clear.jpg)';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
             case 'Rain':
-                backgroundImage = 'url(/WeatherMate-App/utils/rainy.jpg)';
+                backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/rainy.jpg)';
                 document.getElementById('home-label').style.color = 'black';
                 document.getElementById('local-time-label').style.color = 'black';
                 break;
             case 'Drizzle':
-                backgroundImage = 'url(/WeatherMate-App/utils/rainy.jpg)';
+                backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/rainy.jpg)';
                 document.getElementById('home-label').style.color = 'black';
                 document.getElementById('local-time-label').style.color = 'black';
                 break;
             case 'Snow':
-                backgroundImage = 'url(/WeatherMate-App/utils/snowy.jpg)';
+                backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/snowy.jpg)';
                 document.getElementById('home-label').style.color = 'black';
                 document.getElementById('local-time-label').style.color = 'black';
                 break;
             case 'Thunderstorm':
-                backgroundImage = 'url(/WeatherMate-App/utils/thunderstorm.jpg)';
+                backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/thunderstorm.jpg)';
                 document.getElementById('home-label').style.color = 'black';
                 document.getElementById('local-time-label').style.color = 'black';
                 break;
             default:
-                backgroundImage = 'url(/WeatherMate-App/utils/clouds.jpg)';
+                backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/clouds.jpg)';
                 document.getElementById('home-label').style.color = 'black';
                 document.getElementById('local-time-label').style.color = 'black';
                 break;

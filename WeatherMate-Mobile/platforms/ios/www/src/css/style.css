@@ -9,7 +9,7 @@ html {
 }
 
 body {
-    background-image: url("/WeatherMate-App/utils/clouds.jpg");
+    background-image: url("https://hoangsonww.github.io/WeatherMate-App/utils/clouds.jpg");
     font-family: "Poppins", sans-serif;
     display: flex;
     flex-direction: column;
@@ -23,12 +23,12 @@ body {
 }
 
 #center {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 16px;
     padding: 15px;
     margin: 10px;
     width: calc(100% - 20px);
-    max-width: 400px;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -165,7 +165,7 @@ input:focus {
     background-color: #f5f5f5;
     max-height: 400px;
     overflow-y: auto;
-    border-radius: 15px;
+    border-radius: 16px;
     padding: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
     width: 80%;
@@ -288,8 +288,8 @@ button:hover {
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-    width: 80%;
-    max-width: 600px;
+    width: 600px;
+    max-width: calc(100% - 20px);
     margin: 20px 0;
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -591,13 +591,13 @@ button:hover {
 .local-time-container {
     position: fixed;
     top: 30px;
-    right: 0;
+    right: 5px;
     background: rgba(255, 255, 255, 0.8);
     line-height: 20px;
     margin: 20px;
-    border-radius: 50%; /* Circle shape */
-    width: 60px; /* Fixed size */
-    height: 60px; /* Fixed size */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -616,6 +616,10 @@ button:hover {
     position: fixed;
     top: 0;
     right: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 4px;
 }
 
 #enable-location-btn {
@@ -636,6 +640,7 @@ button:hover {
 #enable-location-btn:hover {
     background: #0056b3;
 }
+
 
 #local-advice,
 #current-location-weather,
@@ -675,7 +680,7 @@ button:hover {
     cursor: pointer;
     position: fixed;
     top: 142px;
-    right: 25px;
+    right: 30px;
     color: black;
 }
 
@@ -688,6 +693,10 @@ button:hover {
     top: 100px;
     right: 15px;
     text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 4px;
 }
 
 #wind-info-btn {

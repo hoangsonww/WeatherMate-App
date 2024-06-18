@@ -591,13 +591,13 @@ button:hover {
 .local-time-container {
     position: fixed;
     top: 30px;
-    right: 0;
+    right: 5px;
     background: rgba(255, 255, 255, 0.8);
     line-height: 20px;
     margin: 20px;
-    border-radius: 50%; /* Circle shape */
-    width: 60px; /* Fixed size */
-    height: 60px; /* Fixed size */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -616,6 +616,10 @@ button:hover {
     position: fixed;
     top: 0;
     right: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 4px;
 }
 
 #enable-location-btn {
@@ -636,6 +640,7 @@ button:hover {
 #enable-location-btn:hover {
     background: #0056b3;
 }
+
 
 #local-advice,
 #current-location-weather,
@@ -675,7 +680,7 @@ button:hover {
     cursor: pointer;
     position: fixed;
     top: 142px;
-    right: 25px;
+    right: 30px;
     color: black;
 }
 
@@ -688,6 +693,10 @@ button:hover {
     top: 100px;
     right: 15px;
     text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 4px;
 }
 
 #wind-info-btn {
