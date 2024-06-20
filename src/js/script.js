@@ -244,10 +244,12 @@ function setBackground(condition, data) {
 }
 
 function displayCityNotFound(city) {
-    main.innerHTML = `<h2 style="text-align: center; align-self: center">NO WEATHER DATA FOR THE REGION OR CITY WITH THE NAME ${city.toUpperCase()} FOUND!</h2>
-                      <h3 style="align-self: center; text-align: center">PLEASE CHECK THE SPELLING AND TRY AGAIN!</h3>`;
+    alert(`No weather data found for ${city}. Please try again with another location. Be sure to check the spelling!`);
     document.getElementById("wind-info-btn").style.display = 'none';
     document.getElementById("feels-like-btn").style.display = 'none';
+    document.getElementById("forecast-btn").style.display = 'none';
+    document.getElementById("aqi-btn").style.display = 'none';
+    document.getElementById("humidity-rain-btn").style.display = 'none';
 }
 
 function addWeatherToPage(data) {
