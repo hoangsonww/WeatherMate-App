@@ -18,6 +18,7 @@ async function getBotResponse(message) {
     let fullResponse = "Loading...";
 
     try {
+        showLoadingMessage();
         const genAI = new GoogleGenerativeAI(getAIResponse());
         const model = genAI.getGenerativeModel({
             model: "gemini-1.5-flash",
@@ -46,6 +47,7 @@ async function getBotResponse(message) {
         const result = await chatSession.sendMessage(message);
         fullResponse = result.response.text();
         conversationHistory.push({role: "model", parts: [{text: fullResponse}]});
+        hideLoadingMessage();
     }
     catch (error) {
         console.error('Error fetching response:', error.message);
@@ -66,6 +68,18 @@ function removeMarkdown(text) {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html;
     return tempDiv.textContent || tempDiv.innerText || '';
+}
+
+function showLoadingMessage() {
+    const chatMessages = document.querySelector(".chat-messages");
+    const loadingElem = document.createElement("div");
+    loadingElem.innerText = "Loading...";
+    chatMessages.appendChild(loadingElem);
+}
+
+function hideLoadingMessage() {
+    const chatMessages = document.querySelector(".chat-messages");
+    chatMessages.removeChild(chatMessages.lastChild);
 }
 
 const chatInput = document.querySelector(".chat-input");
