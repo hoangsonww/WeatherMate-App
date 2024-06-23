@@ -21,6 +21,7 @@ At the mean time, you can use the web version [here](https://hoangsonww.github.i
 - **Dynamic Backgrounds**: The UI changes to reflect the current weather conditions, enhancing the user experience.
 - **Favorites**: Save your favorite locations for quick weather checks.
 - **Responsive Design**: WeatherMate looks great on any device, whether it's your phone, tablet, or desktop.
+- **Chatbot Integration**: Get weather updates through a chatbot interface. It can also answer many other queries you may have!
 
 ## How It Works
 
