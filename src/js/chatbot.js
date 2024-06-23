@@ -46,7 +46,8 @@ async function getBotResponse(message) {
         const result = await chatSession.sendMessage(message);
         fullResponse = result.response.text();
         conversationHistory.push({role: "model", parts: [{text: fullResponse}]});
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error fetching response:', error.message);
         fullResponse = "An error occurred while generating the response, possibly due to high traffic or safety concerns. Please understand that I am trained by MovieVerse to provide safe and helpful responses within my limitations. I apologize for any inconvenience caused. Please try again with a different query or contact MovieVerse support for further assistance.";
     }
