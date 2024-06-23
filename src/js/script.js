@@ -19,7 +19,6 @@ searchInput.addEventListener('input', async (e) => {
         return;
     }
 
-
     const encodedSearchTerm = encodeURIComponent(searchTerm);
     const searchUrl = `https://api.openweathermap.org/data/2.5/find?q=${encodedSearchTerm}&type=like&sort=population&cnt=5&appid=${weatherpath}`;
 
