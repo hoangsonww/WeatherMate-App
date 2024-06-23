@@ -73,7 +73,19 @@ function removeMarkdown(text) {
 function showLoadingMessage() {
     const chatMessages = document.querySelector(".chat-messages");
     const loadingElem = document.createElement("div");
-    loadingElem.innerText = "Loading...";
+    loadingElem.className = "chat-message";
+    loadingElem.innerText = "Loading";
+
+    function animateLoadingDots() {
+        if (loadingElem.innerText.endsWith("...")) {
+            loadingElem.innerText = "Loading";
+        }
+        else {
+            loadingElem.innerText += ".";
+        }
+    }
+
+    setInterval(animateLoadingDots, 500);
     chatMessages.appendChild(loadingElem);
 }
 
