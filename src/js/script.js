@@ -10,9 +10,6 @@ const weatherpath = "593309284d3eb093ee96647eb294905b";
 let isCelsius = localStorage.getItem("isCelsius") === "true";
 let lastCity = "";
 
-const searchInput = document.getElementById('search');
-const resultsDiv = document.getElementById('search-results');
-
 searchInput.addEventListener('input', async (e) => {
     const searchTerm = e.target.value.trim();
     resultsDiv.innerHTML = '';
