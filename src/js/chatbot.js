@@ -110,16 +110,19 @@ document.querySelector(".chatbot").prepend(chatTitleElem);
 
 chatInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && e.target.value.trim()) {
+        scrollToBottom();
         const question = e.target.value.trim();
         const userMsgElem = document.createElement("div");
         userMsgElem.innerText = `You: ${question}`;
         chatMessages.appendChild(userMsgElem);
+        scrollToBottom();
 
         setTimeout(async () => {
             const response = await getBotResponse(question);
             const elizaMsgElem = document.createElement("div");
             elizaMsgElem.innerText = `WeatherMate: ${response}`;
             chatMessages.appendChild(elizaMsgElem);
+            scrollToBottom();
         }, 1000);
 
         e.target.value = '';
