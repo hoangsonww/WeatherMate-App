@@ -1,5 +1,7 @@
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
 
+
+
 async function getBotResponse(message) {
     const weatherInCityRegex = /weather in (.*?)(?=\n|$)/;
     const weatherInCityMatch = message.match(weatherInCityRegex);
