@@ -5,6 +5,18 @@ function scrollToBottom() {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
+function sendInstructionalMessage() {
+    const instructionMessage = "Hello! I am your WeatherMate Assistant. I can provide weather information for you. To get started, type 'weather in [a city's name]' to get the weather for that city. Or you can also ask me any general weather-related questions or any other queries you may have. How can I assist you today?";
+    const instructionElem = document.createElement("div");
+    instructionElem.innerText = instructionMessage;
+    document.querySelector(".chat-messages").appendChild(instructionElem);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    sendInstructionalMessage();
+    scrollToBottom();
+});
+
 async function getBotResponse(message) {
     const weatherInCityRegex = /weather in (.*?)(?=\n|$)/;
     const weatherInCityMatch = message.match(weatherInCityRegex);
