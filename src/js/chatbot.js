@@ -1,6 +1,9 @@
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
 
-
+function scrollToBottom() {
+    const chatMessages = document.querySelector(".chat-messages");
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
 
 async function getBotResponse(message) {
     const weatherInCityRegex = /weather in (.*?)(?=\n|$)/;
