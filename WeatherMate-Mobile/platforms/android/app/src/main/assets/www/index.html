@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The WeatherMate App - Your Digital Meteorologist</title>
+    <title>The WeatherMate App - Real-Time Weather Updates</title>
     <link rel="manifest" href="manifest.json">
     <meta name="description" content="The WeatherMate App provides real-time weather updates, forecasts, and air quality information for any location.">
     <meta name="keywords" content="weather, forecast, air quality, temperature, humidity, wind, WeatherMate">
@@ -75,12 +75,7 @@
         <div id="forecast-display"></div>
         <div id="humidity-rain-display" style="display: none; text-align: center"></div>
         <form id="form">
-            <input
-                    type="text"
-                    id="search"
-                    placeholder="Search for any location..."
-                    autocomplete="on"
-            />
+            <input type="text" id="search" placeholder="Search for any location..." autocomplete="on" />
         </form>
         <div id="search-results" style="margin-top: 20px"></div>
         <br/>
@@ -92,14 +87,7 @@
         <div id="local-advice" class="local-advice" title="Choose a City or Region to Get Weather Advice">
             <p><strong>Weather Advice</strong></p>
         </div>
-        <div
-                id="current-location-weather"
-                class="current-location-weather"
-                onclick="fetchWeatherForCurrentLocation()"
-                style="cursor: pointer"
-                title="Click to Refresh Weather for Your Current Location"
-        >
-        </div>
+        <div id="current-location-weather" class="current-location-weather" onclick="fetchWeatherForCurrentLocation()" style="cursor: pointer" title="Click to Refresh Weather for Your Current Location"></div>
         <h6 id="local-time-label" style="color: black !important;"><strong>Your Local Time</strong></h6>
         <div id="local-time-container" class="local-time-container" title="Your Local Time"></div>
         <h6 id="home-label" style="color: black !important;"><strong>Back to Home</strong></h6>

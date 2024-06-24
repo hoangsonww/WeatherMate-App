@@ -1,5 +1,22 @@
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
 
+function scrollToBottom() {
+    const chatMessages = document.querySelector(".chat-messages");
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function sendInstructionalMessage() {
+    const instructionMessage = "Hello! I am your WeatherMate Assistant 🌤. I can provide weather information for you. To get started, type 'weather in [a city's name]' to get the weather for that city. Or you can also ask me any general weather-related questions or any other queries you may have. How can I assist you today? 🌤";
+    const instructionElem = document.createElement("div");
+    instructionElem.innerText = instructionMessage;
+    document.querySelector(".chat-messages").appendChild(instructionElem);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    sendInstructionalMessage();
+    scrollToBottom();
+});
+
 async function getBotResponse(message) {
     const weatherInCityRegex = /weather in (.*?)(?=\n|$)/;
     const weatherInCityMatch = message.match(weatherInCityRegex);
@@ -19,6 +36,7 @@ async function getBotResponse(message) {
 
     try {
         showLoadingMessage();
+
         const genAI = new GoogleGenerativeAI(getAIResponse());
         const model = genAI.getGenerativeModel({
             model: "gemini-1.5-flash",
@@ -104,17 +122,19 @@ document.querySelector(".chatbot").prepend(chatTitleElem);
 
 chatInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && e.target.value.trim()) {
+        scrollToBottom();
         const question = e.target.value.trim();
-
         const userMsgElem = document.createElement("div");
         userMsgElem.innerText = `You: ${question}`;
         chatMessages.appendChild(userMsgElem);
+        scrollToBottom();
 
         setTimeout(async () => {
             const response = await getBotResponse(question);
             const elizaMsgElem = document.createElement("div");
-            elizaMsgElem.innerText = `Eliza: ${response}`;
+            elizaMsgElem.innerText = `WeatherMate: ${response}`;
             chatMessages.appendChild(elizaMsgElem);
+            scrollToBottom();
         }, 1000);
 
         e.target.value = '';
