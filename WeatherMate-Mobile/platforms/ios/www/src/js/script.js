@@ -5,12 +5,11 @@ const buttonSearch = document.getElementById("btn");
 const favorite = document.getElementById("favorites-section");
 const title = document.getElementById("my-heading");
 const forecast = document.getElementById("forecast-display");
-
-let isCelsius = localStorage.getItem("isCelsius") === "true";
-let lastCity = "";
-
+const weatherpath = "593309284d3eb093ee96647eb294905b";
 const searchInput = document.getElementById('search');
 const resultsDiv = document.getElementById('search-results');
+let isCelsius = localStorage.getItem("isCelsius") === "true";
+let lastCity = "";
 
 searchInput.addEventListener('input', async (e) => {
     const searchTerm = e.target.value.trim();
@@ -189,8 +188,6 @@ function setBackground(condition, data) {
         backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/night.jpg)';
         textColor = 'black';
         favoriteColor = 'black';
-        document.getElementById('home-label').style.color = 'white';
-        document.getElementById('local-time-label').style.color = 'white';
     }
     else {
         switch (condition) {
@@ -204,8 +201,8 @@ function setBackground(condition, data) {
                 break;
             case 'Clear':
                 backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/clear.jpg)';
-                document.getElementById('home-label').style.color = 'white';
-                document.getElementById('local-time-label').style.color = 'white';
+                document.getElementById('home-label').style.color = 'black';
+                document.getElementById('local-time-label').style.color = 'black';
                 break;
             case 'Rain':
                 backgroundImage = 'url(https://hoangsonww.github.io/WeatherMate-App/utils/rainy.jpg)';
@@ -246,10 +243,12 @@ function setBackground(condition, data) {
 }
 
 function displayCityNotFound(city) {
-    main.innerHTML = `<h2 style="text-align: center; align-self: center">NO WEATHER DATA FOR THE REGION OR CITY WITH THE NAME ${city.toUpperCase()} FOUND!</h2>
-                      <h3 style="align-self: center; text-align: center">PLEASE CHECK THE SPELLING AND TRY AGAIN!</h3>`;
+    alert(`No weather data found for ${city}. Please try again with another location. Be sure to check the spelling!`);
     document.getElementById("wind-info-btn").style.display = 'none';
     document.getElementById("feels-like-btn").style.display = 'none';
+    document.getElementById("forecast-btn").style.display = 'none';
+    document.getElementById("aqi-btn").style.display = 'none';
+    document.getElementById("humidity-rain-btn").style.display = 'none';
 }
 
 function addWeatherToPage(data) {
@@ -750,116 +749,6 @@ function removeFavorite(city) {
     displayFavorites();
 }
 
-function getBotResponse(message) {
-
-    const weatherInCityRegex = /weather in (.*?)(?=\n|$)/;
-
-    const weatherInCityMatch = message.match(weatherInCityRegex);
-
-    if (weatherInCityMatch && weatherInCityMatch[1]) {
-        const city = weatherInCityMatch[1].trim();
-        getWeatherByLocation(city);
-        return `Fetching weather for ${city}...`;
-    }
-
-    if (message.toLowerCase().includes("hello") || message.toLowerCase().startsWith("hi") || message.toLowerCase().includes("hey")) {
-        return "How can I assist with your weather queries today? I can also display weather for you! To make me do so, simply type 'weather in [a city's name]'";
-    }
-
-    if (message.toLowerCase().includes("bye") || message.toLowerCase().includes("goodbye")) {
-        return "Goodbye! Check back for updates!";
-    }
-
-    if (message.toLowerCase().includes("how are you") || message.toLowerCase().includes("how's it going") || message.toLowerCase().includes("how are you doing")) {
-        return "I'm as operational as a weather satellite! Currently tracking some interesting weather patterns. Need an update?";
-    }
-
-    if (message.toLowerCase().includes("what can you do") || message.toLowerCase().includes("what can you do for me") || message.toLowerCase().includes("what can you do for us")) {
-        return "I'm equipped to provide real-time weather updates, forecasts, alerts, and even educational tidbits about meteorology. Would you like a weather fact or a forecast?";
-    }
-
-    if (message.toLowerCase().includes("who are you") || message.toLowerCase().includes("what are you")) {
-        return "I'm WeatherMate, your virtual meteorologist. I can forecast weather, offer climate trivia, and suggest the best times to enjoy the outdoors!";
-    }
-
-    if (message.toLowerCase().includes("what do you do") && message.toLowerCase().includes("what you do") && message.toLowerCase().includes("what can you do")) {
-        return "Let's clear the air! I can provide weather forecasts, climate facts, or explain meteorological terms. What weather topic can I illuminate for you?";
-    }
-
-    if (message.toLowerCase().includes("sorry") || message.toLowerCase().includes("my bad")) {
-        return "I'm here to improve your day like a break in the clouds. Tell me what weather info you're after, and I'll do my best!";
-    }
-
-    if (message.toLowerCase().includes("thank you") || message.toLowerCase().includes("thanks")) {
-        return "Thank you for the warm front of kindness! How can I further brighten your day with weather updates?";
-    }
-
-    if (message.toLowerCase().includes("tell me a joke") || message.toLowerCase().includes("tell me a weather joke") || message.toLowerCase().includes("tell me a weather-related joke")) {
-        return "Why don't meteorologists like to go to the beach? They can't enjoy the sun with all that cloud judgment! Any other weather fun facts or forecasts I can provide?";
-    }
-
-    if (message.toLowerCase().includes("what should i wear") || message.toLowerCase().includes("what should i wear today") || message.toLowerCase().includes("what should i wear tomorrow")) {
-        return "Dressing in layers is key for cold weather. For heat, light-colored and loose-fitting clothing is best. Can I suggest something based on today’s weather?";
-    }
-
-    if (message.toLowerCase().includes("how's the weather") || message.toLowerCase().includes("how's the weather today") || message.toLowerCase().includes("how's the weather tomorrow")) {
-        return "Sometimes changes in weather, like barometric pressure, can affect your health. It's best to consult a doctor, but would you like to know if there’s a pressure change expected today?";
-    }
-
-    if (message.toLowerCase().includes("is it safe to go outside") || message.toLowerCase().includes("is it safe to go outside today") || message.toLowerCase().includes("is it safe to go outside tomorrow")) {
-        return "Safety first! There is a [current weather alert]. It's best to [safety advice]. Stay indoors and away from windows if you hear thunder.";
-    }
-
-    return "I seem to be out of my element. I'm best with cloud coverage than clouded questions. For weather forecasts, trivia, or wardrobe advice, I'm your bot. How may I assist?";
-}
-
-const chatInput = document.querySelector(".chat-input");
-const chatMessages = document.querySelector(".chat-messages");
-
-const chatTitleElem = document.createElement("div");
-chatTitleElem.className = "chat-header chat-title";
-chatTitleElem.innerText = "Chat With Your WeatherMate!";
-document.querySelector(".chatbot").prepend(chatTitleElem);
-
-chatInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && e.target.value.trim()) {
-        const question = e.target.value.trim();
-
-        const userMsgElem = document.createElement("div");
-        userMsgElem.innerText = `You: ${question}`;
-        chatMessages.appendChild(userMsgElem);
-
-        setTimeout(() => {
-            const response = getBotResponse(question);
-            const elizaMsgElem = document.createElement("div");
-            elizaMsgElem.innerText = `Eliza: ${response}`;
-            chatMessages.appendChild(elizaMsgElem);
-        }, 1000);
-
-        e.target.value = '';
-    }
-});
-
-const toggleButton = document.createElement("button");
-toggleButton.innerText = "-";
-toggleButton.className = "toggle-chat";
-toggleButton.title = "Maximize/Minimize Chatbot";
-toggleButton.onclick = function() {
-    const chatMessagesElem = document.querySelector(".chat-messages");
-    const chatInputElem = document.querySelector(".chat-input");
-
-    if (chatMessagesElem.style.display === "none") {
-        chatMessagesElem.style.display = "";
-        chatInputElem.style.display = "";
-        toggleButton.innerText = "-";
-    }
-    else {
-        chatMessagesElem.style.display = "none";
-        chatInputElem.style.display = "none";
-        toggleButton.innerText = "+";
-    }
-};
-
 function generateLocalAdvice(weatherData) {
     const adviceElement = document.getElementById("local-advice");
     let advice;
@@ -918,11 +807,7 @@ function generateLocalAdvice(weatherData) {
     adviceElement.textContent = advice || "Choose a city to get weather advice!";
 }
 
-const chatHeaderElem = document.querySelector(".chat-header");
-chatHeaderElem.appendChild(toggleButton);
-
 const chatMessagesElem = document.querySelector(".chat-messages");
-const weatherpath = "593309284d3eb093ee96647eb294905b";
 const chatInputElem = document.querySelector(".chat-input");
 chatMessagesElem.style.display = "none";
 chatInputElem.style.display = "none";
