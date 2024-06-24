@@ -24,6 +24,12 @@
     "app",
     "real-time",
     "location",
+    "forecast",
+    "humidity",
+    "temperature",
+    "wind",
+    "rain",
+    "conditions",
     "information"
   ],
   "author": "Son Nguyen",
