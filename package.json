@@ -15,6 +15,7 @@
     "build:android": "cd WeatherMate-Mobile && cordova build android",
     "build:ios": "cd WeatherMate-Mobile && cordova build ios"
   },
+  "repository": ,
   "keywords": [
     "weather",
     "app",
