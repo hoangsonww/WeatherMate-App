@@ -113,7 +113,7 @@ chatInput.addEventListener("keydown", (e) => {
         setTimeout(async () => {
             const response = await getBotResponse(question);
             const elizaMsgElem = document.createElement("div");
-            elizaMsgElem.innerText = `Eliza: ${response}`;
+            elizaMsgElem.innerText = `WeatherMate: ${response}`;
             chatMessages.appendChild(elizaMsgElem);
         }, 1000);
 
