@@ -22,7 +22,7 @@ async function getBotResponse(message) {
         const genAI = new GoogleGenerativeAI(getAIResponse());
         const model = genAI.getGenerativeModel({
             model: "gemini-1.5-flash",
-            systemInstruction: "You are a weather assistant. Your task is to provide weather information to users. You can also provide general information about weather and answer weather-related questions, or any other queries the user may have, with appropriate responses.",
+            systemInstruction: "You are a weather assistant, also known as WeatherMate Assistant, for the WeatherMate App. The app is created by Son Nguyen in 2023. Your task is to provide weather information to users. You can also provide general information about weather and answer weather-related questions, or any other queries the user may have, with appropriate responses.",
         });
 
         conversationHistory.push({role: "user", parts: [{text: message}]});
