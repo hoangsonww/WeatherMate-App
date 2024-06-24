@@ -19,6 +19,7 @@ async function getBotResponse(message) {
 
     try {
         showLoadingMessage();
+
         const genAI = new GoogleGenerativeAI(getAIResponse());
         const model = genAI.getGenerativeModel({
             model: "gemini-1.5-flash",
