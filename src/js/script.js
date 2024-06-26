@@ -29,6 +29,7 @@ searchInput.addEventListener('input', async (e) => {
         if (!response.ok) {
             throw new Error(`Failed to fetch: ${response.statusText}`);
         }
+
         const data = await response.json();
 
         if (data.cod !== "200") {
