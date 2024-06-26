@@ -876,6 +876,7 @@ async function getWeatherByLocationCoords(lat, lon) {
     try {
         const response = await fetch(dataUrl);
         const data = await response.json();
+
         if (data.cod === 200) {
             addWeatherToPageByCoords(data);
         }
