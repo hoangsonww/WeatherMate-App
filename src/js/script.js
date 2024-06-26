@@ -841,6 +841,7 @@ function showPositionWeather(position) {
 
 function showRefreshButton(city) {
     const refreshButton = document.getElementById('refresh-weather');
+
     if (city) {
         refreshButton.style.display = 'block';
         refreshButton.onclick = function() {
