@@ -76,6 +76,7 @@ async function getWeatherByLocation(city) {
     }
 
     lastCity = city;
+
     document.getElementById("forecast-display").classList.remove('hide');
     document.getElementById( "forecast-display" ).classList.add( 'show' );
 
