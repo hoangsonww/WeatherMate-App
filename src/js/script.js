@@ -354,7 +354,6 @@ function displayLocalTime(timezoneOffset) {
     const utcDate = new Date();
     const utcTime = utcDate.getTime() + utcDate.getTimezoneOffset() * 60000;
     const localTime = new Date(utcTime + timezoneOffset * 1000);
-
     const formattedTime = localTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     let timeElement = document.getElementById("local-time");
