@@ -8,6 +8,7 @@ const forecast = document.getElementById("forecast-display");
 const weatherpath = "593309284d3eb093ee96647eb294905b";
 const searchInput = document.getElementById('search');
 const resultsDiv = document.getElementById('search-results');
+
 let isCelsius = localStorage.getItem("isCelsius") === "true";
 let lastCity = "";
 
