@@ -817,7 +817,6 @@ chatInputElem.style.display = "none";
 
 function fetchWeatherForCurrentLocation() {
     const locationWeatherUI = document.getElementById("current-location-weather");
-
     locationWeatherUI.textContent = "Loading Weather...";
     locationWeatherUI.style.color = 'black';
 
