@@ -36,6 +36,7 @@ async function getBotResponse(message) {
 
     try {
         showLoadingMessage();
+        scrollToBottom();
 
         const genAI = new GoogleGenerativeAI(getAIResponse());
         const model = genAI.getGenerativeModel({
@@ -139,6 +140,7 @@ chatInput.addEventListener("keydown", (e) => {
 
         e.target.value = '';
     }
+    scrollToBottom();
 });
 
 const toggleButton = document.createElement("button");

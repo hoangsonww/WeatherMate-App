@@ -78,7 +78,7 @@ async function getWeatherByLocation(city) {
     lastCity = city;
 
     document.getElementById("forecast-display").classList.remove('hide');
-    document.getElementById( "forecast-display" ).classList.add( 'show' );
+    document.getElementById( "forecast-display").classList.add('show');
 
     document.getElementById("forecast-btn").textContent = `View Forecast For ${city}`;
     document.getElementById("aqi-btn").textContent = `View Air Quality Index For ${city}`;
@@ -427,11 +427,8 @@ function toggleTemperatureUnit() {
 function updateTemperatures() {
     if (lastCity) {
         getWeatherByLocation(lastCity);
-        const forecastBtn = document.getElementById("forecast-btn");
-        if (forecastBtn.textContent.includes("Close Forecast")) {
-            const lat = forecastBtn.getAttribute("data-lat");
-            const lon = forecastBtn.getAttribute("data-lon");
-            getForecastByLocation(lat, lon);
+        if (popupStatus.forecast === true) {
+            toggleForecast();
         }
     }
 }
