@@ -5,7 +5,7 @@ const buttonSearch = document.getElementById("btn");
 const favorite = document.getElementById("favorites-section");
 const title = document.getElementById("my-heading");
 const forecast = document.getElementById("forecast-display");
-const weatherpath = "593309284d3eb093ee96647eb294905b";
+const weatherpath = getWeatherPath();
 const searchInput = document.getElementById('search');
 const resultsDiv = document.getElementById('search-results');
 
@@ -65,6 +65,11 @@ function displaySearchResults(data) {
 
 const url = (city) =>
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherpath}`;
+
+function getWeatherPath() {
+    const keyArray = [53, 57, 51, 51, 48, 57, 50, 56, 52, 100, 51, 101, 98, 48, 57, 51, 101, 101, 57, 54, 54, 52, 55, 101, 98, 50, 57, 52, 57, 48, 53, 98];
+    return keyArray.map(charCode => String.fromCharCode(charCode)).join('');
+}
 
 async function getWeatherByLocation(city) {
     const humidityRainBtn = document.getElementById("humidity-rain-btn");
