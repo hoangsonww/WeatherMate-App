@@ -10,6 +10,7 @@
     "build": "npm run start",
     "test": "http-server -o",
     "serve": "http-server -o",
+    "format": "prettier --config ./MovieVerse-Config/.prettierrc --write \"MovieVerse-Backend/databases/*.{html,css,js,jsx,ts,tsx}\" \"MovieVerse-Frontend/**/*.{html,css,js,jsx,ts,tsx}\" \"MovieVerse-Utilities/**/*.{html,css,js,jsx,ts,tsx}\" \"MovieVerse-Config/**/*.{html,css,js,jsx,ts,tsx}\" \"index.js\" \"404.html\" \"index.html\" \"MovieVerse-Mobile/www/launch-screen.html\" \"microfrontend-layout.html\"",
     "dev:android": "cd WeatherMate-Mobile && cordova run android",
     "dev:ios": "cd WeatherMate-Mobile && cordova run ios",
     "build:android": "cd WeatherMate-Mobile && cordova build android",
