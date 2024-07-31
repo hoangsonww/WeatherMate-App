@@ -1,6 +1,7 @@
 {
   "short_name": "WeatherMate",
   "name": "WeatherMate App - Real-time Weather Updates",
+  "author": "Son Nguyen",
   "icons": [
     {
       "src": "utils/icon-192x192.png",
