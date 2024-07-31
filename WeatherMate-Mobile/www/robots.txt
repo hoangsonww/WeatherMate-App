@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://hoangsonww.github.io/WeatherMate-App/sitemap.xml

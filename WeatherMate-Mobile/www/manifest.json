@@ -1,6 +1,13 @@
 {
   "short_name": "WeatherMate",
   "name": "WeatherMate App - Real-time Weather Updates",
+  "description": "A weather app that displays real-time weather and forecast information for any location.",
+  "author": "Son Nguyen",
+  "start_url": "/",
+  "background_color": "#c9dfff",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#4DB8FF",
   "icons": [
     {
       "src": "utils/icon-192x192.png",
@@ -12,10 +19,5 @@
       "type": "image/png",
       "sizes": "512x512"
     }
-  ],
-  "start_url": "/",
-  "background_color": "#c9dfff",
-  "display": "standalone",
-  "scope": "/",
-  "theme_color": "#4DB8FF"
+  ]
 }
