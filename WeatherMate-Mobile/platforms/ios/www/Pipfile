@@ -1,0 +1,31 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+flask = "*"
+gunicorn = "*"
+psycopg2-binary = "*"
+djangorestframework = "*"
+flask-restful = "*"
+flask-sqlalchemy = "*"
+flask-migrate = "*"
+flask-script = "*"
+flask-cors = "*"
+requests = "*"
+beautifulsoup4 = "*"
+lxml = "*"
+pillow = "*"
+
+[dev-packages]
+pytest = "*"
+pytest-django = "*"
+pytest-flask = "*"
+flake8 = "*"
+black = "*"
+isort = "*"
+
+[requires]
+python_version = "3.9"
