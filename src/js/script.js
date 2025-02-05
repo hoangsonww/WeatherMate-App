@@ -60,7 +60,10 @@ function displaySearchResults(data) {
   document.querySelectorAll('.search-result-card').forEach(card => {
     card.addEventListener('click', function () {
       const cityName = this.getAttribute('data-city-name');
+      // Trigger the weather lookup
       getWeatherByLocation(cityName);
+      // Close/hide the results div when a result is clicked
+      resultsDiv.innerHTML = '';
     });
   });
 }
@@ -137,10 +140,71 @@ async function displayAirQuality(lat, lon, visibility) {
     const aqi = aqiData.list[0].main.aqi;
     const airQuality = convertAQIToQuality(aqi);
 
-    const visibilityKm = (visibility / 1000).toFixed(1);
+    // Determine the color based on the AQI level
+    let aqiColor;
+    switch (aqi) {
+    case 1: // Good
+      aqiColor = 'green';
+      break;
+    case 2: // Fair
+      aqiColor = 'yellowgreen';
+      break;
+    case 3: // Moderate
+      aqiColor = 'orange';
+      break;
+    case 4: // Poor
+      aqiColor = 'orangered';
+      break;
+    case 5: // Very Poor
+      aqiColor = 'red';
+      break;
+    default:
+      aqiColor = 'gray';
+    }
+
+    // Create a simple progress bar for AQI.
+    // Since AQI ranges from 1 to 5, we map that to a percentage.
+    const aqiProgressPercent = (aqi / 5) * 100;
+    const aqiBar = `
+      <div style="background-color:#eee; width:100%; height:10px; border-radius:5px; margin: 5px 0;">
+        <div style="background-color:${aqiColor}; width:${aqiProgressPercent}%; height:100%; border-radius:5px;"></div>
+      </div>
+    `;
+
+    // For visibility, convert from meters to kilometers
+    const visKm = visibility / 1000;
+
+    // Determine a maximum visibility for the progress bar.
+    // Many locations often report up to 10km in urban areas; adjust as needed.
+    const maxVisibility = 10;
+    const visProgressPercent = Math.min((visKm / maxVisibility) * 100, 100);
+
+    // Set a color based on visibility thresholds:
+    // less than 3 km: red, 3 to 7 km: orange, 7 km and above: green.
+    let visibilityColor;
+    if (visKm < 3) {
+      visibilityColor = 'red';
+    } else if (visKm < 7) {
+      visibilityColor = 'orange';
+    } else {
+      visibilityColor = 'green';
+    }
+
+    // Create a simple progress bar for visibility.
+    const visibilityBar = `
+      <div style="background-color:#eee; width:100%; height:10px; border-radius:5px; margin: 5px 0;">
+        <div style="background-color:${visibilityColor}; width:${visProgressPercent}%; height:100%; border-radius:5px;"></div>
+      </div>
+    `;
+
     aqiElement.innerHTML = `
-            <h3 class="aqi-text aqi-${aqi}">Air Quality Index: ${aqi} (${airQuality})</h3>
-            <h3 style="color: black">Visibility: ${visibilityKm} km</h3>`;
+      <h3 class="aqi-text" style="color:${aqiColor};">
+        Air Quality Index: ${aqi} (${airQuality})
+      </h3>
+      ${aqiBar}
+      <h3 style="color: black">Visibility: <span style="color: ${visibilityColor}">${visKm.toFixed(1)} km</span></h3>
+      ${visibilityBar}
+    `;
   } catch (error) {
     aqiElement.innerHTML = 'Error loading data.';
   }
@@ -348,20 +412,45 @@ async function displayHumidityRain(lat, lon, displayElement) {
   const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherpath}`;
   const forecastResp = await fetch(forecastUrl);
   const forecastData = await forecastResp.json();
-  const chanceOfRain = forecastData.list[0].pop;
+  const chanceOfRain = forecastData.list[0].pop; // This is a value between 0 and 1
+  const rainPercentage = chanceOfRain * 100;
 
-  displayElement.innerHTML = `<h3>Humidity: ${humidity}%</h3><h3>Chance of Rain: ${(chanceOfRain * 100).toFixed(0)}%</h3>`;
+  // Determine colors based on thresholds
+  // For humidity: <30% is good (green), 30-70% is moderate (orange), >70% is high (red)
+  let humidityColor = humidity < 30 ? 'green' : humidity < 70 ? 'orange' : 'red';
+
+  // For chance of rain: <30% green, 30-70% orange, >70% red
+  let rainColor = rainPercentage < 30 ? 'green' : rainPercentage < 70 ? 'orange' : 'red';
+
+  // Create simple progress bars as visual indicators
+  const humidityBar = `
+    <div style="background-color:#eee; width:100%; height:10px; border-radius:5px; margin: 5px 0;">
+      <div style="background-color:${humidityColor}; width:${humidity}%; height:100%; border-radius:5px;"></div>
+    </div>
+  `;
+  const rainBar = `
+    <div style="background-color:#eee; width:100%; height:10px; border-radius:5px; margin: 5px 0;">
+      <div style="background-color:${rainColor}; width:${rainPercentage}%; height:100%; border-radius:5px;"></div>
+    </div>
+  `;
+
+  // Set the innerHTML with both the text and the visual indicators
+  displayElement.innerHTML = `
+    <h3>
+      Humidity: <span style="color:${humidityColor};">${humidity}%</span>
+    </h3>
+    ${humidityBar}
+    <h3>
+      Chance of Rain: <span style="color:${rainColor};">${rainPercentage.toFixed(0)}%</span>
+    </h3>
+    ${rainBar}
+  `;
   displayElement.style.display = 'block';
 }
 
 function displayLocalTime(timezoneOffset) {
-  const utcDate = new Date();
-  const utcTime = utcDate.getTime() + utcDate.getTimezoneOffset() * 60000;
-  const localTime = new Date(utcTime + timezoneOffset * 1000);
-  const formattedTime = localTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
+  // Create or get the local time element
   let timeElement = document.getElementById('local-time');
-
   if (!timeElement) {
     timeElement = document.createElement('div');
     timeElement.id = 'local-time';
@@ -369,7 +458,25 @@ function displayLocalTime(timezoneOffset) {
     main.appendChild(timeElement);
   }
 
-  timeElement.innerHTML = `<h3>Local Time: ${formattedTime}</h3>`;
+  // Function to update the local time
+  function updateTime() {
+    const utcDate = new Date();
+    const utcTime = utcDate.getTime() + utcDate.getTimezoneOffset() * 60000;
+    const localTime = new Date(utcTime + timezoneOffset * 1000);
+
+    // Format the local time including seconds
+    const formattedTime = localTime.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+
+    timeElement.innerHTML = `<h3>Local Time: ${formattedTime}</h3>`;
+  }
+
+  // Update immediately, then every 1 second
+  updateTime();
+  setInterval(updateTime, 1000);
 }
 
 async function getForecastByLocation(lat, lon) {
@@ -390,27 +497,79 @@ async function getForecastByLocation(lat, lon) {
 
 function addForecastToPage(respData) {
   const forecastDisplay = document.getElementById('forecast-display');
-
   const unit = isCelsius ? '°C' : '°F';
 
+  // Show the forecast container (and the chart within it)
   forecastDisplay.style.display = 'grid';
 
+  // Clear any previous forecast content (including any old canvas/chart)
   forecastDisplay.innerHTML = '';
 
+  // Get the first 5 forecast items
   const forecastList = respData.list.slice(0, 5);
 
+  // Arrays to hold data for the chart
+  const chartLabels = [];
+  const chartData = [];
+
+  // Create forecast items and fill the chart data arrays
   forecastList.forEach(item => {
     const temp = KtoUnit(item.main.temp);
+    const timeLabel = new Date(item.dt * 1000).toLocaleTimeString();
+    chartLabels.push(timeLabel);
+    chartData.push(temp);
 
+    // Create a div for the forecast item
     const forecastItem = document.createElement('div');
     forecastItem.classList.add('forecast-item');
     forecastItem.innerHTML = `
-            <img src="https://openweathermap.org/img/wn/${item.weather[0].icon}.png" alt="${item.weather[0].description}">
-            ${temp}${unit} - ${item.weather[0].main}
-            <small>${new Date(item.dt * 1000).toLocaleTimeString()}</small>
-        `;
+      <img src="https://openweathermap.org/img/wn/${item.weather[0].icon}.png" alt="${item.weather[0].description}">
+      ${temp}${unit} - ${item.weather[0].main}
+      <small>${timeLabel}</small>
+    `;
 
     forecastDisplay.appendChild(forecastItem);
+  });
+
+  // Create a canvas element for the chart
+  const canvas = document.createElement('canvas');
+  canvas.id = 'forecast-chart';
+  // Optionally, you can set a fixed size for the canvas:
+  // canvas.width = 400;
+  // canvas.height = 200;
+  forecastDisplay.appendChild(canvas);
+
+  // Create the chart using Chart.js
+  const ctx = canvas.getContext('2d');
+
+  // If you want to ensure that any previous Chart instance is removed before creating a new one,
+  // you could store it in a variable and call .destroy() on it. For simplicity, this snippet creates a new chart.
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: chartLabels,
+      datasets: [{
+        label: `Temperature (${unit})`,
+        data: chartData,
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 2,
+        fill: false,
+        tension: 0.1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: false,
+          ticks: {
+            callback: function(value) {
+              return value + unit;
+            }
+          }
+        }
+      }
+    }
   });
 }
 
@@ -933,19 +1092,88 @@ document.getElementById('wind-info-btn').addEventListener('click', toggleWindInf
 
 function addWindInfoToPage(data) {
   if (data.wind && data.wind.speed !== undefined) {
-    const windSpeedElement = document.getElementById('wind-speed');
+    // Calculate wind speed in km/h
     const windSpeedKmH = (data.wind.speed * 3.6).toFixed(1);
-    windSpeedElement.textContent = `Speed: ${windSpeedKmH} km/h`;
 
+    // Determine color based on wind speed thresholds:
+    // - Less than 20 km/h: green
+    // - 20 to 40 km/h: orange
+    // - Greater than 40 km/h: red
+    let windSpeedColor;
+    if (windSpeedKmH < 20) {
+      windSpeedColor = 'green';
+    } else if (windSpeedKmH < 40) {
+      windSpeedColor = 'orange';
+    } else {
+      windSpeedColor = 'red';
+    }
+
+    // Create a progress bar for wind speed.
+    // We'll assume a maximum of 100 km/h for visual scaling.
+    const maxWindSpeed = 100;
+    const windSpeedPercent = Math.min((windSpeedKmH / maxWindSpeed) * 100, 100);
+    const windSpeedBar = `
+      <div style="background-color:#eee; width:100%; height:10px; border-radius:5px; margin: 5px 0;">
+        <div style="background-color:${windSpeedColor}; width:${windSpeedPercent}%; height:100%; border-radius:5px;"></div>
+      </div>
+    `;
+
+    // Function to get color for wind direction based on degree.
+    // North: blue, East: red, South: green, West: orange.
+    function getWindDirectionColor(deg) {
+      if ((deg >= 0 && deg < 45) || (deg >= 315 && deg <= 360)) {
+        return 'blue';
+      } else if (deg >= 45 && deg < 135) {
+        return 'red';
+      } else if (deg >= 135 && deg < 225) {
+        return 'green';
+      } else if (deg >= 225 && deg < 315) {
+        return 'orange';
+      } else {
+        return 'gray';
+      }
+    }
+
+    const windDirColor = getWindDirectionColor(data.wind.deg);
+    const windDirText = getWindDirection(data.wind.deg);
+
+    // Update the wind speed element with text and the progress bar.
+    const windSpeedElement = document.getElementById('wind-speed');
+    windSpeedElement.innerHTML = `
+      Speed: <span style="color:${windSpeedColor};">${windSpeedKmH} km/h</span>
+      ${windSpeedBar}
+    `;
+
+    // Update wind direction element.
+    // An arrow rotates based on the wind degree, and the text is color-coded.
     const windDirectionElement = document.getElementById('wind-direction');
-    windDirectionElement.textContent = `Direction: ${getWindDirection(data.wind.deg)}`;
+    windDirectionElement.innerHTML = `
+      Direction: <span style="color:${windDirColor};">${windDirText}</span>
+      <span style="display:inline-block; transform: rotate(${data.wind.deg}deg); font-size: 24px; color:${windDirColor};">&#8593;</span>
+    `;
 
+    // Determine color for pressure:
+    // For example, lower pressures might be concerning (red),
+    // moderate pressures in orange, and higher pressures in green.
+    const pressure = data.main.pressure;
+    let pressureColor;
+    if (pressure < 1000) {
+      pressureColor = 'red';
+    } else if (pressure < 1020) {
+      pressureColor = 'orange';
+    } else {
+      pressureColor = 'green';
+    }
+
+    // Update the pressure element with color coding.
     const pressureElement = document.getElementById('wind-pressure');
-    pressureElement.textContent = `Pressure: ${data.main.pressure} hPa`;
+    pressureElement.innerHTML = `Pressure: <span style="color:${pressureColor};">${pressure} hPa</span>`;
 
+    // Update wind info button with city data.
     const windInfoBtn = document.getElementById('wind-info-btn');
     windInfoBtn.setAttribute('data-city', data.name);
   } else {
+    // If wind data is not available, update the wind info container with a message.
     const windInfoDiv = document.getElementById('wind-info');
     windInfoDiv.textContent = 'Wind data not available for this location.';
   }
@@ -960,18 +1188,93 @@ function getWindDirection(degree) {
 document.getElementById('feels-like-btn').addEventListener('click', toggleFeelsLikeInfo);
 
 function addFeelsLikeToPage(data) {
-  const feelsLikeTempElement = document.getElementById('feels-like-temp');
-  let feelsLikeTemp = isCelsius
-    ? (data.main.feels_like - 273.15).toFixed(1) + ' °C'
-    : (((data.main.feels_like - 273.15) * 9) / 5 + 32).toFixed(1) + ' °F';
-  feelsLikeTempElement.textContent = `Feels Like: ${feelsLikeTemp}`;
+  // Convert Kelvin to Celsius or Fahrenheit and store as numbers
+  let feelsLikeTempNum, minTempNum, maxTempNum;
+  if (isCelsius) {
+    feelsLikeTempNum = data.main.feels_like - 273.15;
+    minTempNum = data.main.temp_min - 273.15;
+    maxTempNum = data.main.temp_max - 273.15;
+  } else {
+    feelsLikeTempNum = ((data.main.feels_like - 273.15) * 9) / 5 + 32;
+    minTempNum = ((data.main.temp_min - 273.15) * 9) / 5 + 32;
+    maxTempNum = ((data.main.temp_max - 273.15) * 9) / 5 + 32;
+  }
 
-  const minTemp = isCelsius ? (data.main.temp_min - 273.15).toFixed(1) + ' °C' : (((data.main.temp_min - 273.15) * 9) / 5 + 32).toFixed(1) + ' °F';
-  const maxTemp = isCelsius ? (data.main.temp_max - 273.15).toFixed(1) + ' °C' : (((data.main.temp_max - 273.15) * 9) / 5 + 32).toFixed(1) + ' °F';
+  // Format temperatures for display
+  let unitSymbol = isCelsius ? '°C' : '°F';
+  let feelsLikeTempStr = feelsLikeTempNum.toFixed(1) + ' ' + unitSymbol;
+  let minTempStr = minTempNum.toFixed(1) + ' ' + unitSymbol;
+  let maxTempStr = maxTempNum.toFixed(1) + ' ' + unitSymbol;
+
+  // Helper function to determine the color based on temperature thresholds.
+  // For Celsius:
+  //   < 0: blue, 0-15: lightblue, 15-25: green, 25-35: orange, >=35: red
+  // For Fahrenheit:
+  //   < 32: blue, 32-59: lightblue, 59-77: green, 77-95: orange, >=95: red
+  function getTempColor(temp) {
+    if (isCelsius) {
+      if (temp < 0) return 'blue';
+      if (temp < 15) return 'lightblue';
+      if (temp < 25) return 'green';
+      if (temp < 35) return 'orange';
+      return 'red';
+    } else {
+      if (temp < 32) return 'blue';
+      if (temp < 59) return 'lightblue';
+      if (temp < 77) return 'green';
+      if (temp < 95) return 'orange';
+      return 'red';
+    }
+  }
+
+  const feelsLikeColor = getTempColor(feelsLikeTempNum);
+  const minTempColor = getTempColor(minTempNum);
+  const maxTempColor = getTempColor(maxTempNum);
+
+  // Define a scale for the progress bars.
+  // For Celsius, assume a scale from -20°C to 40°C.
+  // For Fahrenheit, assume a scale from -4°F to 104°F.
+  let progressMin, progressMax;
+  if (isCelsius) {
+    progressMin = -20;
+    progressMax = 40;
+  } else {
+    progressMin = -4;
+    progressMax = 104;
+  }
+
+  // Helper function to create a progress bar given a temperature and its color.
+  function createProgressBar(temp, color) {
+    let percent = ((temp - progressMin) / (progressMax - progressMin)) * 100;
+    // Ensure percent is within 0 to 100%
+    percent = Math.max(0, Math.min(100, percent));
+    return `
+      <div style="background-color:#eee; width:100%; height:10px; border-radius:5px; margin: 5px 0;">
+        <div style="background-color:${color}; width:${percent}%; height:100%; border-radius:5px;"></div>
+      </div>
+    `;
+  }
+
+  const feelsLikeBar = createProgressBar(feelsLikeTempNum, feelsLikeColor);
+  const minTempBar = createProgressBar(minTempNum, minTempColor);
+  const maxTempBar = createProgressBar(maxTempNum, maxTempColor);
+
+  // Update the DOM elements with both the color-coded values and progress bars
+  const feelsLikeTempElement = document.getElementById('feels-like-temp');
+  feelsLikeTempElement.innerHTML = `
+    Feels Like: <span style="color:${feelsLikeColor};">${feelsLikeTempStr}</span>
+    ${feelsLikeBar}
+  `;
 
   const minTempElement = document.getElementById('min-temp');
-  const maxTempElement = document.getElementById('max-temp');
+  minTempElement.innerHTML = `
+    Min Temperature: <span style="color:${minTempColor};">${minTempStr}</span>
+    ${minTempBar}
+  `;
 
-  minTempElement.textContent = `Min Temperature: ${minTemp}`;
-  maxTempElement.textContent = `Max Temperature: ${maxTemp}`;
+  const maxTempElement = document.getElementById('max-temp');
+  maxTempElement.innerHTML = `
+    Max Temperature: <span style="color:${maxTempColor};">${maxTempStr}</span>
+    ${maxTempBar}
+  `;
 }

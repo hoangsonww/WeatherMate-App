@@ -757,3 +757,21 @@ button:hover {
   height: 0;
   opacity: 0;
 }
+
+/* Simple dropdown animation */
+.dropdown-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+  opacity: 0;
+}
+
+.dropdown-content.open {
+  max-height: 1000px;
+  opacity: 1;
+}
+
+/* Add animation to other toggled elements */
+.weather, .chatbot, #aqi-display, #humidity-rain-display, #wind-info, #feels-like-info {
+  transition: all 0.5s ease;
+}

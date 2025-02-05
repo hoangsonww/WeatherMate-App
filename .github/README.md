@@ -58,6 +58,7 @@ To get started with WeatherMate:
 - **Add to Favorites**: Click the heart icon next to the city name to add it to your favorites for quick access later.
 - **Remove from Favorites**: Click the heart icon next to the city name to remove it from your favorites.
 - **Switch Units**: Click the "Switch Units" button to toggle between Celsius and Fahrenheit.
+- **Weather Chatbot**: Interact with the chatbot for weather updates and more. You can ask it anything, not just about the weather! 
 - **Refresh**: Click the "Refresh" button to refresh the weather data.
 - **Local Time**: The local time of the searched location is displayed at the top of the page.
 - **Dynamic Backgrounds**: The background image changes to reflect the current weather conditions.
@@ -69,7 +70,6 @@ To get started with WeatherMate:
 
 - **HTML/CSS**: For structure and styling.
 - **JavaScript**: For dynamic interactions and API integration.
-- **Vue.js**: For reactive UI components.
 - **Font Awesome**: For icons.
 - **Moment.js**: For time display.
 - **jQuery**: For DOM manipulation.
