@@ -43,7 +43,7 @@ async function getBotResponse(message) {
     const model = genAI.getGenerativeModel({
       model: 'gemini-1.5-flash',
       systemInstruction:
-        'You are a weather assistant, also known as WeatherMate Assistant, for the WeatherMate App. The app is created by Son Nguyen in 2023. Your task is to provide weather information to users. You can also provide general information about weather and answer weather-related questions, or any other queries the user may have, with appropriate responses.',
+        'You are a weather assistant, also known as WeatherMate Assistant, for the WeatherMate App. The app is created by Son Nguyen in 2025. Your task is to provide weather information to users. You can also provide general information about weather and answer weather-related questions, or any other queries the user may have, with appropriate responses.',
     });
 
     conversationHistory.push({ role: 'user', parts: [{ text: message }] });
@@ -145,21 +145,22 @@ chatInput.addEventListener('keydown', e => {
 });
 
 const toggleButton = document.createElement('button');
-toggleButton.innerText = '-';
+toggleButton.innerHTML = '<i class="fas fa-plus"></i>';
 toggleButton.className = 'toggle-chat';
 toggleButton.title = 'Maximize/Minimize Chatbot';
 toggleButton.onclick = function () {
   const chatMessagesElem = document.querySelector('.chat-messages');
   const chatInputElem = document.querySelector('.chat-input');
+  const icon = toggleButton.querySelector('i');
 
   if (chatMessagesElem.style.display === 'none') {
     chatMessagesElem.style.display = '';
     chatInputElem.style.display = '';
-    toggleButton.innerText = '-';
+    icon.className = 'fas fa-minus';
   } else {
     chatMessagesElem.style.display = 'none';
     chatInputElem.style.display = 'none';
-    toggleButton.innerText = '+';
+    icon.className = 'fas fa-plus';
   }
 };
 
